@@ -1,4 +1,4 @@
-# bobVue
+# bobView
 
 ## Project setup
 ```
