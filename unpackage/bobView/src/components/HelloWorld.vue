@@ -38,9 +38,25 @@ export default {
   },
   methods: {
     createNewPage() {
+      console.log(this);
+      
       let wp = null;
-      wp || (wp = plus.webview.create("http://www.bobgame.cn/mobile.php?s=/Bobsports/matching/msg/MDAwMDAwMDAwMJnfgM-RjYXPhc-AsYXNosqyeXvdlWdtpq2cosyBjHya",'openGamePage',{backButtonAutoControl:'close'}));
-      wp.show('slide-in-right');
+      //新建并打开webview
+      wp ||
+        (wp = plus.webview.create(
+          "http://www.bobgame.cn/mobile.php?s=/Bobsports/matching/msg/MDAwMDAwMDAwMJnfgM-RjYXPhc-AsYXNosqyeXvdlWdtpq2cosyBjHya",
+          "openGamePage",
+          { backButtonAutoControl: "close" }
+        ));
+      wp.show("slide-in-right");
+
+      //拦截跳转
+      wp.overrideUrlLoading({ effect: "instant", mode: "reject" }, function(e) {
+        plus.nativeUI.toast(`已拦截:${e.url}`);
+        // setTimeout(()=>{
+          plus.webview.close(wp);
+        // },2000)
+      });
     }
   }
 };

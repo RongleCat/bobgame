@@ -13,7 +13,7 @@
     export default {
         data() {
             return {
-                key: value
+                key: '是是是'
             }
         },
         methods: {
@@ -35,7 +35,7 @@
             li{
                 width: 25%;
                 float: left;
-                height: 100px;
+                height: 30px;
                 &:nth-child(1){
                     background: #000;
                 }
