@@ -35,7 +35,7 @@
             li{
                 width: 25%;
                 float: left;
-                height: 30px;
+                height: px2rem(80px);;
                 &:nth-child(1){
                     background: #000;
                 }
