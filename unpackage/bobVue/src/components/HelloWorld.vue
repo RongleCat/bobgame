@@ -38,12 +38,10 @@ export default {
   },
   methods: {
     createNewPage() {
-      console.log(this);
-      
       let wp = null;
       //新建并打开webview
       wp ||
-        (wp = plus.webview.create(
+        (wp = window.plus.webview.create(
           "http://www.bobgame.cn/mobile.php?s=/Bobsports/matching/msg/MDAwMDAwMDAwMJnfgM-RjYXPhc-AsYXNosqyeXvdlWdtpq2cosyBjHya",
           "openGamePage",
           { backButtonAutoControl: "close" }
@@ -52,9 +50,9 @@ export default {
 
       //拦截跳转
       wp.overrideUrlLoading({ effect: "instant", mode: "reject" }, function(e) {
-        plus.nativeUI.toast(`已拦截:${e.url}`);
+        window.plus.nativeUI.toast(`已拦截:${e.url}`);
         // setTimeout(()=>{
-          plus.webview.close(wp);
+          window.plus.webview.close(wp);
         // },2000)
       });
     }
