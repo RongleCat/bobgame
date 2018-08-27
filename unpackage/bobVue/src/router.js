@@ -8,32 +8,36 @@ import My from './views/My.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home,
-      alias: '/home'
-    },
-    {
-      path: '/friends',
-      name: 'friends',
-      component: Friends
-    },
-    {
-      path: '/mall',
-      name: 'Mall',
-      component: Mall
-    },
-    {
-      path: '/my',
-      name: 'My',
-      component: My
-    }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
-  ]
+    linkActiveClass: 'active',
+    linkExactActiveClass: 'active',
+    routes: [{
+            path: '/',
+            name: 'Home',
+            component: Home
+        },
+        {
+            path: '/home',
+            redirect: '/'
+        },
+        {
+            path: '/friends',
+            name: 'Friends',
+            component: Friends
+        },
+        {
+            path: '/mall',
+            name: 'Mall',
+            component: Mall
+        },
+        {
+            path: '/my',
+            name: 'My',
+            component: My
+        }
+        // {
+        //   path: '/about',
+        //   name: 'about',
+        //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+        // }
+    ]
 })

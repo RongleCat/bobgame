@@ -1,15 +1,12 @@
 <template>
-    <div>
-        好友页面
+    <div class="view-page">
+        <img src="../assets/images/friends.jpg" alt="">
     </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
 <style scoped>
-
 </style>

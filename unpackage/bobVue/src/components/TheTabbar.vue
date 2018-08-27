@@ -2,7 +2,7 @@
     <div>
         <ul class="nav-list">
             <li>
-                <router-link to="/home">
+                <router-link to="/" exact>
                     <div class="tab-icon icon-1"></div>
                     <div class="tab-text">首页</div>
                 </router-link>
@@ -33,14 +33,7 @@
 export default {
   data() {
     return {
-      key: "是是是"
     };
-  },
-  methods: {
-    name() {}
-  },
-  mounted() {
-    console.log(this.$atApp());
   }
 };
 </script>
@@ -55,7 +48,18 @@ export default {
     display: flex;
     height: px2rem(100px);
     background: #fff;
-    border-top: 0.5px solid #e5e5e5;
+    position: relative;
+    &::after{
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: #e5e5e5;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: scaleY(.5);
+    }
     li {
       flex: 1;
       > a {
@@ -70,6 +74,7 @@ export default {
         opacity: 0.5;
         filter: grayscale(100%);
         filter: gray;
+        transition: all .2s;
         .tab-icon {
           width: px2rem(56px);
           height: px2rem(47px);
@@ -87,7 +92,7 @@ export default {
           line-height: px2rem(20px);
           font-size: px2rem(20px);
         }
-        &.router-link-active{
+        &.active{
           opacity: 1;
           filter:none;
         }
