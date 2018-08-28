@@ -1,3 +1,22 @@
-@function px2rem($px){//$px为需要转换的字号
-    @return $px / 75px * 1rem;
+.view-block {
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    height: 100%;
+    .test-block {
+        width: 100%;
+        height: px2rem(200px);
+        background: #f0f0f0;
+        margin-bottom: px2rem(20px);
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+.statusBar{
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 11;
 }
