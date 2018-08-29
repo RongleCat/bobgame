@@ -49,6 +49,7 @@ export default {
     beforeCreate() {
         if (this.$atApp()) {
             window.plus.navigator.setStatusBarStyle('light');
+            console.log(window.plus.navigator.setStatusBarStyle);
         }
     },
     methods: {
