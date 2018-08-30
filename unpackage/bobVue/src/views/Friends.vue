@@ -6,7 +6,8 @@
                 <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入好友昵称" type="text" @focus="setFocus" @blur="setBlur" />
             </div>
         </div>
-        <div class="view-block">
+        <vue-scroll class="view-block" ref="vs">
+            <div class="test-block" @click="touchs1"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
@@ -16,8 +17,7 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
-            <div class="test-block"></div>
-        </div>
+        </vue-scroll>
     </div>
 </template>
 
@@ -45,12 +45,23 @@ export default {
             return this.keyword.length
         }
     },
+    mounted() {
+        let that = this;
+        that.$nextTick(() => {
+            setTimeout(() => {
+                that.$refs['vs'].refresh();
+            }, 500);
+        })
+    },
     methods: {
         setFocus() {
             this.isFocus = true
         },
         setBlur() {
             this.isFocus = false
+        },
+        touchs1(){
+            console.log('sssss');
         }
     },
     beforeCreate() {

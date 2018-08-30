@@ -8,7 +8,7 @@
             </div>
             <div class="my-order">我的订单</div>
         </div>
-        <div class="view-block">
+        <vue-scroll class="view-block" ref="vs">
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
@@ -19,7 +19,7 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
-        </div>
+        </vue-scroll>
     </div>
 </template>
 
@@ -41,6 +41,14 @@ export default {
         setViewPaddingTop() {
             return this.$store.state.statusBarHeight + this.headHeight / 75 + 'rem'
         }
+    },
+    mounted() {
+        let that = this;
+        that.$nextTick(() => {
+            setTimeout(() => {
+                that.$refs['vs'].refresh();
+            }, 500);
+        })
     },
     beforeCreate() {
         if (this.$atApp()) {

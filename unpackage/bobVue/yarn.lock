@@ -2841,6 +2841,10 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "http://r.cnpmjs.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
+fastclick@^1.0.6:
+  version "1.0.6"
+  resolved "http://r.cnpmjs.org/fastclick/download/fastclick-1.0.6.tgz#161625b27b1a5806405936bda9a2c1926d06be6a"
+
 fastparse@^1.1.1:
   version "1.1.1"
   resolved "http://r.cnpmjs.org/fastparse/download/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
@@ -6855,6 +6859,12 @@ vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.17:
   version "2.5.17"
   resolved "http://r.cnpmjs.org/vue/download/vue-2.5.17.tgz#0f8789ad718be68ca1872629832ed533589c6ada"
+
+vuescroll@^4.7.6:
+  version "4.7.6"
+  resolved "http://r.cnpmjs.org/vuescroll/download/vuescroll-4.7.6.tgz#9f3a2959a25af7399a6f084a447506700750997f"
+  dependencies:
+    vue "^2.5.17"
 
 vuex@^3.0.1:
   version "3.0.1"

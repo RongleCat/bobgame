@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul class="nav-list">
+        <ul class="nav-list clearfix">
             <li>
                 <router-link to="/" exact>
                     <div class="tab-icon icon-1"></div>
@@ -45,7 +45,6 @@ export default {
   margin: 0;
   .nav-list {
     list-style: none;
-    display: flex;
     height: px2rem(100px);
     background: #fff;
     position: relative;
@@ -61,7 +60,8 @@ export default {
         transform: scaleY(.5);
     }
     li {
-      flex: 1;
+        float: left;
+        width: 25%;
       > a {
         display: flex;
         width: 100%;

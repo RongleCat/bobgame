@@ -9,7 +9,7 @@
             </div>
             <div class="message-icon" :class="{active:showMessageTip}" @click="toggleTip">消息</div>
         </div>
-        <div class="view-block">
+        <vue-scroll class="view-block" ref="vs">
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
@@ -20,7 +20,7 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
-        </div>
+        </vue-scroll>
     </div>
 </template>
 
@@ -45,7 +45,12 @@ export default {
         }
     },
     mounted() {
-
+        let that = this;
+        that.$nextTick(() => {
+            setTimeout(() => {
+                that.$refs['vs'].refresh();
+            }, 500);
+        })
     },
     beforeCreate() {
         if (this.$atApp()) {
@@ -146,7 +151,7 @@ export default {
     }
   }
 }
-.view-block{
-    padding: px2rem(25px);
+.view-block {
+  padding: px2rem(25px);
 }
 </style>

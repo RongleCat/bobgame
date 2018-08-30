@@ -8,7 +8,7 @@
                 <div class="bean-block">{{userInfo.beanCount}}</div>
             </div>
         </div>
-        <div class="view-block" @scroll="setScrollTop">
+        <vue-scroll @handle-scroll="setScrollTop" class="view-block no-scroll" ref="vs">
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
@@ -19,7 +19,7 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
             <div class="test-block"></div>
-        </div>
+        </vue-scroll>
     </div>
 </template>
 
@@ -49,11 +49,19 @@ export default {
     beforeCreate() {
         if (this.$atApp()) {
             window.plus.navigator.setStatusBarStyle('light');
-            console.log(window.plus.navigator.setStatusBarStyle);
+
         }
     },
+    mounted() {
+        let that = this;
+        that.$nextTick(() => {
+            setTimeout(() => {
+                that.$refs['vs'].refresh();
+            }, 500);
+        })
+    },
     methods: {
-        setScrollTop(e) {
+        setScrollTop(o) {
             if (this.$atApp()) {
                 if (this.scrollTop >= 50) {
                     window.plus.navigator.setStatusBarStyle('dark');
@@ -61,7 +69,7 @@ export default {
                     window.plus.navigator.setStatusBarStyle('light');
                 }
             }
-            this.scrollTop = e.target.scrollTop
+            this.scrollTop = o.scrollTop
         }
     }
 };
@@ -124,6 +132,6 @@ export default {
   }
 }
 .test-block {
-  background: rgba(0, 0, 0, 0);
+  //   background: rgba(0, 0, 0, 0);
 }
 </style>
