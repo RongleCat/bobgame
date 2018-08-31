@@ -7,5 +7,8 @@ module.exports = {
         data: `@import "@/assets/scss/function.scss";`
       }
     }
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }

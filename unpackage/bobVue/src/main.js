@@ -5,7 +5,10 @@ import router from './router'
 import FastClick from 'fastclick'
 import vuescroll from 'vuescroll';
 import 'vuescroll/dist/vuescroll.css';
+import ThePopView from './components/ThePopView.vue';
 
+//全局注册组件
+Vue.component('ThePopView',ThePopView)
 //页面滚动插件配置
 Vue.use(vuescroll, {
     ops: {

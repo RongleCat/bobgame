@@ -18,19 +18,29 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
         </vue-scroll>
+        <ThePopView v-if="enterChatPage" v-on:closeView="touchs1" :full="true" btnType="back">
+            <template slot='header'>我是头部</template>
+            <template slot='content'>
+                <Chat friendName="大宝贝儿"></Chat>
+            </template>
+        </ThePopView>
     </div>
 </template>
 
 <script>
+import Chat from './Chat';
 export default {
     data() {
         return {
             title: '好友',
             headHeight: 110,
             keyword: '',
-            isFocus: false
+            isFocus: false,
+            enterChatPage: false,
+            direction: 'left'
         }
     },
+    components:{Chat},
     computed: {
         userInfo() {
             return this.$store.state.userInfo
@@ -60,8 +70,8 @@ export default {
         setBlur() {
             this.isFocus = false
         },
-        touchs1(){
-            console.log('sssss');
+        touchs1() {
+            this.enterChatPage = !this.enterChatPage;
         }
     },
     beforeCreate() {

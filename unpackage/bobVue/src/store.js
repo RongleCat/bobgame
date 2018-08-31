@@ -10,11 +10,19 @@ export default new Vuex.Store({
             beanCount:105785,
             userName:'瑞克'
         },
-        statusBarHeight:0
+        statusBarHeight:0,
+        tabberZIndex:100,
+        haveOpenPopView:false
     },
     mutations: {
         setStatusBarHeight(state,value){
             state.statusBarHeight = value
+        },
+        setTabberZIndex(state,value){
+            state.tabberZIndex = value
+        },
+        setHaveOpenPopView(state,value){
+            state.haveOpenPopView = value
         }
     },
     actions: {

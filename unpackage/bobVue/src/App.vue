@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <TheTabber class="com-tabber"></TheTabber>
+        <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}"></TheTabber>
         <transition :name="'fade-'+direction">
             <router-view class="view-main" />
         </transition>
@@ -19,6 +19,11 @@ export default {
         return {
             direction:'left'
         };
+    },
+    computed:{
+        tabberZIndex(){
+            return this.$store.state.tabberZIndex
+        }
     },
     watch: {
         '$route': function (to, form) {
@@ -41,6 +46,7 @@ export default {
 
 <style lang="scss">
 @import './assets/scss/common.scss';
+@import './assets/scss/transition.scss';
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
