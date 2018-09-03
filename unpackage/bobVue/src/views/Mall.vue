@@ -51,9 +51,9 @@ export default {
         })
     },
     beforeCreate() {
-        if (this.$atApp()) {
+        this.$atApp(()=>{
             window.plus.navigator.setStatusBarStyle('dark');
-        }
+        })
     }
 };
 </script>

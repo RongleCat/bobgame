@@ -9,7 +9,8 @@
 
 <script>
 import TheTabber from "@/components/TheTabbar.vue";
-let allRouter = ['Home','Friends','Mall','My'];
+import unit from './unit/back.js';
+let allRouter = ['Home', 'Friends', 'Mall', 'My'];
 
 export default {
     components: {
@@ -17,36 +18,41 @@ export default {
     },
     data() {
         return {
-            direction:'left'
+            direction: 'left',
+            showGuide: window.localStorage.showGuide
         };
     },
-    computed:{
-        tabberZIndex(){
+    computed: {
+        tabberZIndex() {
             return this.$store.state.tabberZIndex
+        },
+        hasPopOpen() {
+            return this.$store.state.hasPopOpen
         }
     },
     watch: {
         '$route': function (to, form) {
-            let _before = allRouter.indexOf(to.name),_after = allRouter.indexOf(form.name);
-            if (_before<_after) {
+            let _before = allRouter.indexOf(to.name), _after = allRouter.indexOf(form.name);
+            if (_before < _after) {
                 this.direction = 'right';
-            }else{
+            } else {
                 this.direction = 'left';
             }
         }
     },
-    beforeCreate(){
+    beforeCreate() {
         let that = this;
-        if (that.$atApp()) {
-            this.$store.commit('setStatusBarHeight',window.plus.navigator.getStatusbarHeight() / 37.5)
-        }
+        that.$atApp(() => {
+            this.$store.commit('setStatusBarHeight', window.plus.navigator.getStatusbarHeight() / 37.5)
+            unit.bindBackKeyEvent(that)
+        })
     }
 };
 </script>
 
 <style lang="scss">
-@import './assets/scss/common.scss';
-@import './assets/scss/transition.scss';
+@import "./assets/scss/common.scss";
+@import "./assets/scss/transition.scss";
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

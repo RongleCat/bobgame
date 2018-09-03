@@ -18,7 +18,7 @@
             <div class="test-block"></div>
             <div class="test-block"></div>
         </vue-scroll>
-        <ThePopView v-if="enterChatPage" v-on:closeView="touchs1" :full="true" btnType="back">
+        <ThePopView v-if="enterChatPage" v-on:closeView="touchs1"  btnType="back">
             <template slot='header'>我是头部</template>
             <template slot='content'>
                 <Chat friendName="大宝贝儿"></Chat>
@@ -75,9 +75,9 @@ export default {
         }
     },
     beforeCreate() {
-        if (this.$atApp()) {
+        this.$atApp(()=>{
             window.plus.navigator.setStatusBarStyle('dark');
-        }
+        })
     }
 };
 </script>

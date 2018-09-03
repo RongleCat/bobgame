@@ -47,10 +47,9 @@ export default {
         }
     },
     beforeCreate() {
-        if (this.$atApp()) {
+        this.$atApp(() => {
             window.plus.navigator.setStatusBarStyle('light');
-
-        }
+        })
     },
     mounted() {
         let that = this;
@@ -62,13 +61,13 @@ export default {
     },
     methods: {
         setScrollTop(o) {
-            if (this.$atApp()) {
+            this.$atApp(() => {
                 if (this.scrollTop >= 50) {
                     window.plus.navigator.setStatusBarStyle('dark');
                 } else {
                     window.plus.navigator.setStatusBarStyle('light');
                 }
-            }
+            })
             this.scrollTop = o.scrollTop
         }
     }

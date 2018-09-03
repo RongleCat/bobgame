@@ -32,9 +32,22 @@ body {
     right: 0;
     top: 0;
     bottom: px2rem(100px);
-    z-index: 100;
+    z-index: 101;
+    &.one-level-full-page{
+        bottom: 0;
+    }
 }
 
+// .one-level-full-page {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0 !important;
+//     background: #09f;
+//     z-index: 200;
+    
+//   }
 
 
 .view-page {

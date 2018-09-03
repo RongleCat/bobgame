@@ -7,8 +7,12 @@ import vuescroll from 'vuescroll';
 import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
 
+//开发初始化操作
+
+window.localStorage.removeItem('showGuide')
+
 //全局注册组件
-Vue.component('ThePopView',ThePopView)
+Vue.component('ThePopView', ThePopView)
 //页面滚动插件配置
 Vue.use(vuescroll, {
     ops: {
@@ -26,7 +30,7 @@ Vue.use(vuescroll, {
         bar: {
             showDelay: 200,
             background: '#a6a6a6',
-            keepShow:false
+            keepShow: false
         }
     }
 });
@@ -45,9 +49,13 @@ let vueTools = {
         return false
     },
     install(Vue) {
-        Vue.prototype.$atApp = function () {
+        Vue.prototype.$atApp = function (callback) {
             if (/html5plus/.test(navigator.userAgent.toLowerCase())) {
-                return true
+                if (callback) {
+                    callback();
+                } else {
+                    return true
+                }
             }
             return false
         }
@@ -66,38 +74,11 @@ if (vueTools.atApp()) {
         document.addEventListener('plusready', plusReady, false);
     }
 } else {
-    new Vue({
-        store,
-        router,
-        render: h => h(App)
-    }).$mount('#app')
+    plusReady()
 }
 
 //h5+执行
 function plusReady() {
-    //监听按钮
-    let first = null;
-    window.plus.key.addEventListener('backbutton', function () {
-        let path = window.location.hash;
-        // window.plus.nativeUI.toast(wvn);
-        if (path === '#/') {
-            if (!first) {
-                first = new Date().getTime();
-                window.plus.nativeUI.toast('再按一次退出应用');
-                setTimeout(function () {
-                    first = null;
-                }, 1000);
-            } else {
-                if (new Date().getTime() - first < 1000) {
-                    window.plus.runtime.quit();
-                }
-            }
-        } else {
-            history.go(-1)
-        }
-        return false
-    }, false);
-
     new Vue({
         store,
         router,

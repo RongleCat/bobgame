@@ -46,16 +46,18 @@ export default {
     },
     mounted() {
         let that = this;
-        that.$nextTick(() => {
-            setTimeout(() => {
-                that.$refs['vs'].refresh();
-            }, 500);
-        })
+        that.$refs['vs'].refresh();
+
+        // that.$nextTick(() => {
+        //     setTimeout(() => {
+        //         that.$refs['vs'].refresh();
+        //     }, 500);
+        // })
     },
     beforeCreate() {
-        if (this.$atApp()) {
+        this.$atApp(() => {
             window.plus.navigator.setStatusBarStyle('dark');
-        }
+        })
     },
     methods: {
         toggleTip() {

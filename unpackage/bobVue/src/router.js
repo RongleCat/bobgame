@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Friends from './views/Friends.vue'
 import Mall from './views/Mall.vue'
 import My from './views/My.vue'
+import Guide from './views/Guide.vue'
 
 Vue.use(Router)
 
@@ -13,7 +14,17 @@ export default new Router({
     routes: [{
             path: '/',
             name: 'Home',
-            component: Home
+            component: Home,
+            beforeEnter: (to, from, next) => {
+                let showGuide = window.localStorage.showGuide
+                console.log(showGuide);
+                if (!showGuide) {
+                    window.localStorage.showGuide = 'end'
+                    next('/guide')
+                }
+                next()
+                return 
+            }
         },
         {
             path: '/home',
@@ -33,6 +44,11 @@ export default new Router({
             path: '/my',
             name: 'My',
             component: My
+        },
+        {
+            path:'/guide',
+            name:'Guide',
+            component:Guide
         }
         // {
         //   path: '/about',

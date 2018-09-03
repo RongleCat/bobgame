@@ -12,7 +12,8 @@ export default new Vuex.Store({
         },
         statusBarHeight:0,
         tabberZIndex:100,
-        haveOpenPopView:false
+        haveOpenPopView:false,
+        hasPopOpen:false
     },
     mutations: {
         setStatusBarHeight(state,value){
@@ -23,6 +24,9 @@ export default new Vuex.Store({
         },
         setHaveOpenPopView(state,value){
             state.haveOpenPopView = value
+        },
+        setHasPopOpen(state,value){
+            state.hasPopOpen = value
         }
     },
     actions: {
