@@ -34,7 +34,7 @@ export default {
             return this.$store.state.statusBarHeight + this.headHeight / 75 + 'rem'
         },
         btnClass() {
-            return this.btnType === 'back' ? 'icon-fanhui1' : 'icon-close'
+            return this.btnType === 'back' ? 'icon-zuo' : 'icon-close'
         },
         transition() {
             if (this.transitionNone) {
@@ -126,13 +126,17 @@ export default {
             }
         },
         backBtnClose() {
-            this.$emit('closeView')
-            console.log('ssss');
+            if (window.that.full) {
+                window.that.$emit('closeView')
+            } else {
+                window.that.closePopView()
+            }
             return false
         }
     },
     mounted() {
         let that = this
+        window.that = this
         that.pop = this.$refs.pop
         that.offsetWidth = that.pop.offsetWidth
         if (!that.full) {
@@ -144,25 +148,22 @@ export default {
         that.pop.addEventListener('touchstart', that.moveStart, false);
         that.$atApp(function () {
             window.plus.key.removeEventListener('backbutton', unit.dbTapQuit)
-            window.plus.key.addEventListener('backbutton', function () {
-                if (that.full) {
-                    that.$emit('closeView')
-                } else {
-                    that.closePopView()
-                }
-                return false
-            }, false)
+            window.plus.key.addEventListener('backbutton', that.backBtnClose, false)
             // unit.bindBackKeyEvent();
         })
     },
     beforeCreate() {
         let that = this
         that.$store.commit('setHaveOpenPopView', true)
-
     },
     beforeDestroy() {
+        let that = this
         this.$store.commit('setTabberZIndex', 100)
-        unit.bindBackKeyEvent();
+        this.$atApp(() => {
+            window.plus.key.removeEventListener('backbutton', that.backBtnClose)
+            window.plus.key.removeEventListener('backbutton', unit.dbTapQuit)
+            unit.bindBackKeyEvent();
+        })
     }
 }
 </script>

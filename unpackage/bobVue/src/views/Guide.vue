@@ -27,7 +27,6 @@ export default {
     },
     computed: {
         paddingTop() {
-            console.log((this.$store.state.statusBarHeight));
             return this.$store.state.statusBarHeight + 20 / 75 + 'rem'
         }
     },

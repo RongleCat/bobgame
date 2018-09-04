@@ -46,13 +46,13 @@ export default {
     },
     mounted() {
         let that = this;
-        that.$refs['vs'].refresh();
+        // that.$refs['vs'].refresh();
 
-        // that.$nextTick(() => {
-        //     setTimeout(() => {
-        //         that.$refs['vs'].refresh();
-        //     }, 500);
-        // })
+        that.$nextTick(() => {
+            setTimeout(() => {
+                that.$refs['vs'].refresh();
+            }, 500);
+        })
     },
     beforeCreate() {
         this.$atApp(() => {

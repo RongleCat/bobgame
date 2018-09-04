@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}"></TheTabber>
+        <transition :name="'pop-left'">
+            <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}" v-if="showTabber"></TheTabber>
+        </transition>
         <transition :name="'fade-'+direction">
             <router-view class="view-main" />
         </transition>
@@ -10,7 +12,7 @@
 <script>
 import TheTabber from "@/components/TheTabbar.vue";
 import unit from './unit/back.js';
-let allRouter = ['Home', 'Friends', 'Mall', 'My'];
+let allRouter = ['Guide','Home', 'Friends', 'Mall', 'My','Login'];
 
 export default {
     components: {
@@ -28,6 +30,9 @@ export default {
         },
         hasPopOpen() {
             return this.$store.state.hasPopOpen
+        },
+        showTabber() {
+            return this.$store.state.showTabber
         }
     },
     watch: {

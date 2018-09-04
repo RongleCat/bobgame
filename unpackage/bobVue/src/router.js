@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store'
 import Home from './views/Home.vue'
 import Friends from './views/Friends.vue'
 import Mall from './views/Mall.vue'
 import My from './views/My.vue'
 import Guide from './views/Guide.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -16,14 +18,13 @@ export default new Router({
             name: 'Home',
             component: Home,
             beforeEnter: (to, from, next) => {
-                let showGuide = window.localStorage.showGuide
-                console.log(showGuide);
-                if (!showGuide) {
-                    window.localStorage.showGuide = 'end'
+                if (!window.localStorage.showGuide) {
                     next('/guide')
+                } else {
+                    store.commit('setShowTabber', true)
+                    next()
                 }
-                next()
-                return 
+                
             }
         },
         {
@@ -43,12 +44,38 @@ export default new Router({
         {
             path: '/my',
             name: 'My',
-            component: My
+            component: My,
+            beforeEnter: (to, from, next) => {
+                if (!window.localStorage.token) {
+                    next('/login')
+                } else {
+                    next()
+                }
+            }
         },
         {
-            path:'/guide',
-            name:'Guide',
-            component:Guide
+            path: '/guide',
+            name: 'Guide',
+            component: Guide,
+            beforeEnter: (to, from, next) => {
+                if (!window.localStorage.showGuide) {
+                    window.localStorage.showGuide = 'end'
+                    next()
+                } else {
+                    next('/')
+                }
+                return
+            }
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login,
+            beforeEnter(to, from, next) {
+                store.commit('setShowTabber', false)
+                next()
+                return
+            }
         }
         // {
         //   path: '/about',

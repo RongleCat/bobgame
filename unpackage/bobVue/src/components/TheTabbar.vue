@@ -31,10 +31,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-    };
-  }
+    data() {
+        return {
+        };
+    }
 };
 </script>
 
@@ -48,20 +48,20 @@ export default {
     height: px2rem(100px);
     background: #fff;
     position: relative;
-    &::after{
-        content: '';
-        width: 100%;
-        height: 1px;
-        background: #e5e5e5;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        transform: scaleY(.5);
+    &::after {
+      content: "";
+      width: 100%;
+      height: 1px;
+      background: #e5e5e5;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      transform: scaleY(0.5);
     }
     li {
-        float: left;
-        width: 25%;
+      float: left;
+      width: 25%;
       > a {
         display: flex;
         width: 100%;
@@ -71,10 +71,8 @@ export default {
         padding-top: px2rem(11px);
         text-decoration: none;
         color: #333;
-        opacity: 0.5;
-        filter: grayscale(100%);
-        filter: gray;
-        transition: all .2s;
+        transition: all 0.2s;
+        opacity: .5;
         .tab-icon {
           width: px2rem(56px);
           height: px2rem(47px);
@@ -83,7 +81,7 @@ export default {
           margin-bottom: px2rem(11px);
           @for $i from 1 through 4 {
             &.icon-#{$i} {
-              background-position-y: ($i - 1) * px2rem(-47px);
+              background-position-y: ($i + 4 - 1) * px2rem(-47px);
             }
           }
         }
@@ -92,9 +90,13 @@ export default {
           line-height: px2rem(20px);
           font-size: px2rem(20px);
         }
-        &.active{
+        &.active {
           opacity: 1;
-          filter:none;
+          @for $i from 1 through 4 {
+            .icon-#{$i} {
+              background-position-y: ($i - 1) * px2rem(-47px);
+            }
+          }
         }
       }
     }
