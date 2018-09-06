@@ -130,7 +130,4 @@ export default {
     }
   }
 }
-.test-block {
-  //   background: rgba(0, 0, 0, 0);
-}
 </style>

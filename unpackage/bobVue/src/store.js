@@ -14,7 +14,7 @@ export default new Vuex.Store({
         tabberZIndex:100,
         haveOpenPopView:false,
         hasPopOpen:false,
-        showTabber:false
+        showTabber:true
     },
     mutations: {
         setStatusBarHeight(state,value){

@@ -8,17 +8,21 @@
         </div>
         <vue-scroll class="view-block" ref="vs">
             <div class="test-block" @click="touchs1"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
-            <div class="test-block"></div>
+            <swiper :options="swiperOption" ref="mySwiper" class="guide-container">
+                <!-- slides -->
+                <swiper-slide></swiper-slide>
+                <swiper-slide></swiper-slide>
+                <swiper-slide></swiper-slide>
+                <swiper-slide>
+                    <div class="enter-home">
+                        开始游戏
+                    </div>
+                </swiper-slide>
+                <!-- Optional controls -->
+                <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
         </vue-scroll>
-        <ThePopView v-if="enterChatPage" v-on:closeView="touchs1"  btnType="back">
+        <ThePopView v-if="enterChatPage" v-on:closeView="touchs1" btnType="back">
             <template slot='header'>我是头部</template>
             <template slot='content'>
                 <Chat friendName="大宝贝儿"></Chat>
@@ -29,6 +33,9 @@
 
 <script>
 import Chat from './Chat';
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
+
 export default {
     data() {
         return {
@@ -37,10 +44,23 @@ export default {
             keyword: '',
             isFocus: false,
             enterChatPage: false,
-            direction: 'left'
+            direction: 'left',
+            swiperOption: {
+                resistanceRatio: 0,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    bulletClass: 'my-bullet',
+                    bulletActiveClass: 'my-bullet-active'
+                }
+            }
         }
     },
-    components:{Chat},
+    components: {
+        Chat,
+        swiper,
+        swiperSlide
+    },
     computed: {
         userInfo() {
             return this.$store.state.userInfo
@@ -75,7 +95,7 @@ export default {
         }
     },
     beforeCreate() {
-        this.$atApp(()=>{
+        this.$atApp(() => {
             window.plus.navigator.setStatusBarStyle('dark');
         })
     }
@@ -120,5 +140,8 @@ export default {
 }
 .view-block {
   padding: px2rem(25px);
+}
+.guide-container{
+    height: px2rem(600px);;
 }
 </style>

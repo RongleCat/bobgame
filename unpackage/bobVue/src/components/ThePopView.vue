@@ -1,12 +1,12 @@
 <template>
     <transition :name="transition">
         <div class="pop-page" :style="{paddingTop:setViewPaddingTop}" ref="pop">
-            <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:'#f2f2f2'}"></div>
-            <div class="pop-header" :style="{top:statusBarHeight}">
+            <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:'#f2f2f2'}" v-if="hasHeader"></div>
+            <div class="pop-header" :style="{top:statusBarHeight}" v-if="hasHeader">
                 <button class="btn-back iconfont" :class="[btnClass]" @click="closePopView"></button>
                 <slot name="header"></slot>
             </div>
-            <div class="pop-content">
+            <div class="pop-content" v-on:closePop="closePopView">
                 <slot name="content"></slot>
             </div>
         </div>
@@ -16,7 +16,7 @@
 <script>
 import unit from '../unit/back.js';
 export default {
-    props: ['full', 'back', 'popType', 'btnType'],
+    props: ['full', 'back', 'popType', 'btnType','header','close'],
     data() {
         return {
             headHeight: 88,
@@ -31,7 +31,7 @@ export default {
             return this.$store.state.statusBarHeight + 'rem'
         },
         setViewPaddingTop() {
-            return this.$store.state.statusBarHeight + this.headHeight / 75 + 'rem'
+            return this.header === 'none'?0:this.$store.state.statusBarHeight + this.headHeight / 75 + 'rem'
         },
         btnClass() {
             return this.btnType === 'back' ? 'icon-zuo' : 'icon-close'
@@ -43,8 +43,14 @@ export default {
                 return `pop-${this.popType ? this.popType : 'left'}`
             }
         },
-        hasPopOpen() {
-            return this.$store.state.hasPopOpen
+        hasHeader() {
+            return this.header==='none'?false:true
+        }
+    },
+    watch:{
+        close(){
+            console.log(this.close);
+            this.closePopView()
         }
     },
     methods: {
@@ -221,6 +227,7 @@ export default {
     overflow-y: auto;
     min-height: 100%;
     max-height: 100%;
+    height: 100%;
   }
 }
 </style>

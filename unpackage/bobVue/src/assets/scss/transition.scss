@@ -3,7 +3,7 @@
 .fade-left-leave-active,
 .fade-right-enter-active,
 .fade-right-leave-active {
-    transition: all 0.4s;
+    transition: all .4s;
 }
 
 .fade-left-enter {
@@ -35,7 +35,7 @@
 .pop-right-leave-active,
 .pop-top-leave-active,
 .pop-bottom-leave-active {
-    transition: all .4s cubic-bezier(.39,.05,.09,.92)
+    transition: transform .4s cubic-bezier(.39,.05,.09,.92)
 }
 .pop-left-enter,
 .pop-left-leave-to {

@@ -32,12 +32,11 @@
       "Events" : {
          "description" : "应用扩展事件"
       },
-      "Maps" : {
-         "description" : "管理地图插件"
-      },
       "Speech" : {
          "description" : "管理语音识别插件"
-      }
+      },
+      "OAuth" : {},
+      "Payment" : {}
    },
    "plus" : {
       "splashscreen" : {
@@ -155,6 +154,14 @@
                "hdpi" : "start/start.9.png", /*高分屏启动图片，分辨率：480x762*/
                "xhdpi" : "start/start.9.png", /*720P高分屏启动图片，分辨率：720x1242*/
                "xxhdpi" : "start/start.9.png"
+            }
+         },
+         "plugins" : {
+            "oauth" : {
+               "weixin" : {
+                  "appid" : "wx8a753c967440272c",
+                  "appsecret" : "02829098b6d34ccec5180998d12910d3"
+               }
             }
          }
       }

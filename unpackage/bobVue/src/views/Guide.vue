@@ -45,13 +45,17 @@ export default {
     },
     methods: {
         navToHome() {
-            this.$router.push('/')
+            this.$router.replace('/')
         }
     },
     beforeCreate() {
+        window.localStorage.setItem('showGuide', 'end')
         this.$atApp(() => {
             window.plus.navigator.setStatusBarStyle('dark');
         })
+    },
+    mounted(){
+        console.log('sss');
     }
 }
 </script>
@@ -62,6 +66,8 @@ export default {
   height: 100%;
 }
 .guide-page {
+  width: 100%;
+  height: 100%;
   background: #fff;
   .btn-skip {
     position: absolute;
@@ -89,37 +95,39 @@ export default {
     background-image: url("../assets/images/guide/4.jpg");
   }
 }
-.swiper-pagination{
-    position: absolute;
-    bottom: px2rem(100px)!important;
-    .my-bullet{
-        display: inline-block;
-        width: px2rem(16px);
-        height: px2rem(16px);
-        margin-left: px2rem(20px);
-        border-radius: px2rem(8px);
-        background: #ccc;
-        transition: all .2s;
-        &.my-bullet-active{
-            width: px2rem(50px);
-            background: #09f;
-        }
-        &:first-child{
-            margin-left: 0;
-        }
+.swiper-pagination {
+  position: absolute;
+  bottom: px2rem(100px) !important;
+  left: 0;
+  right: 0;
+  .my-bullet {
+    display: inline-block;
+    width: px2rem(16px);
+    height: px2rem(16px);
+    margin-left: px2rem(20px);
+    border-radius: px2rem(8px);
+    background: #ccc;
+    transition: all 0.2s;
+    &.my-bullet-active {
+      width: px2rem(50px);
+      background: #09f;
     }
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 }
-.enter-home{
-    position: absolute;
-    bottom: px2rem(180px);
-    left: 50%;
-    transform: translateX(-50%);
-    line-height: px2rem(80px);
-    border-radius: px2rem(20px);
-    background: #09f;
-    color: #fff;
-    text-align: center;
-    font-size: px2rem(28px);
-    width: px2rem(300px);
+.enter-home {
+  position: absolute;
+  bottom: px2rem(180px);
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: px2rem(80px);
+  border-radius: px2rem(20px);
+  background: #09f;
+  color: #fff;
+  text-align: center;
+  font-size: px2rem(28px);
+  width: px2rem(300px);
 }
 </style>

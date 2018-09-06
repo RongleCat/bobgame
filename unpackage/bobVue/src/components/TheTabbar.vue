@@ -72,7 +72,7 @@ export default {
         text-decoration: none;
         color: #333;
         transition: all 0.2s;
-        opacity: .5;
+        opacity: 0.5;
         .tab-icon {
           width: px2rem(56px);
           height: px2rem(47px);

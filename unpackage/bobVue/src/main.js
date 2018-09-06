@@ -4,12 +4,19 @@ import store from './store'
 import router from './router'
 import FastClick from 'fastclick'
 import vuescroll from 'vuescroll';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+// import Vconsole from 'vconsole';
 import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
 
+// const vConsole = new Vconsole();
+// console.log(vConsole);
 //开发初始化操作
-
+// window.localStorage.setItem('showGuide','end')
+window.localStorage.removeItem('token')
 window.localStorage.removeItem('showGuide')
+
 
 //全局注册组件
 Vue.component('ThePopView', ThePopView)
@@ -66,6 +73,7 @@ let vueTools = {
 }
 
 Vue.use(vueTools)
+Vue.use(VueAxios, axios)
 
 if (vueTools.atApp()) {
     if (window.plus) {

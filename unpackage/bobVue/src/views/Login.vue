@@ -4,7 +4,7 @@
             <i class="iconfont" :class="[btnBackClass]"></i>
         </div>
         <div class="login-main">
-            <div class="btn-block btn-weixin">
+            <div class="btn-block btn-weixin" @click="weixinLogin">
                 <i class="iconfont icon-weixin"></i>
                 微信登录
             </div>
@@ -12,17 +12,21 @@
                 <i class="iconfont icon-shouji"></i>
                 手机登录
             </div>
+            <!-- <div class="btn-block btn-phone" @click="weixinLogout">
+                <i class="iconfont icon-weixin"></i>
+                注销微信登录
+            </div> -->
         </div>
         <div class="login-phone-page">
             <div class="input-block">
                 <i class="iconfont icon-phone before-icon"></i>
-                <i class="iconfont icon-cuo after-icon"></i>
+                <i class="iconfont icon-cuo after-icon" @click="username = null"></i>
                 <input type="text" placeholder="请输入您绑定的手机号/账号" v-model="username">
             </div>
             <div class="input-block">
                 <i class="iconfont icon-password before-icon"></i>
-                <i class="iconfont icon-zhengyan after-icon"></i>
-                <input type="text" placeholder="请输入您的密码" v-model="password">
+                <i class="iconfont after-icon" :class="[passwordType?'icon-biyan':'icon-zhengyan']" @click="passwordType = !passwordType"></i>
+                <input :type="passwordType?'password':'text'" placeholder="请输入您的密码" v-model="password">
             </div>
             <div class="btn-phone-login" :class="{'no-input':userInput}" @click="submitLogin">
                 登录
@@ -36,14 +40,20 @@
 
 <script>
 import unit from '../unit/back.js'
+import md5 from '../unit/md5.js'
+import { Base64 } from 'js-base64'
+import { Toast } from 'vant';
+import Moment from 'moment';
 export default {
     data() {
         return {
             btnClass: 'close',
             showPhoneLogin: false,
             errorMsg: '',
-            username: null,
-            password: null
+            username: 'ceshi002',
+            password: '666666',
+            passwordType: true,
+            weixinLoginObj: null
         }
     },
     computed: {
@@ -84,7 +94,76 @@ export default {
             })
         },
         submitLogin() {
-            this.errorMsg = '用户名密码错误'
+            let that = this
+            // this.errorMsg = '用户名密码错误';
+            let userInfo = {
+                account: that.username,
+                password: that.password
+            }
+            that.loginSubmit(that.encodeUserInfo(userInfo, 'account'))
+        },
+        weixinLogin() {
+            let that = this
+            that.$atApp(() => {
+                window.plus.oauth.getServices(services => {
+                    services.map((item) => {
+                        if (item.id === 'weixin') {
+                            item.login(() => {
+                                item.getUserInfo(() => {
+                                    let { nickname, headimgurl, sex, unionid } = item.userInfo
+                                    that.loginSubmit(that.encodeUserInfo({ nickname: nickname.replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g, ""), headimgurl, sex, unionid }, 'wx'))
+                                })
+                            }, err => {
+                                console.log(err);
+                            })
+                        }
+                    })
+                })
+            })
+        },
+        weixinLogout() {
+            let that = this
+            that.$atApp(() => {
+                window.plus.oauth.getServices(services => {
+                    services.map((item) => {
+                        if (item.id === 'weixin') {
+                            item.logout(() => {
+                                console.log('退出');
+                            }, err => {
+                                console.log(err);
+                            })
+                        }
+                    })
+                })
+            })
+        },
+        encodeUserInfo(info, type) {
+            info.time = parseInt(Moment().valueOf() / 1000)
+            let signArr = [];
+            for (let i in info) {
+                signArr.push(`${i}=${info[i]}`)
+            }
+            info.sign = md5(signArr.join('&') + 'BOBAPPLOGINKEY')
+            return Base64.encode(JSON.stringify({ "data": Base64.encode(JSON.stringify(info)), "type": type }))
+        },
+        loginSubmit(data) {
+            let that = this
+            Toast({ type: 'loading', message: '正在登陆...', duration: 0 })
+            that.$http({
+                url: 'http://ceshi2.bobgame.cn/app.php?s=/BobLogin/BobLoginReceive',
+                method: 'POST',
+                data: {
+                    data
+                }
+            }).then(r => {
+                Toast.clear()
+                if (r.data.status === 200) {
+                    window.localStorage.setItem('token', r.data.data)
+                    that.$router.replace('/'+that.$route.params.to)
+                } else {
+                    Toast.fail(r.data.msg)
+                }
+            })
         }
     },
     mounted() {

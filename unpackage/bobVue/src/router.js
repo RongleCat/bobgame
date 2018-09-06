@@ -20,6 +20,7 @@ export default new Router({
             beforeEnter: (to, from, next) => {
                 if (!window.localStorage.showGuide) {
                     next('/guide')
+                    window.localStorage.showGuide = 'end'
                 } else {
                     store.commit('setShowTabber', true)
                     next()
@@ -47,7 +48,7 @@ export default new Router({
             component: My,
             beforeEnter: (to, from, next) => {
                 if (!window.localStorage.token) {
-                    next('/login')
+                    next('/login/my')
                 } else {
                     next()
                 }
@@ -59,22 +60,19 @@ export default new Router({
             component: Guide,
             beforeEnter: (to, from, next) => {
                 if (!window.localStorage.showGuide) {
-                    window.localStorage.showGuide = 'end'
                     next()
                 } else {
                     next('/')
                 }
-                return
             }
         },
         {
-            path: '/login',
+            path: '/login/:to',
             name: 'Login',
             component: Login,
             beforeEnter(to, from, next) {
                 store.commit('setShowTabber', false)
                 next()
-                return
             }
         }
         // {
