@@ -186,19 +186,19 @@ export default {
   background: #000;
   z-index: 120;
   .pop-header {
-    height: px2rem(88px);
+    height: 88px;
     background: #f2f2f2;
     width: 100%;
     position: absolute;
     left: 0;
     right: 0;
     .btn-back {
-      width: px2rem(88px);
+      width: 88px;
       height: 100%;
       position: relative;
       background: transparent;
       border: 0;
-      font-size: px2rem(48px);
+      font-size: 48px;
       &.icon-close {
         &::after,
         &::before {
@@ -206,9 +206,9 @@ export default {
           top: 50%;
           left: 50%;
           content: "";
-          width: px2rem(4px);
-          height: px2rem(42px);
-          border-radius: px2rem(5px);
+          width: 4px;
+          height: 42px;
+          border-radius: 5px;
           background: #333;
         }
         &::after {

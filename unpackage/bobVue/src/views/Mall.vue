@@ -60,34 +60,34 @@ export default {
 
 <style scoped lang="scss">
 .head-block {
-  height: px2rem(100px);
+  height: 100px;
   width: 100%;
   position: absolute;
   left: 0;
   right: 0;
-  padding-top: px2rem(20px);
-  padding-left: px2rem(25px);
-  padding-right: px2rem(25px);
+  padding-top: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
   .user-info {
-    height: px2rem(60px);
+    height: 60px;
     float: left;
-    padding-left: px2rem(110px);
+    padding-left: 110px;
     position: relative;
-    border-radius: px2rem(30px);
+    border-radius: 30px;
     overflow: hidden;
-    padding-right: px2rem(20px);
+    padding-right: 20px;
     background: #f0f0f0;
-    font-size: px2rem(30px);
-    line-height: px2rem(65px);
+    font-size: 30px;
+    line-height: 65px;
     font-weight: bold;
     background-image: url("../assets/images/bean.png");
-    background-size: auto px2rem(33px);
+    background-size: auto 33px;
     background-repeat: no-repeat;
     background-position-y: center;
-    background-position-x: px2rem(70px);
+    background-position-x: 70px;
     .head-img {
-      width: px2rem(60px);
-      height: px2rem(60px);
+      width: 60px;
+      height: 60px;
       position: absolute;
       left: 0;
       top: 0;
@@ -96,16 +96,16 @@ export default {
   }
   .my-order {
     float: right;
-    font-size: px2rem(28px);
-    line-height: px2rem(64px);
-    height: px2rem(60px);
+    font-size: 28px;
+    line-height: 64px;
+    height: 60px;
     background: url("../assets/images/icon_order.png") no-repeat;
-    padding-left: px2rem(40px);
-    background-size: px2rem(26px) auto;
+    padding-left: 40px;
+    background-size: 26px auto;
     background-position-y: center;
   }
 }
 .view-block {
-  padding: px2rem(25px);
+  padding: 25px;
 }
 </style>

@@ -104,19 +104,19 @@ export default {
 
 <style scoped lang="scss">
 .head-block {
-  height: px2rem(110px);
+  height: 110px;
   width: 100%;
   position: absolute;
   left: 0;
   right: 0;
   background: #f2f2f2;
-  padding: px2rem(25px) px2rem(20px);
+  padding: 25px 20px;
   .input-block {
     text-align: center;
     width: 100%;
     height: 100%;
     background: #fff;
-    border-radius: px2rem(8px);
+    border-radius: 8px;
     overflow: hidden;
     input {
       border: 0;
@@ -126,22 +126,22 @@ export default {
       height: 100%;
       background-image: url("../assets/images/icon_sousuo.png");
       background-repeat: no-repeat;
-      font-size: px2rem(28px);
-      background-size: px2rem(36px) auto;
+      font-size: 28px;
+      background-size: 36px auto;
       background-position-y: center;
-      background-position-x: px2rem(220px);
+      background-position-x: 220px;
       &.focus {
-        padding-left: px2rem(70px);
+        padding-left: 70px;
         text-align: left;
-        background-position-x: px2rem(20px);
+        background-position-x: 20px;
       }
     }
   }
 }
 .view-block {
-  padding: px2rem(25px);
+  padding: 25px;
 }
 .guide-container{
-    height: px2rem(600px);;
+    height: 600px;;
 }
 </style>

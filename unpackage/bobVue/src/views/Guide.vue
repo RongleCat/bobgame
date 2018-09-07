@@ -3,10 +3,10 @@
         <div class="btn-skip" :style="{top:paddingTop}" @click="navToHome">跳过</div>
         <swiper :options="swiperOption" ref="mySwiper" class="guide-container">
             <!-- slides -->
-            <swiper-slide></swiper-slide>
-            <swiper-slide></swiper-slide>
-            <swiper-slide></swiper-slide>
-            <swiper-slide>
+            <swiper-slide class="item-01"></swiper-slide>
+            <swiper-slide class="item-02"></swiper-slide>
+            <swiper-slide class="item-03"></swiper-slide>
+            <swiper-slide class="item-04">
                 <div class="enter-home" @click="navToHome">
                     开始游戏
                 </div>
@@ -71,45 +71,46 @@ export default {
   background: #fff;
   .btn-skip {
     position: absolute;
-    right: px2rem(20px);
+    right: 20px;
     border: 1px solid #aaa;
+    /* no */
     color: #aaa;
-    padding: px2rem(8px) px2rem(30px);
-    border-radius: px2rem(10px);
+    padding: 8px 30px;
+    border-radius: 10px;
     z-index: 10;
-    font-size: px2rem(24px);
+    font-size: 24px;
   }
 }
 .swiper-slide {
   background-size: 100% auto;
-  &:nth-child(1) {
+  &.item-01 {
     background-image: url("../assets/images/guide/1.jpg");
   }
-  &:nth-child(2) {
+  &.item-02 {
     background-image: url("../assets/images/guide/2.jpg");
   }
-  &:nth-child(3) {
+  &.item-03 {
     background-image: url("../assets/images/guide/3.jpg");
   }
-  &:nth-child(4) {
+  &.item-04 {
     background-image: url("../assets/images/guide/4.jpg");
   }
 }
 .swiper-pagination {
   position: absolute;
-  bottom: px2rem(100px) !important;
+  bottom: 100px !important;
   left: 0;
   right: 0;
   .my-bullet {
     display: inline-block;
-    width: px2rem(16px);
-    height: px2rem(16px);
-    margin-left: px2rem(20px);
-    border-radius: px2rem(8px);
+    width: 16px;
+    height: 16px;
+    margin-left: 20px;
+    border-radius: 8px;
     background: #ccc;
     transition: all 0.2s;
     &.my-bullet-active {
-      width: px2rem(50px);
+      width: 50px;
       background: #09f;
     }
     &:first-child {
@@ -119,15 +120,15 @@ export default {
 }
 .enter-home {
   position: absolute;
-  bottom: px2rem(180px);
+  bottom: 180px;
   left: 50%;
   transform: translateX(-50%);
-  line-height: px2rem(80px);
-  border-radius: px2rem(20px);
+  line-height: 80px;
+  border-radius: 20px;
   background: #09f;
   color: #fff;
   text-align: center;
-  font-size: px2rem(28px);
-  width: px2rem(300px);
+  font-size: 28px;
+  width: 300px;
 }
 </style>

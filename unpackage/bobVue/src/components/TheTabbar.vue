@@ -45,7 +45,7 @@ export default {
   margin: 0;
   .nav-list {
     list-style: none;
-    height: px2rem(100px);
+    height: 100px;
     background: #fff;
     position: relative;
     &::after {
@@ -68,33 +68,33 @@ export default {
         height: 100%;
         flex-direction: column;
         align-items: center;
-        padding-top: px2rem(11px);
+        padding-top: 11px;
         text-decoration: none;
         color: #333;
         transition: all 0.2s;
         opacity: 0.5;
         .tab-icon {
-          width: px2rem(56px);
-          height: px2rem(47px);
+          width: 56px;
+          height: 47px;
           background: url("../assets/images/tabber_icon.png");
           background-size: 100% auto;
-          margin-bottom: px2rem(11px);
+          margin-bottom: 11px;
           @for $i from 1 through 4 {
             &.icon-#{$i} {
-              background-position-y: ($i + 4 - 1) * px2rem(-47px);
+              background-position-y: ($i + 4 - 1) * -47px;
             }
           }
         }
         .tab-text {
           text-align: center;
-          line-height: px2rem(20px);
-          font-size: px2rem(20px);
+          line-height: 20px;
+          font-size: 20px;
         }
         &.active {
           opacity: 1;
           @for $i from 1 through 4 {
             .icon-#{$i} {
-              background-position-y: ($i - 1) * px2rem(-47px);
+              background-position-y: ($i - 1) * -47px;
             }
           }
         }

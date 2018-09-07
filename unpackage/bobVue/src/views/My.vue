@@ -77,11 +77,11 @@ export default {
 <style scoped lang="scss">
 .view-block {
   background: #f5f5f5 url("../assets/images/bg_my.png") no-repeat center top;
-  background-size: auto px2rem(435px);
+  background-size: auto 435px;
 }
 .header-block {
-  height: px2rem(136px);
-  padding-left: px2rem(25px);
+  height: 136px;
+  padding-left: 25px;
   position: absolute;
   left: 0;
   right: 0;
@@ -89,43 +89,43 @@ export default {
   background: #fff;
   z-index: 10;
   .head-img {
-    width: px2rem(90px);
-    height: px2rem(90px);
+    width: 90px;
+    height: 90px;
     background-size: 100% auto;
     border-radius: 50%;
     position: absolute;
-    left: px2rem(25px);
+    left: 25px;
     top: 50%;
     transform: translateY(-50%);
   }
   .user-info {
     position: absolute;
-    left: px2rem(140px);
+    left: 140px;
     top: 50%;
     transform: translateY(-50%);
     .user-name {
       color: #333;
-      font-size: px2rem(26px);
-      line-height: px2rem(32px);
+      font-size: 26px;
+      line-height: 32px;
       font-weight: bold;
-      margin-bottom: px2rem(14px);
+      margin-bottom: 14px;
       text-align: left;
-      padding-left: px2rem(7px);
+      padding-left: 7px;
     }
     .bean-block {
-      height: px2rem(44px);
+      height: 44px;
       background-color: #f5f5f5;
-      border-radius: px2rem(22px);
+      border-radius: 22px;
       color: #333;
       background-image: url("../assets/images/bean.png");
-      background-size: auto px2rem(33px);
+      background-size: auto 33px;
       background-repeat: no-repeat;
-      background-position-x: px2rem(7px);
+      background-position-x: 7px;
       background-position-y: center;
-      font-size: px2rem(30px);
-      padding-left: px2rem(50px);
-      padding-right: px2rem(20px);
-      line-height: px2rem(48px);
+      font-size: 30px;
+      padding-left: 50px;
+      padding-right: 20px;
+      line-height: 48px;
       font-weight: bold;
     }
   }

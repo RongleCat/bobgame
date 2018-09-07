@@ -21,6 +21,8 @@ export default new Router({
                 if (!window.localStorage.showGuide) {
                     next('/guide')
                     window.localStorage.showGuide = 'end'
+                } else if(!window.localStorage.token){
+                    next('/login/home')
                 } else {
                     store.commit('setShowTabber', true)
                     next()

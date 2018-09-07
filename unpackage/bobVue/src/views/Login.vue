@@ -157,9 +157,12 @@ export default {
                 }
             }).then(r => {
                 Toast.clear()
-                if (r.data.status === 200) {
+                if (r.data.code === 200) {
+                    let { head_icon, nickname, jifen } = r.data.info
+                    that.$store.commit('setUserInfo', { head_icon, nickname, jifen })
+                    window.localStorage.setItem('userBaseInfo', JSON.stringify({ head_icon, nickname, jifen }))
                     window.localStorage.setItem('token', r.data.data)
-                    that.$router.replace('/'+that.$route.params.to)
+                    that.$router.replace('/' + that.$route.params.to)
                 } else {
                     Toast.fail(r.data.msg)
                 }
@@ -199,24 +202,24 @@ export default {
 }
 .btn-block {
   width: 100%;
-  height: px2rem(100px);
-  line-height: px2rem(100px);
-  font-size: px2rem(34px);
-  border-radius: px2rem(10px);
-  padding-left: px2rem(265px);
+  height: 100px;
+  line-height: 100px;
+  font-size: 34px;
+  border-radius: 10px;
+  padding-left: 265px;
   position: relative;
   .iconfont {
-    font-size: px2rem(48px);
+    font-size: 48px;
     position: absolute;
     top: 50%;
-    left: px2rem(205px);
+    left: 205px;
     transform: translateY(-50%);
   }
   &.btn-weixin {
     background: #4cd470;
     color: #fff;
-    margin-top: px2rem(130px);
-    margin-bottom: px2rem(50px);
+    margin-top: 130px;
+    margin-bottom: 50px;
     //   transition: filter 0.2s;
     &:active {
       filter: brightness(0.9) contrast(100%);
@@ -224,6 +227,7 @@ export default {
   }
   &.btn-phone {
     border: 1px solid #ccc;
+    /* no */
     color: #333;
     &:active {
       background: #f0f0f0;
@@ -234,9 +238,9 @@ export default {
 .btn-close {
   position: fixed;
   left: 0;
-  width: px2rem(120px);
-  height: px2rem(120px);
-  line-height: px2rem(120px);
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
   text-align: center;
   color: #fff;
   z-index: 10;
@@ -246,8 +250,8 @@ export default {
   }
   &:after {
     display: block;
-    width: px2rem(56px);
-    height: px2rem(56px);
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     content: "";
     background: #333;
@@ -264,8 +268,8 @@ export default {
   background-image: url("../assets/images/login/login_bg.png");
   background-size: 100% auto;
   background-repeat: no-repeat;
-  padding: px2rem(0px) px2rem(75px);
-  padding-top: px2rem(860px);
+  padding: 0px 75px;
+  padding-top: 860px;
   position: absolute;
   top: 0;
   left: 0;
@@ -281,34 +285,34 @@ export default {
   left: 0;
   transform: translateX(100%);
   transition: transform 0.4s;
-  padding: px2rem(390px) px2rem(75px) 0 px2rem(75px);
+  padding: 390px 75px 0 75px;
 }
 .input-block {
   width: 100%;
-  height: px2rem(100px);
-  padding: 0 px2rem(56px);
+  height: 100px;
+  padding: 0 56px;
   position: relative;
   input {
     display: block;
     width: 100%;
     height: 100%;
     border: 0;
-    font-size: px2rem(30px);
+    font-size: 30px;
   }
   .iconfont {
     position: absolute;
     display: block;
-    width: px2rem(100px);
-    height: px2rem(100px);
+    width: 100px;
+    height: 100px;
     text-align: center;
-    line-height: px2rem(100px);
-    font-size: px2rem(42px);
+    line-height: 100px;
+    font-size: 42px;
     &.before-icon {
-      left: px2rem(-30px);
+      left: -30px;
       top: 0;
     }
     &.after-icon {
-      right: px2rem(-30px);
+      right: -30px;
       top: 0;
       color: #ccc;
     }
@@ -317,6 +321,7 @@ export default {
     display: block;
     width: 100%;
     height: 1px;
+    /* no */
     content: "";
     background: #e6e6e6;
     position: absolute;
@@ -327,15 +332,15 @@ export default {
   }
 }
 .btn-phone-login {
-  margin-top: px2rem(100px);
-  height: px2rem(100px);
+  margin-top: 100px;
+  height: 100px;
   width: 100%;
   background: #ffce39;
   color: #333;
-  border-radius: px2rem(10px);
+  border-radius: 10px;
   text-align: center;
-  font-size: px2rem(34px);
-  line-height: px2rem(100px);
+  font-size: 34px;
+  line-height: 100px;
   &.no-input {
     background: rgba(255, 206, 57, 0.5);
     color: rgba(51, 51, 51, 0.5);
@@ -343,22 +348,22 @@ export default {
 }
 .error-tip {
   position: absolute;
-  line-height: px2rem(146px);
-  padding-left: px2rem(55px);
+  line-height: 146px;
+  padding-left: 55px;
   color: #f84d3b;
-  top: px2rem(790px);
+  top: 790px;
   left: 50%;
   transform: translateX(-50%);
   .iconfont {
     text-align: center;
-    line-height: px2rem(34px);
+    line-height: 34px;
     color: #fff;
     position: absolute;
-    font-size: px2rem(24px);
+    font-size: 24px;
     left: 0;
     background: #f84d3b;
-    width: px2rem(34px);
-    height: px2rem(34px);
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);

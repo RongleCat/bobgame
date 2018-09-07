@@ -13,10 +13,9 @@ import ThePopView from './components/ThePopView.vue';
 // const vConsole = new Vconsole();
 // console.log(vConsole);
 //开发初始化操作
-// window.localStorage.setItem('showGuide','end')
-window.localStorage.removeItem('token')
-window.localStorage.removeItem('showGuide')
-
+window.localStorage.setItem('showGuide','end')
+// window.localStorage.removeItem('token')
+// window.localStorage.removeItem('showGuide')
 
 //全局注册组件
 Vue.component('ThePopView', ThePopView)
