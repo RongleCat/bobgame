@@ -10,30 +10,41 @@
             <div class="message-icon" :class="{active:showMessageTip}" @click="toggleTip">消息</div>
         </div>
         <vue-scroll class="view-block" ref="vs">
-            <div class="view-content">
-                <div class="banner-container">
-                    <swiper :options="swiperOption" ref="mySwiper" class="loop-container">
-                        <template v-if="reqDone">
-                            <swiperSlide v-for="item in homeDate['adv_lists']" :key="item.id">
+            <div class="sss"></div>
+            <template v-if="reqDone">
+                <div class="view-content">
+                    <div class="banner-container">
+                        <swiper :options="swiperOption" ref="mySwiper" class="loop-container">
+                            <swiperSlide v-for="item in homeDate.adv_lists" :key="item.id">
                                 <img :src="item.path|imgUrl" alt="">
                             </swiperSlide>
-                        </template>
-                        <div class="swiper-pagination" slot="pagination"></div>
-                    </swiper>
+                            <div class="swiper-pagination" slot="pagination"></div>
+                        </swiper>
+                    </div>
+                    <!-- <div class="fore-block">
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                        <div class="item"></div>
+                    </div> -->
+                    <div class="news-container">
+                        <div class="icon">公告</div>
+                        <div class="title">平台政策汇总</div>
+                        <div class="view">立即查看
+                            <i class="iconfont icon-you"></i>
+                        </div>
+                    </div>
+                    <div class="block-title">竞技游戏</div>
+                    <div class="jingji-game-list">
+                        <div class="item" v-for="item in homeDate.sportsGames" :key="item.id" :style="{'background-image':`url(${createImgUrl(item.cover,'bg')})`}">
+                            <div class="icon" :style="{'background-image':`url(${createImgUrl(item.icon,'icon')})`}"></div>
+                            <div class="title">{{item.game_name}}</div>
+                            <div class="description">{{item.introduction}}</div>
+                        </div>
+                    </div>
+                    <div class="block-title">金豆游戏</div>
                 </div>
-                <!-- <div class="fore-block">
-                    <div class="item"></div>
-                    <div class="item"></div>
-                    <div class="item"></div>
-                    <div class="item"></div>
-                </div> -->
-                <div class="jingji-game-list">
-                    <div class="item"></div>
-                    <div class="item"></div>
-                    <div class="item"></div>
-                    <div class="item"></div>
-                </div>
-            </div>
+            </template>
         </vue-scroll>
     </div>
 </template>
@@ -118,12 +129,21 @@ export default {
         toggleTip() {
             this.showMessageTip = !this.showMessageTip
             window.localStorage.removeItem('token')
+        },
+        createImgUrl(value, type) {
+            if (!value && type === 'icon') {
+                return 'http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffbd19ea4.png'
+            } else if (!value && type === 'bg') {
+                return 'http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffdd66fec.png'
+            } else {
+                return 'http://cdn.bobgame.cn' + value
+            }
         }
     }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .header-block {
   height: 136px;
   padding-left: 25px;
@@ -171,6 +191,7 @@ export default {
       padding-right: 20px;
       line-height: 48px;
       font-weight: bold;
+      float: left;
     }
   }
   .message-icon {
@@ -211,19 +232,113 @@ export default {
 }
 .view-content {
   padding: 25px;
+  width: 10rem;
 }
 .banner-container {
   overflow: hidden;
   width: 100%;
   height: 210px;
   margin-bottom: 40px;
-//   border-radius: 10px;
-  img{
-      display: block;
+  //   border-radius: 10px;
+  img {
+    display: block;
   }
-  .swiper-slide{
-      border-radius: 10px;
-      overflow: hidden;
+  .swiper-slide {
+    border-radius: 10px;
+    overflow: hidden;
   }
+}
+.jingji-game-list {
+  width: 100%;
+  .item {
+    width: 100%;
+    height: 210px;
+    background-size: cover;
+    margin-bottom: 25px;
+    position: relative;
+    .icon {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.7);
+      position: absolute;
+      top: 50%;
+      left: 45px;
+      transform: translateY(-50%);
+      background-size: 100% auto;
+    }
+    .title {
+      border-radius: 27px;
+      padding: 0 20px;
+      line-height: 54px;
+      font-size: 28px;
+      background: #292c55;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(41, 44, 85, 0.28);
+      position: absolute;
+      top: 50px;
+      right: 45px;
+    }
+    .description {
+      color: #fff;
+      font-size: 20px;
+      line-height: 38px;
+      position: absolute;
+      top: 130px;
+      right: 45px;
+      max-width: 410px;
+    }
+  }
+}
+.news-container {
+  height: 70px;
+  line-height: 70px;
+  font-size: 24px;
+  color: #333;
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 110px;
+  padding-right: 30px;
+  .icon {
+    font-size: 18px;
+    border-radius: 3px;
+    width: 50px;
+    height: 26px;
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    background: #333;
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+  }
+  .title{
+      float: left;
+  }
+  .view{
+      float: right;
+      color: #adadad;
+      .iconfont{
+          color: #ccc;
+      }
+  }
+  &::after {
+    content: "";
+    width: 640px;
+    height: 1px;
+    /* no */
+    background: #e5e5e5;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleY(0.5);
+  }
+}
+.block-title {
+  font-size: 46px;
+  color: #333;
+  line-height: 110px;
+  font-weight: bold;
 }
 </style>

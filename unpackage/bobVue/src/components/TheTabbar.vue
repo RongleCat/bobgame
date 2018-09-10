@@ -1,31 +1,33 @@
 <template>
     <div>
-        <ul class="nav-list clearfix">
-            <li>
-                <router-link to="/" exact>
-                    <div class="tab-icon icon-1"></div>
-                    <div class="tab-text">首页</div>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/friends">
-                    <div class="tab-icon icon-2"></div>
-                    <div class="tab-text">好友</div>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/mall">
-                    <div class="tab-icon icon-3"></div>
-                    <div class="tab-text">商城</div>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/my">
-                    <div class="tab-icon icon-4"></div>
-                    <div class="tab-text">我的</div>
-                </router-link>
-            </li>
-        </ul>
+        <div class="nav-list">
+            <ul class="clearfix">
+                <li>
+                    <router-link to="/" exact>
+                        <div class="tab-icon icon-1"></div>
+                        <div class="tab-text">首页</div>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/friends">
+                        <div class="tab-icon icon-2"></div>
+                        <div class="tab-text">好友</div>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/mall">
+                        <div class="tab-icon icon-3"></div>
+                        <div class="tab-text">商城</div>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/my">
+                        <div class="tab-icon icon-4"></div>
+                        <div class="tab-text">我的</div>
+                    </router-link>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -48,10 +50,12 @@ export default {
     height: 100px;
     background: #fff;
     position: relative;
+    // border-top: 1px solid #e5e5e5;
     &::after {
       content: "";
       width: 100%;
       height: 1px;
+      /* no */
       background: #e5e5e5;
       position: absolute;
       top: 0;
