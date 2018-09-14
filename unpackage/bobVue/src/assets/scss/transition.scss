@@ -53,3 +53,12 @@
 .pop-bottom-leave-to {
     transform: translateY(100%);
 }
+
+.fade-in-enter-active,
+.fade-in-leave-active{
+  transition: all .2s;
+}
+.fade-in-enter,
+.fade-in-leave-to {
+  opacity: 0;
+}

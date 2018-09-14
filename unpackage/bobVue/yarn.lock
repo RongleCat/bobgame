@@ -5994,6 +5994,13 @@ postcss-ordered-values@^4.0.0:
     postcss "^6.0.0"
     postcss-value-parser "^3.0.0"
 
+postcss-px2rem-exclude@^0.0.6:
+  version "0.0.6"
+  resolved "http://r.cnpmjs.org/postcss-px2rem-exclude/download/postcss-px2rem-exclude-0.0.6.tgz#470f74fb9f839941264394fbb80bffc9be494628"
+  dependencies:
+    postcss "^5.0.0"
+    px2rem "~0.5.0"
+
 postcss-px2rem@^0.3.0:
   version "0.3.0"
   resolved "http://r.cnpmjs.org/postcss-px2rem/download/postcss-px2rem-0.3.0.tgz#0dfa4e8a268fa7478273f0c4b47c619834894041"

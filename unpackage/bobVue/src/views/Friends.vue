@@ -6,7 +6,7 @@
                 <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入好友昵称" type="text" @focus="setFocus" @blur="setBlur" />
             </div>
         </div>
-        <vue-scroll class="view-block" ref="vs">
+        <div class="view-block">
             <div class="test-block" @click="touchs1"></div>
             <swiper :options="swiperOption" ref="mySwiper" class="guide-container">
                 <!-- slides -->
@@ -21,7 +21,7 @@
                 <!-- Optional controls -->
                 <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
-        </vue-scroll>
+        </div>
         <ThePopView v-if="enterChatPage" v-on:closeView="touchs1" btnType="back">
             <template slot='header'>我是头部</template>
             <template slot='content'>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Chat from './Chat';
+import Chat from './Friends/Chat';
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
@@ -76,12 +76,6 @@ export default {
         }
     },
     mounted() {
-        let that = this;
-        that.$nextTick(() => {
-            setTimeout(() => {
-                that.$refs['vs'].refresh();
-            }, 500);
-        })
     },
     methods: {
         setFocus() {
@@ -91,7 +85,8 @@ export default {
             this.isFocus = false
         },
         touchs1() {
-            this.enterChatPage = !this.enterChatPage;
+            // this.enterChatPage = !this.enterChatPage;
+            this.$router.push('/friends/10')
         }
     },
     beforeCreate() {

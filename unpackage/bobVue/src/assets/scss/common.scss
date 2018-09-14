@@ -1,106 +1,122 @@
 #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-    width: 100%;
-    height: 100%;
-  }
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  width: 100%;
+  height: 100%;
+}
+
 html,
 body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .com-tabber {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.view-main{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .com-tabber+.view-main {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 100px;
-    z-index: 101;
-    &.one-level-full-page{
-        bottom: 0;
-    }
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 100px;
+  z-index: 101;
+
+  &.one-level-full-page {
+    bottom: 0;
+  }
 }
 
-// .one-level-full-page {
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     bottom: 0 !important;
-//     background: #09f;
-//     z-index: 200;
-    
-//   }
-
-
 .view-page {
-    img {
-        width: 100%;
-    }
+  img {
+    width: 100%;
+  }
 }
 
 .view-block {
-    &.no-scroll {
-        -webkit-overflow-scrolling: none;
-    }
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
-    min-height: 100%;
-    max-height: 100%;
-    .test-block {
-        width: 100%;
-        height: 200px;
-        background: #f0f0f0;
-        margin-bottom: 20px;
+  &.no-scroll {
+    -webkit-overflow-scrolling: none;
+  }
 
-        &:last-child {
-            margin-bottom: 0;
-        }
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+  min-height: 100%;
+  max-height: 100%;
+  height: 100%;
+
+  .test-block {
+    width: 100%;
+    height: 200px;
+    background: #f0f0f0;
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
     }
+  }
 }
 
 .statusBar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 11;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
 }
 
 .clearfix {
-    zoom: 1;
-    &:after {
-        content: "";
-        height: 0;
-        line-height: 0;
-        display: block;
-        visibility: hidden;
-        clear: both;
-    }
+  zoom: 1;
+
+  &:after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+}
+
+.content-container {
+  max-width: 750px;
+  padding: 25px;
+}
+
+.common-header{
+  text-align: center;
+  line-height: 88px;
+  font-size: 28px;
+}
+
+.center-block{
+  text-align: center!important;
 }
