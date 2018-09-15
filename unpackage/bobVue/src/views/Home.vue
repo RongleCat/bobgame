@@ -43,13 +43,13 @@
 </template>
 
 <script>
-  import 'swiper/dist/css/swiper.css'
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import "swiper/dist/css/swiper.css";
+  import { swiper, swiperSlide } from "vue-awesome-swiper";
   export default {
     components: { swiper, swiperSlide },
     data() {
       return {
-        title: '首页',
+        title: "首页",
         showMessageTip: true,
         headHeight: 136,
         swiperOption: {
@@ -58,62 +58,62 @@
         },
         pageData: null,
         reqDone: false
-      }
+      };
     },
     computed: {
       userInfo() {
-        return this.$store.state.userInfo
+        return this.$store.state.userInfo;
       },
       headUrl() {
-        let url = this.$store.state.userInfo.head_icon
+        let url = this.$store.state.userInfo.head_icon;
         if (/http/g.test(url)) {
-          return url
+          return url;
         } else {
-          return 'http://cdn.bobgame.cn' + url
+          return "http://cdn.bobgame.cn" + url;
         }
       },
       statusBarHeight() {
-        return this.$store.state.statusBarHeight + 'rem'
+        return this.$store.state.statusBarHeight + "rem";
       },
       setViewPaddingTop() {
-        return this.$store.state.statusBarHeight + this.headHeight / 75 + 'rem'
+        return this.$store.state.statusBarHeight + this.headHeight / 75 + "rem";
       }
     },
     mounted() {
-      let that = this
+      let that = this;
       console.log(that);
     },
     beforeCreate() {
       let that = this;
 
       that.$atApp(() => {
-        window.plus.navigator.setStatusBarStyle('dark');
-      })
+        window.plus.navigator.setStatusBarStyle("dark");
+      });
 
       if (that.reqDone) {
-        return false
+        return false;
       }
 
-      this.$http.get('/Index/index.html').then(r => {
+      this.$http.get("/Index/index.html").then(r => {
         setTimeout(() => {
-          that.pageData = r.data
-          that.reqDone = true
-        }, 300)
-      })
+          that.pageData = r.data;
+          that.reqDone = true;
+        }, 300);
+      });
     },
     methods: {
       toggleTip() {
-        this.showMessageTip = !this.showMessageTip
-        window.localStorage.removeItem('token')
-        this.$http.defaults.headers.get['Authorization'] = null
+        this.showMessageTip = !this.showMessageTip;
+        window.localStorage.removeItem("token");
+        this.$http.defaults.headers.get["Authorization"] = null;
       },
       createImgUrl(value, type) {
-        if (!value && type === 'icon') {
-          return 'http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffbd19ea4.png'
-        } else if (!value && type === 'bg') {
-          return 'http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffdd66fec.png'
+        if (!value && type === "icon") {
+          return "http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffbd19ea4.png";
+        } else if (!value && type === "bg") {
+          return "http://cdn.bobgame.cn/Uploads/Picture/2018-09-03/5b8cffdd66fec.png";
         } else {
-          return 'http://cdn.bobgame.cn' + value
+          return "http://cdn.bobgame.cn" + value;
         }
       }
     }

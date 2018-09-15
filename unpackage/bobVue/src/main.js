@@ -13,6 +13,7 @@ import ThePopView from './components/ThePopView.vue';
 //判断是否在H5+app环境
 import vueTools from "./unit/atApp";
 
+
 // const vConsole = new Vconsole();
 // console.log(vConsole);
 //开发初始化操作

@@ -1,7 +1,7 @@
 <template>
   <div class="page-main" :style="{paddingTop:setViewPaddingTop}">
-    <div class="statusBar" :style="{height:statusBarHeight}"></div>
-    <div class="pop-header" :style="{top:statusBarHeight}" v-if="!diy">
+    <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:color?color:'#f2f2f2'}"></div>
+    <div class="pop-header" :style="{top:statusBarHeight,backgroundColor:color?color:'#f2f2f2'}" v-if="!diy">
       <button class="btn-back iconfont" :class="[btnClass]" @click="btnBackEvent"></button>
       <div class="common-header">
         <slot name="headerContent"></slot>
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    props: ['btnType', 'diy'],
+    props: ['btnType', 'diy', 'color'],
     data() {
       return {
         headHeight: 88
@@ -34,7 +34,7 @@
       }
     },
     mounted() {
-      console.log()
+      console.log(this.color)
       // this.$emit('setPaddingTop', parseInt(this.statusBarHeight) + 88 / 75 + 'rem')
     },
     methods: {
@@ -47,13 +47,8 @@
 </script>
 
 <style scoped lang="scss">
-  .statusBar {
-    background: #f2f2f2;
-  }
-
   .pop-header {
     height: 88px;
-    background: #f2f2f2;
     width: 100%;
     position: absolute;
     left: 0;
@@ -91,7 +86,8 @@
       }
     }
   }
-  .page-main{
+
+  .page-main {
     width: 100%;
     height: 100%;
   }
