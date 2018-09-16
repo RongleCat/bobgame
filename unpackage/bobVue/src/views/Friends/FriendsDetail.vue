@@ -9,12 +9,14 @@
     <template slot="content">
       <div class="chat-container" :class="[recordOpen?'open-record':'',faceOpen?'open-face':'',gameOpen?'open-game':'']">
         <div class="record-block">
-          <vCircle v-model="currentRate" :rate="30" :speed="100" class="vue-circle" />
-          <div class="btn-record">
-            <i class="iconfont icon-yuyin"></i>
+          <div class="btn-record" @touchstart="startMic" @touchend="stopMic">
+            <transition name="fade-in">
+              <vCircle v-model="currentRate" :rate="circleValue" :speed="100" class="vue-circle" v-if="currentTime" />
+            </transition>
+            <i class="iconfont icon-yuyin" :style="{backgroundColor:recordBtnColor}"></i>
           </div>
           <div class="tip-text">
-            长按开始录音
+            {{tipText}}
           </div>
         </div>
         <div class="face-block">
@@ -29,107 +31,116 @@
           <div class="icon icon-02" @click="openSlide('game')"><i class="iconfont icon-gamepad"></i></div>
           <div class="icon icon-03" @click="openSlide('face')"><i class="iconfont icon-xiaolian"></i></div>
         </div>
+        <!-- <div class="friend-info">
+          <div class="btn-add"></div>
+        </div> -->
         <div class="chat-main" ref="chatBlock" @click="closeAllSlide">
-          <div class="test">1</div>
-          <div class="test">2</div>
-          <div class="test">3</div>
-          <div class="test">4</div>
-          <div class="test">5</div>
-          <div class="test">6</div>
-          <div class="test">7</div>
-          <div class="test">8</div>
-          <div class="test">9</div>
-          <div class="test">10</div>
-          <div class="test">11</div>
-          <div class="test">12</div>
-          <div class="test">13</div>
-          <div class="test">14</div>
-          <div class="test">15</div>
-          <div class="test">16</div>
-          <div class="test">17</div>
-          <div class="test">18</div>
-          <div class="test">19</div>
-          <div class="test">20</div>
-          <div class="test">21</div>
-          <div class="test">22</div>
-          <div class="test">23</div>
-          <div class="test">24</div>
-          <div class="test">25</div>
-          <div class="test">26</div>
-          <div class="test">27</div>
-          <div class="test">28</div>
-          <div class="test">29</div>
-          <div class="test">30</div>
-          <div class="test">31</div>
-          <div class="test">32</div>
-          <div class="test">33</div>
-          <div class="test">34</div>
-          <div class="test">35</div>
-          <div class="test">36</div>
-          <div class="test">37</div>
-          <div class="test">38</div>
-          <div class="test">39</div>
-          <div class="test">40</div>
-          <div class="test">41</div>
-          <div class="test">42</div>
-          <div class="test">43</div>
-          <div class="test">44</div>
-          <div class="test">45</div>
-          <div class="test">46</div>
-          <div class="test">47</div>
-          <div class="test">48</div>
-          <div class="test">49</div>
-          <div class="test">50</div>
-          <div class="test">51</div>
-          <div class="test">52</div>
-          <div class="test">53</div>
-          <div class="test">54</div>
-          <div class="test">55</div>
-          <div class="test">56</div>
-          <div class="test">57</div>
-          <div class="test">58</div>
-          <div class="test">59</div>
-          <div class="test">60</div>
-          <div class="test">61</div>
-          <div class="test">62</div>
-          <div class="test">63</div>
-          <div class="test">64</div>
-          <div class="test">65</div>
-          <div class="test">66</div>
-          <div class="test">67</div>
-          <div class="test">68</div>
-          <div class="test">69</div>
-          <div class="test">70</div>
-          <div class="test">71</div>
-          <div class="test">72</div>
-          <div class="test">73</div>
-          <div class="test">74</div>
-          <div class="test">75</div>
-          <div class="test">76</div>
-          <div class="test">77</div>
-          <div class="test">78</div>
-          <div class="test">79</div>
-          <div class="test">80</div>
-          <div class="test">81</div>
-          <div class="test">82</div>
-          <div class="test">83</div>
-          <div class="test">84</div>
-          <div class="test">85</div>
-          <div class="test">86</div>
-          <div class="test">87</div>
-          <div class="test">88</div>
-          <div class="test">89</div>
-          <div class="test">90</div>
-          <div class="test">91</div>
-          <div class="test">92</div>
-          <div class="test">93</div>
-          <div class="test">94</div>
-          <div class="test">95</div>
-          <div class="test">96</div>
-          <div class="test">97</div>
-          <div class="test">98</div>
-          <div class="test">99</div>
-          <div class="test">100</div>
+          <div class="chat-center-line">
+            <div class="center-main">2018-09-16 20:32</div>
+          </div>
+          <div class="chat-line">
+            <div class="battle-info-block">
+              <div class="battle-head-block">
+                <img :src="friendInfo.headimg">
+                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png">
+              </div>
+              <div class="top-block">
+                <h3>一起聊天玩游戏吧~</h3>
+                <h4>我们都爱玩的游戏</h4>
+              </div>
+              <div class="bottom-block">
+                <div class="game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                </div>
+                <div class="game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-08-27/5b84002384301.jpg">
+                </div>
+                <div class="game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-08-22/5b7d267a247a5.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-center-line">
+            <div class="center-main">临时对话保留24小时，成为好友永久保留对话。</div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-left">
+              <div class="head">
+                <img :src="friendInfo.headimg" alt="">
+              </div>
+              <div class="text-content">
+                哈喽~
+              </div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-left">
+              <div class="head">
+                <img :src="friendInfo.headimg" alt="">
+              </div>
+              <div class="text-content">
+                《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。
+              </div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-right">
+              <div class="head">
+                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
+              </div>
+              <div class="text-content">
+                哈喽~
+              </div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-left">
+              <div class="head">
+                <img :src="friendInfo.headimg" alt="">
+              </div>
+              <div class="text-content">
+                哈喽~
+              </div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-left">
+              <div class="head">
+                <img :src="friendInfo.headimg" alt="">
+              </div>
+              <div class="audio-content"><i class="iconfont icon-yuyinzuo"></i><span>50"</span></div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-right">
+              <div class="head">
+                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
+              </div>
+              <div class="audio-content"><i class="iconfont icon-yuyinyou"></i><span>20"</span></div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-right">
+              <div class="head">
+                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
+              </div>
+              <div class="text-content">
+                《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。
+              </div>
+            </div>
+          </div>
+          <div class="chat-line">
+            <div class="chat-item-left">
+              <div class="head">
+                <img :src="friendInfo.headimg" alt="">
+              </div>
+              <div class="game-content">
+                <div class="game-title"></div>
+                <div class="btn-status"></div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- 好友页面
           <button class="btn-mic" @click="startMic">开始录音</button>
@@ -146,7 +157,7 @@
 <script>
   import uploader from "../../unit/oss.js";
   import moment from "moment";
-  import { Circle } from 'vant';
+  import { Circle } from "vant";
   import ThePage from "@/components/ThePage";
   export default {
     components: { ThePage, vCircle: Circle },
@@ -155,48 +166,78 @@
         luyin: null,
         audio: {},
         long: 0,
-        recordTime: 0,
-        chatInput: '点击输入内容',
+        chatInput: "点击输入内容",
         scrollValue: 0,
         recordOpen: false,
         faceOpen: false,
         gameOpen: false,
-        currentRate: 0
+        currentRate: 0,
+        currentTime: 0,
+        currentPlayer: null,
+        recordBtnColor: '#ccc',
+        tipText: '长按开始录音',
+        friendInfo: {
+          headimg: 'http://bobgame.cn/Uploads/Picture/2018-08-13/5b711405a3680.jpg',
+          name: '大宝贝儿',
+          sex: 0,
+          star: '金牛座',
+          city: '浙江杭州'
+        }
       };
     },
     computed: {
       chatClass() {
-        return this.chatInput === '点击输入内容' ? '' : 'not-empty'
+        return this.chatInput === "点击输入内容" ? "" : "not-empty";
+      },
+      circleValue() {
+        if (this.currentTime === 0) {
+          return false
+        }
+        return parseInt((this.currentTime / 1000 / 60) * 100)
+      },
+      userInfo() {
+        return this.$store.state.userInfo;
+      },
+      headUrl() {
+        let url = this.$store.state.userInfo.head_icon;
+        if (/http/g.test(url)) {
+          return url;
+        } else {
+          return "http://cdn.bobgame.cn" + url;
+        }
       }
     },
-    mounted() {
-
-    },
+    mounted() {},
     methods: {
       openSlide(type) {
-        this.closeAllSlide()
-        this[`${type}Open`] = true
-        this.scrollBottom()
+        this.closeAllSlide();
+        this[`${type}Open`] = true;
+        this.scrollBottom();
       },
       closeAllSlide() {
-        let that = this
-        let arr = ['record', 'face', 'game']
+        let that = this;
+        let arr = ["record", "face", "game"];
         arr.map(item => {
-          that[`${item}Open`] = false
-        })
+          that[`${item}Open`] = false;
+        });
       },
       setPaddingTop(value) {
         console.log(value);
       },
       startMic() {
         let that = this;
-        let startTime = moment()
+        let startTime = moment();
+        that.recordBtnColor = '#82ed6d'
+        that.tipText = '松开发送，上滑取消'
+        that.currentTime = moment().diff(startTime)
+        window.recordTimer = setInterval(() => {
+          that.currentTime = moment().diff(startTime)
+        }, 200)
         that.$atApp(() => {
-          let r = that.luyin = window.plus.audio.getRecorder();
-          r.record({ filename: "_doc/audio/", format: 'amr' },
+          let r = (that.luyin = window.plus.audio.getRecorder());
+          r.record({ filename: "_doc/audio/", format: "amr" },
             function (r) {
-              let allTime = moment().diff(startTime)
-              that.recordTime = moment(allTime).format('s"SS')
+              let allTime = moment().diff(startTime);
               uploader(r, allTime)
                 .then(res => {
                   // that.audio = res
@@ -212,9 +253,9 @@
                   // });
                   // dtask.start()
 
-                  res
-                  let audioPlayer = window.plus.audio.createPlayer(r);
-                  audioPlayer.play()
+                  res;
+                  that.currentPlayer = window.plus.audio.createPlayer(r);
+                  that.currentPlayer.play();
                 })
                 .catch(err => {
                   console.log(err);
@@ -231,26 +272,33 @@
       },
       stopMic() {
         let r = this.luyin;
+        window.clearInterval(window.recordTimer);
         // alert(JSON.stringify(r))
-        r.stop();
+        this.recordBtnColor = '#ccc'
+        this.tipText = '长按开始录音'
+        this.currentTime = 0
+        this.$atApp(() => {
+          r.stop();
+        })
+
       },
       chatFocus() {
-        let that = this
-        if (this.chatInput === '点击输入内容') {
-          this.chatInput = ''
+        let that = this;
+        if (this.chatInput === "点击输入内容") {
+          this.chatInput = "";
         }
-        that.scrollBottom()
-        that.closeAllSlide()
+        that.scrollBottom();
+        that.closeAllSlide();
       },
       chatBlur() {
-        if (this.chatInput === '') {
-          this.chatInput = '点击输入内容'
+        if (this.chatInput === "") {
+          this.chatInput = "点击输入内容";
         }
       },
       scrollBottom() {
-        let that = this
+        let that = this;
         setTimeout(() => {
-          that.$refs.chatBlock.scrollTop = 9999999999
+          that.$refs.chatBlock.scrollTop = 9999999999;
         }, 200);
 
         // window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -264,6 +312,13 @@
         //   }
         // },16)
       }
+    },
+    beforeDestroy() {
+      let that = this
+      that.$atApp(() => {
+        that.currentPlayer.stop();
+        that.currentPlayer = null
+      })
     }
   };
 </script>
@@ -307,7 +362,7 @@
       right: 0;
       background: #fff;
       padding: 14px 180px 14px 100px;
-      transition: bottom .2s;
+      transition: bottom 0.2s;
 
       textarea {
         display: block;
@@ -346,7 +401,8 @@
           text-align: center;
           line-height: 58px;
           font-weight: bold;
-          border: 2px solid #333;
+          border: 2px solid #666;
+          color: #666;
         }
 
         &.icon-01 {
@@ -385,7 +441,8 @@
       // background: #f5f5f5;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      transition: bottom .2s;
+      transition: bottom 0.2s;
+      padding-top: 40px;
     }
 
     .record-block {
@@ -395,10 +452,12 @@
       bottom: 0;
       left: 0;
       right: 0;
-      // background: #fff;
       z-index: 10;
       transform: translateY(100%);
-      transition: transform .2s;
+      transition: transform 0.2s;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     .face-block {
@@ -408,10 +467,9 @@
       bottom: 0;
       left: 0;
       right: 0;
-      // background: #fff;
       z-index: 10;
       transform: translateY(100%);
-      transition: transform .2s;
+      transition: transform 0.2s;
     }
 
     .game-block {
@@ -421,10 +479,9 @@
       bottom: 0;
       left: 0;
       right: 0;
-      // background: #fff;
       z-index: 10;
       transform: translateY(100%);
-      transition: transform .2s;
+      transition: transform 0.2s;
     }
 
     &.open-record {
@@ -473,16 +530,12 @@
   .vue-circle {
     width: 150px !important;
     height: 150px !important;
-    top: 36px;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 20;
   }
 
   .btn-record {
     width: 150px;
     height: 150px;
-    padding: 2px;
     position: absolute;
     top: 36px;
     left: 50%;
@@ -491,22 +544,245 @@
     z-index: 10;
 
     .iconfont {
-      width: 100%;
-      height: 100%;
+      width: 146px;
+      height: 146px;
       display: block;
       font-size: 96px;
-      background: #82ed6d;
       border-radius: 50%;
       text-align: center;
-      line-height: 145px;
+      line-height: 156px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: all .2s;
     }
   }
-  .tip-text{
+
+  .tip-text {
     position: absolute;
     bottom: 34px;
     font-size: 24px;
     color: #333;
     text-align: center;
     width: 100%;
+  }
+
+  .chat-center-line {
+    height: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+
+    .center-main {
+      display: inline-block;
+      padding: 0 12px;
+      background: #d8dbdf;
+      color: #fff;
+      height: 40px;
+      border-radius: 5px;
+      font-size: 18px;
+      line-height: 44px;
+    }
+  }
+
+  .chat-line {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .battle-info-block {
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-top: 70px;
+    position: relative;
+    margin-bottom: 30px;
+
+    .battle-head-block {
+      width: 100%;
+      height: 140px;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      >img {
+        display: inline-block;
+        width: 140px;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 50%;
+
+        &:first-child {
+          margin-right: 40px;
+        }
+      }
+    }
+
+    .top-block {
+      height: 200px;
+      width: 100%;
+      background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+      border-radius: 10px 10px 0 0;
+      color: #fff;
+      text-align: center;
+      padding-top: 100px;
+
+      h3 {
+        font-size: 30px;
+        padding: 0;
+        margin: 0;
+        line-height: 30px;
+        padding-bottom: 20px;
+      }
+
+      h4 {
+        font-size: 24px;
+        line-height: 24px;
+        opacity: .5;
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    .bottom-block {
+      width: 100%;
+      height: 175px;
+      padding: 20px 25px 25px 25px;
+      background: #fff;
+
+      .game-item {
+        width: 130px;
+        height: 130px;
+        display: inline-block;
+        margin-left: 30px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .chat-item-left {
+    padding-left: 120px;
+    position: relative;
+    @include clearfix;
+    min-height: 80px;
+
+    .head {
+      position: absolute;
+      left: 25px;
+      top: 0;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .text-content {
+      padding: 20px 30px;
+      background: #fff;
+      max-width: 500px;
+      float: left;
+      font-size: 28px;
+      line-height: 40px;
+      min-height: 80px;
+      border-radius: 10px;
+    }
+
+    .audio-content {
+      max-width: 400px;
+      height: 80px;
+      border-radius: 10px;
+      background: #82ed6d;
+      padding-left: 20px;
+      position: relative;
+
+      .iconfont {
+        color: #357628;
+        line-height: 90px;
+        font-size: 42px;
+      }
+
+      span {
+        color: #999999;
+        line-height: 80px;
+        position: absolute;
+        right: 0;
+        font-size: 24px;
+        transform: translateX(150%);
+      }
+    }
+  }
+
+  .chat-item-right {
+    padding-right: 120px;
+    position: relative;
+    @include clearfix;
+    min-height: 80px;
+
+    .head {
+      position: absolute;
+      right: 25px;
+      top: 0;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .text-content {
+      padding: 20px 30px;
+      background: #fff;
+      max-width: 500px;
+      float: right;
+      font-size: 28px;
+      line-height: 40px;
+      min-height: 80px;
+      border-radius: 10px;
+    }
+
+    .audio-content {
+      max-width: 400px;
+      width: 30%;
+      height: 80px;
+      border-radius: 10px;
+      background: #82ed6d;
+      padding-right: 20px;
+      position: relative;
+      float: right;
+      text-align: right;
+
+      .iconfont {
+        color: #357628;
+        line-height: 90px;
+        font-size: 42px;
+      }
+
+      span {
+        color: #999999;
+        line-height: 80px;
+        position: absolute;
+        left: 0;
+        font-size: 24px;
+        transform: translateX(-150%);
+      }
+    }
   }
 </style>

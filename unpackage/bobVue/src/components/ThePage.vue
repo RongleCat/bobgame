@@ -34,7 +34,7 @@
       }
     },
     mounted() {
-      console.log(this.color)
+      // console.log(this.color)
       // this.$emit('setPaddingTop', parseInt(this.statusBarHeight) + 88 / 75 + 'rem')
     },
     methods: {

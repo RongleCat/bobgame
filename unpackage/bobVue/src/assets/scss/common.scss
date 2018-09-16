@@ -7,6 +7,7 @@
   height: 100%;
 }
 
+
 html,
 body {
   width: 100%;
@@ -34,7 +35,8 @@ body {
   left: 0;
   right: 0;
 }
-.view-main{
+
+.view-main {
   position: fixed;
   top: 0;
   left: 0;
@@ -111,12 +113,12 @@ body {
   padding: 25px;
 }
 
-.common-header{
+.common-header {
   text-align: center;
   line-height: 88px;
   font-size: 28px;
 }
 
-.center-block{
-  text-align: center!important;
+.center-block {
+  text-align: center !important;
 }
