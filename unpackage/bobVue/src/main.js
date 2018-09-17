@@ -86,6 +86,10 @@ Vue.filter('imgUrl', function (value) {
   if (!value) return ''
   return 'http://cdn.bobgame.cn' + value
 })
+Vue.filter('toString', function (value) {
+  if (!value) return ''
+  return '' + value
+})
 
 if (vueTools.atApp()) {
   if (window.plus) {

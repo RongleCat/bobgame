@@ -9,14 +9,14 @@
     <template slot="content">
       <div class="chat-container" :class="[recordOpen?'open-record':'',faceOpen?'open-face':'',gameOpen?'open-game':'']">
         <div class="record-block">
-          <div class="btn-record" @touchstart="startMic" @touchend="stopMic">
-            <transition name="fade-in">
-              <vCircle v-model="currentRate" :rate="circleValue" :speed="100" class="vue-circle" v-if="currentTime" />
-            </transition>
-            <i class="iconfont icon-yuyin" :style="{backgroundColor:recordBtnColor}"></i>
-          </div>
-          <div class="tip-text">
+          <transition name="fade-in">
+            <Progress :percentage="circleValue" class="vue-progress" v-if="currentTime" :pivot-text="circleValue | toString" />
+          </transition>
+          <div class="tip-text" :style="{color:recordBtnColor}">
             {{tipText}}
+          </div>
+          <div class="btn-record" @touchstart="startMic" @touchend="stopMic" @touchmove="stopCancel">
+            <i class="iconfont icon-yuyin" :style="{backgroundColor:recordBtnColor}"></i>
           </div>
         </div>
         <div class="face-block">
@@ -27,7 +27,7 @@
         </div>
         <div class="chat-input">
           <div class="icon icon-01" @click="openSlide('record')"><i class="iconfont icon-yuyinzuo"></i></div>
-          <textarea v-model="chatInput" @focus="chatFocus" @blur="chatBlur" :class="[chatClass]"></textarea>
+          <textarea v-model="chatInput" @focus="chatFocus" @blur="chatBlur" :class="[chatClass]" @keypress.enter="emitMessage" ref="emitInput"></textarea>
           <div class="icon icon-02" @click="openSlide('game')"><i class="iconfont icon-gamepad"></i></div>
           <div class="icon icon-03" @click="openSlide('face')"><i class="iconfont icon-xiaolian"></i></div>
         </div>
@@ -35,7 +35,7 @@
           <div class="btn-add"></div>
         </div> -->
         <div class="chat-main" ref="chatBlock" @click="closeAllSlide">
-          <div class="chat-center-line">
+          <div class="chat-line center">
             <div class="center-main">2018-09-16 20:32</div>
           </div>
           <div class="chat-line">
@@ -61,76 +61,26 @@
               </div>
             </div>
           </div>
-          <div class="chat-center-line">
+          <div class="chat-line center">
             <div class="center-main">临时对话保留24小时，成为好友永久保留对话。</div>
           </div>
-          <div class="chat-line">
-            <div class="chat-item-left">
+
+
+          <div class="chat-line" v-for="(item,index) in chatData" :key="index">
+            <div :class="[`chat-item-${item.isMe?'right':'left'}`]">
               <div class="head">
-                <img :src="friendInfo.headimg" alt="">
+                <img :src="item.isMe?headUrl:friendInfo.headimg" alt="">
               </div>
-              <div class="text-content">
-                哈喽~
+
+              <div class="text-content" v-if="item.type === 'text'">
+                {{item.content}}
               </div>
+
+              <ChatVoiceItem class="audio-content" v-else-if="item.type === 'voice'" v-bind="item"></ChatVoiceItem>
             </div>
           </div>
-          <div class="chat-line">
-            <div class="chat-item-left">
-              <div class="head">
-                <img :src="friendInfo.headimg" alt="">
-              </div>
-              <div class="text-content">
-                《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。
-              </div>
-            </div>
-          </div>
-          <div class="chat-line">
-            <div class="chat-item-right">
-              <div class="head">
-                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
-              </div>
-              <div class="text-content">
-                哈喽~
-              </div>
-            </div>
-          </div>
-          <div class="chat-line">
-            <div class="chat-item-left">
-              <div class="head">
-                <img :src="friendInfo.headimg" alt="">
-              </div>
-              <div class="text-content">
-                哈喽~
-              </div>
-            </div>
-          </div>
-          <div class="chat-line">
-            <div class="chat-item-left">
-              <div class="head">
-                <img :src="friendInfo.headimg" alt="">
-              </div>
-              <div class="audio-content"><i class="iconfont icon-yuyinzuo"></i><span>50"</span></div>
-            </div>
-          </div>
-          <div class="chat-line">
-            <div class="chat-item-right">
-              <div class="head">
-                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
-              </div>
-              <div class="audio-content"><i class="iconfont icon-yuyinyou"></i><span>20"</span></div>
-            </div>
-          </div>
-          <div class="chat-line">
-            <div class="chat-item-right">
-              <div class="head">
-                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png" alt="">
-              </div>
-              <div class="text-content">
-                《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。
-              </div>
-            </div>
-          </div>
-          <div class="chat-line">
+
+          <!-- <div class="chat-line">
             <div class="chat-item-left">
               <div class="head">
                 <img :src="friendInfo.headimg" alt="">
@@ -140,7 +90,7 @@
                 <div class="btn-status"></div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- 好友页面
           <button class="btn-mic" @click="startMic">开始录音</button>
@@ -157,10 +107,11 @@
 <script>
   import uploader from "../../unit/oss.js";
   import moment from "moment";
-  import { Circle } from "vant";
+  import { Progress } from "vant";
   import ThePage from "@/components/ThePage";
+  import ChatVoiceItem from "@/components/ChatVoiceItem";
   export default {
-    components: { ThePage, vCircle: Circle },
+    components: { ThePage, Progress, ChatVoiceItem },
     data() {
       return {
         luyin: null,
@@ -182,7 +133,38 @@
           sex: 0,
           star: '金牛座',
           city: '浙江杭州'
-        }
+        },
+        touchStartY: 0,
+        cancel: false,
+        chatData: [{
+          type: 'text',
+          content: '哈喽~'
+        }, {
+          type: 'text',
+          content: '《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。'
+        }, {
+          type: 'text',
+          content: '哈喽~',
+          isMe: true
+        }, {
+          type: 'text',
+          content: '哈喽~'
+        },
+        {
+          type: 'voice',
+          fileName: '12c73da07edcd8d8_3515.mp3'
+        },
+        {
+          type: 'voice',
+          fileName: '1536986007545.amr',
+          isMe: true,
+          isLocal: true,
+          time: 20000
+        }, {
+          type: 'text',
+          content: '《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。',
+          isMe: true
+        }]
       };
     },
     computed: {
@@ -224,42 +206,43 @@
       setPaddingTop(value) {
         console.log(value);
       },
-      startMic() {
+      startMic($event) {
         let that = this;
         let startTime = moment();
         that.recordBtnColor = '#82ed6d'
         that.tipText = '松开发送，上滑取消'
         that.currentTime = moment().diff(startTime)
+        that.touchStartY = $event.changedTouches[0].screenY
+
         window.recordTimer = setInterval(() => {
           that.currentTime = moment().diff(startTime)
         }, 200)
+
         that.$atApp(() => {
           let r = (that.luyin = window.plus.audio.getRecorder());
           r.record({ filename: "_doc/audio/", format: "amr" },
             function (r) {
-              let allTime = moment().diff(startTime);
-              uploader(r, allTime)
-                .then(res => {
-                  // that.audio = res
-                  // var dtask = window.plus.downloader.createDownload(res.url, { filename: `_doc/downAudio/${res.filename}` }, function (d, status) {
-                  //   console.log(JSON.stringify(d));
-                  //   // 下载完成
-                  //   if (status == 200) {
-                  //     // alert("Download success: " + d.filename);
-
-                  //   } else {
-                  //     // alert("Download failed: " + status);
-                  //   }
-                  // });
-                  // dtask.start()
-
-                  res;
-                  that.currentPlayer = window.plus.audio.createPlayer(r);
-                  that.currentPlayer.play();
-                })
-                .catch(err => {
-                  console.log(err);
-                });
+              //判断是否取消
+              if (!that.cancel) {
+                let allTime = moment().diff(startTime);
+                uploader(r, allTime)
+                  .then(res => {
+                    res;
+                    that.chatData.push({
+                      type: 'voice',
+                      fileName: r.split('/')[2],
+                      isMe: true,
+                      isLocal: true,
+                      time: allTime
+                    })
+                    that.scrollBottom();
+                  })
+                  .catch(err => {
+                    console.log(err);
+                  });
+              } else {
+                that.cancel = false
+              }
             },
             function (e) {
               alert("Audio record failed: " + e.message);
@@ -269,6 +252,18 @@
           //   console.log(JSON.stringify(arr));
           // });
         });
+      },
+      stopCancel($event) {
+        let that = this
+        if ($event.changedTouches[0].screenY <= that.touchStartY - 100) {
+          that.recordBtnColor = '#ff3535'
+          that.tipText = '松开取消发送语音'
+          that.cancel = true
+        } else {
+          that.recordBtnColor = '#82ed6d'
+          that.tipText = '松开发送，上滑取消'
+          that.cancel = false
+        }
       },
       stopMic() {
         let r = this.luyin;
@@ -280,7 +275,6 @@
         this.$atApp(() => {
           r.stop();
         })
-
       },
       chatFocus() {
         let that = this;
@@ -300,30 +294,33 @@
         setTimeout(() => {
           that.$refs.chatBlock.scrollTop = 9999999999;
         }, 200);
-
-        // window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-        // let allScroll = that.$refs.chatBlock.scrollHeight - that.$refs.chatBlock.clientHeight
-        // let count = 0
-        // let a = setInterval(() => {
-        //   count += 100
-        //   that.$refs.chatBlock.scrollTop = count
-        //   if (count >= allScroll) {
-        //     clearInterval(a)
-        //   }
-        // },16)
+      },
+      emitMessage($event){
+        let that = this
+        that.chatData.push({
+          type:'text',
+          content:that.chatInput,
+          isMe:true
+        })
+        that.scrollBottom();
+        console.log(that.$refs.emitInput);
+        that.$refs.emitInput.innerHTML = '点击输入内容'
+        that.chatInput = '点击输入内容'
       }
     },
     beforeDestroy() {
       let that = this
       that.$atApp(() => {
-        that.currentPlayer.stop();
-        that.currentPlayer = null
+        if (that.currentPlayer) {
+          that.currentPlayer.stop();
+          that.currentPlayer = null
+        }
       })
     }
   };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   button {
     width: 200px;
     height: 100px;
@@ -527,17 +524,20 @@
     }
   }
 
-  .vue-circle {
-    width: 150px !important;
-    height: 150px !important;
+  .vue-progress {
+    width: 100%;
     z-index: 20;
+
+    .van-progress__pivot {
+      display: none !important;
+    }
   }
 
   .btn-record {
     width: 150px;
     height: 150px;
     position: absolute;
-    top: 36px;
+    top: 80px;
     left: 50%;
     transform: translateX(-50%);
     color: #fff;
@@ -560,17 +560,21 @@
 
   .tip-text {
     position: absolute;
-    bottom: 34px;
+    top: 30px;
     font-size: 24px;
     color: #333;
     text-align: center;
     width: 100%;
   }
 
-  .chat-center-line {
-    height: 40px;
-    text-align: center;
+  .chat-line {
+    width: 100%;
     margin-bottom: 30px;
+
+    &.center {
+      height: 40px;
+      text-align: center;
+    }
 
     .center-main {
       display: inline-block;
@@ -582,11 +586,6 @@
       font-size: 18px;
       line-height: 44px;
     }
-  }
-
-  .chat-line {
-    width: 100%;
-    margin-bottom: 30px;
   }
 
   .battle-info-block {
