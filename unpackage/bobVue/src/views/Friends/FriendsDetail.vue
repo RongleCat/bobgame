@@ -189,7 +189,9 @@
         }
       }
     },
-    mounted() {},
+    mounted() {
+      this.scrollBottom();
+    },
     methods: {
       openSlide(type) {
         this.closeAllSlide();
@@ -295,17 +297,16 @@
           that.$refs.chatBlock.scrollTop = 9999999999;
         }, 200);
       },
-      emitMessage($event){
+      emitMessage($event) {
+        $event.preventDefault()
         let that = this
         that.chatData.push({
-          type:'text',
-          content:that.chatInput,
-          isMe:true
+          type: 'text',
+          content: that.chatInput,
+          isMe: true
         })
         that.scrollBottom();
-        console.log(that.$refs.emitInput);
-        that.$refs.emitInput.innerHTML = '点击输入内容'
-        that.chatInput = '点击输入内容'
+        that.chatInput = ''
       }
     },
     beforeDestroy() {
@@ -701,29 +702,6 @@
       border-radius: 10px;
     }
 
-    .audio-content {
-      max-width: 400px;
-      height: 80px;
-      border-radius: 10px;
-      background: #82ed6d;
-      padding-left: 20px;
-      position: relative;
-
-      .iconfont {
-        color: #357628;
-        line-height: 90px;
-        font-size: 42px;
-      }
-
-      span {
-        color: #999999;
-        line-height: 80px;
-        position: absolute;
-        right: 0;
-        font-size: 24px;
-        transform: translateX(150%);
-      }
-    }
   }
 
   .chat-item-right {
@@ -755,33 +733,6 @@
       line-height: 40px;
       min-height: 80px;
       border-radius: 10px;
-    }
-
-    .audio-content {
-      max-width: 400px;
-      width: 30%;
-      height: 80px;
-      border-radius: 10px;
-      background: #82ed6d;
-      padding-right: 20px;
-      position: relative;
-      float: right;
-      text-align: right;
-
-      .iconfont {
-        color: #357628;
-        line-height: 90px;
-        font-size: 42px;
-      }
-
-      span {
-        color: #999999;
-        line-height: 80px;
-        position: absolute;
-        left: 0;
-        font-size: 24px;
-        transform: translateX(-150%);
-      }
     }
   }
 </style>

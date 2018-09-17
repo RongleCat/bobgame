@@ -1,3 +1,4 @@
 static/
 node_modules/
 release/
+manifest.json
