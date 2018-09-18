@@ -231,11 +231,7 @@
       color: #fff;
       margin-top: 130px;
       margin-bottom: 50px;
-
-      //   transition: filter 0.2s;
-      &:active {
-        filter: brightness(0.9) contrast(100%);
-      }
+      @include tapColor;
     }
 
     &.btn-phone {

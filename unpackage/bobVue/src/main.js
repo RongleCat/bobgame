@@ -10,6 +10,7 @@ import VueAxios from 'vue-axios'
 import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
 
+
 //判断是否在H5+app环境
 import vueTools from "./unit/atApp";
 

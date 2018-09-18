@@ -9,13 +9,12 @@
           <div class="lottery-main">
             <div class="level-block clearfix">
               <div class="level-bean">初级场<span>每局10000金豆</span></div>
-              <div class="change-level">更换奖池</div>
+              <div class="change-level" @click="changeLevel = true">更换奖池</div>
               <span class="pillar one"></span>
               <span class="pillar two"></span>
             </div>
-            <div class="lottery-block" :class="[flashImg?'one':'two']">
+            <div class="lottery-box" :class="[flashImg?'one':'two']">
               <div class="lottery-body">
-                <!-- <test :prizesList="prizesList" :lotteryBtn="lotteryBtn" :beforeLottery="beforeLottery" :afterLottery="afterLottery"></test> -->
                 <div class="item" :class="[`item-${index}`,index===isActive?'active':'']" v-for="(item,index) in prizesList" :key="index">
                   <img :src="item.img" :alt="item.text">
                   {{item.text}}
@@ -24,17 +23,56 @@
               </div>
             </div>
           </div>
+          <div class="my-info">
+            <div class="info-line">
+              <div class="user-info">
+                <img :src="headUrl" alt="" class="head-img">
+                {{userInfo.nickname}}
+              </div>
+              <div class="bean-block">
+                {{userInfo.jifen}}
+              </div>
+            </div>
+            <div class="pop-btn-line">
+              <button>中奖纪录</button>
+              <button>抽奖规则</button>
+            </div>
+          </div>
+          <div class="go-mall" :style="{'background-image':`url('http://ceshi2.bobgame.cn/Public/Mobile/bob2/img/convert.png')`}"></div>
+          <div class="all-get-block">
+            <div class="bg-block"></div>
+            <div class="all-get-main">
+              <div class="all-get-title">中奖纪录</div>
+              <div class="all-get-list-container">
+                <div class="all-get-list">
+                  <div class="item" v-for="(item,index) in getList" :key="index">
+                    <img :src="item.head">
+                    恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </template>
     </ThePage>
+    <Popup v-model="changeLevel">
+      <div class="change-level-container">
+        <div class="btn-close">
+          <div class="btn-center"></div>
+        </div>
+        <div class="pop-title">选择奖池</div>
+      </div>
+    </Popup>
   </div>
 </template>
 
 <script>
   // import test from "./test";
+  import { Popup } from 'vant';
   import ThePage from "@/components/ThePage";
   export default {
-    components: { ThePage },
+    components: { ThePage, Popup },
     data() {
       return {
         flashImg: true,
@@ -43,6 +81,7 @@
         timer: null,
         lock: false,
         select: null,
+        changeLevel: false,
         prizesList: [
         {
           img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-23/1529735455.png",
@@ -75,13 +114,37 @@
         {
           img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-22/1529659952.png",
           text: "500金豆"
-        }]
+        }],
+        getList: [
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
+          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' }
+        ]
       };
     },
     computed: {
       isActive() {
         return this.count % 8;
-      }
+      },
+      userInfo() {
+        return this.$store.state.userInfo;
+      },
+      headUrl() {
+        let url = this.$store.state.userInfo.head_icon;
+        if (/http/g.test(url)) {
+          return url;
+        } else {
+          return "http://cdn.bobgame.cn" + url;
+        }
+      },
     },
     watch: {
       count(newCount) {
@@ -110,7 +173,7 @@
           that.timer = window.setInterval(() => {
             that.count += 1
           }, 150)
-        }else if (all - 5 === newCount) {
+        } else if (all - 5 === newCount) {
           window.clearInterval(that.timer)
           that.timer = window.setInterval(() => {
             that.count += 1
@@ -240,7 +303,7 @@
     }
   }
 
-  .lottery-block {
+  .lottery-box {
     width: 100%;
     height: 520px;
     background: #ff3e2d;
@@ -250,6 +313,7 @@
     background-size: 100% auto;
     background-position: center;
     padding: 30px;
+    margin-bottom: 35px;
 
     &.one {
       background-image: url("../../assets/images/choujiang/flash_01.png");
@@ -299,6 +363,7 @@
         text-align: center;
         line-height: 1.1;
         padding-top: 20px;
+        @include tapColor;
       }
 
       &.item-0 {
@@ -339,6 +404,235 @@
       &.item-7 {
         left: 10px;
         top: 160px;
+      }
+    }
+  }
+
+  .my-info {
+    border-radius: 20px;
+    border: 6px solid #ff3e2d;
+    background: #fffee7;
+    overflow: hidden;
+    margin-bottom: 35px;
+
+    .info-line {
+      height: 70px;
+      width: 100%;
+      font-size: 30px;
+      font-weight: bold;
+      color: #333;
+      line-height: 76px;
+      position: relative;
+      padding-left: 80px;
+
+      img {
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        border-radius: 50%;
+        display: block;
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .pop-btn-line {
+      border-top: 6px solid #ff3e2d;
+      background: #ff3e2d;
+
+      button {
+        border: 0;
+        height: 71px;
+        background: #fffee7;
+        width: 341px;
+        font-size: 30px;
+        color: #7f3636;
+        @include tapColor;
+
+        &:first-child {
+          margin-right: 6px;
+        }
+      }
+    }
+
+    .bean-block {
+      position: absolute;
+      top: 13px;
+      right: 14px;
+      height: 44px;
+      background-color: #f5f5f5;
+      border-radius: 22px;
+      color: #333;
+      background-image: url("../../assets/images/bean.png");
+      background-size: auto 33px;
+      background-repeat: no-repeat;
+      background-position-x: 7px;
+      background-position-y: center;
+      font-size: 30px;
+      padding-left: 50px;
+      padding-right: 20px;
+      line-height: 48px;
+      font-weight: bold;
+      float: left;
+    }
+  }
+
+  .go-mall {
+    width: 100%;
+    height: 160px;
+    border-radius: 20px;
+    background-size: 100% auto;
+    margin-bottom: 30px;
+  }
+
+  .all-get-block {
+    width: 100%;
+    padding: 10px 25px 85px 25px;
+    position: relative;
+
+    .bg-block {
+      width: 100%;
+      height: 20px;
+      background: #ff3e2d;
+      z-index: 10;
+      border-radius: 10px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .all-get-main {
+      width: 100%;
+      background: #fffee7;
+      position: relative;
+      z-index: 20;
+      border-radius: 0 0 15px 15px;
+      padding: 0 25px 25px 25px;
+    }
+
+    .all-get-title {
+      width: 100%;
+      font-size: 34px;
+      color: #7f3636;
+      text-align: center;
+      height: 80px;
+      line-height: 80px;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #fe5f5f;
+        top: 35px;
+        right: 230px;
+        border-radius: 50%;
+      }
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #fe5f5f;
+        top: 35px;
+        left: 230px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .all-get-list-container {
+    height: 300px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .all-get-list {
+    .item {
+      height: 100px;
+      width: 100%;
+      background-color: #f4ecd5;
+      position: relative;
+      line-height: 100px;
+      padding-left: 105px;
+
+      span {
+        color: #7f3636;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        position: absolute;
+        left: 25px;
+        top: 20px;
+      }
+
+      &:nth-child(even) {
+        background: #e5dbc0;
+      }
+    }
+  }
+
+  .van-popup {
+    border-radius: 15px;
+    background: none;
+  }
+
+  .change-level-container {
+    width: 650px;
+    background: #372954;
+    border-radius: 15px;
+    position: relative;
+
+    .pop-title {
+      font-size: 34px;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      line-height: 90px;
+    }
+
+    .btn-close {
+      width: 90px;
+      height: 90px;
+
+      .btn-center {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+        margin-top: 26px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        position: relative;
+        &::after{
+          content: '';
+          width: 2px;
+          height: 30px;
+          background: #fff;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%) rotate(-45deg);
+        }
+        &::before{
+          content: '';
+          width: 2px;
+          height: 30px;
+          background: #fff;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%) rotate(45deg);
+        }
       }
     }
   }

@@ -1,19 +1,21 @@
 <template>
   <div @click="playVoice" :class="[isMe?'right':'left',playClass]" :style="{width:voiceWidth}">
     <span>{{timeLong}}</span>
+    <i class="msg-tip" v-if="!isPlayDone"></i>
   </div>
 </template>
 
 <script>
   import moment from "moment";
   export default {
-    props: ['fileName', 'isMe', 'isLocal', 'time'],
+    props: ['fileName', 'isMe', 'isLocal', 'time', 'isPlayDone'],
     data() {
       return {
         playCtrl: null,
         playIndex: 0,
         playing: false,
-        allTime:0
+        allTime: 0,
+        fileBefore: ''
       }
     },
     computed: {
@@ -30,8 +32,8 @@
       playClass() {
         return `play_0${this.playIndex}`
       },
-      voiceWidth(){
-        return (parseInt(this.allTime/60000*320)+80)/75+'rem'
+      voiceWidth() {
+        return (parseInt(this.allTime / 60000 * 320) + 80) / 75 + 'rem'
       }
     },
     methods: {
@@ -68,7 +70,7 @@
         if (!status) {
           window.plus.nativeUI.toast('开始播放');
           window.clearInterval(window.playVoiceTimer)
-          window.playVoiceTimer = setInterval(() => {
+          window[that.fileBefore] = setInterval(() => {
             switch (that.playIndex) {
             case 0:
               that.playIndex = 1
@@ -89,16 +91,17 @@
         } else {
           window.plus.nativeUI.toast('结束播放');
           that.playIndex = 0;
-          window.clearInterval(window.playVoiceTimer)
+          window.clearInterval(window[that.fileBefore])
         }
       }
     },
     mounted() {
       // this.playIcon()
+      this.fileBefore = this.fileName.split('.')[0]
     },
     beforeDestroy() {
       let that = this
-      clearInterval(window.playVoiceTimer)
+      clearInterval(window[that.fileBefore])
       that.$atApp(() => {
         if (that.playCtrl) {
           that.playCtrl.stop()
@@ -110,59 +113,79 @@
 </script>
 
 <style lang="scss" scoped>
-  .audio-content.play_01 {
-    background-position-y: -80px;
-  }
+  .audio-content {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    @include tapColor;
 
-  .audio-content.play_02 {
-    background-position-y: -160px;
-  }
-
-  .audio-content.play_03 {
-    background-position-y: -240px;
-  }
-
-  .audio-content.left {
-    max-width: 400px;
-    height: 80px;
-    border-radius: 10px;
-    background-color: #a0e759;
-    position: relative;
-    background-image: url('../assets/images/voice.png');
-    background-repeat: no-repeat;
-    background-size: 80px auto;
-
-    span {
-      color: #999999;
-      line-height: 80px;
-      position: absolute;
-      right: 0;
-      font-size: 24px;
-      transform: translateX(150%);
+    &.play_01 {
+      background-position-y: -80px;
     }
-  }
 
-  .audio-content.right {
-    max-width: 400px;
-    height: 80px;
-    border-radius: 10px;
-    background-color: #a0e759;
-    position: relative;
-    float: right;
-    text-align: right;
+    &.play_02 {
+      background-position-y: -160px;
+    }
 
-    background-image: url('../assets/images/voice_filp.png');
-    background-repeat: no-repeat;
-    background-size: 80px auto;
-    background-position-x: right;
+    &.play_03 {
+      background-position-y: -240px;
+    }
 
-    span {
-      color: #999999;
-      line-height: 80px;
-      position: absolute;
-      left: 0;
-      font-size: 24px;
-      transform: translateX(-150%);
+    &.left {
+      max-width: 400px;
+      height: 80px;
+      border-radius: 10px;
+      background-color: #fff;
+      position: relative;
+      background-image: url('../assets/images/voice.png');
+      background-repeat: no-repeat;
+      background-size: 80px auto;
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, .05);
+
+      .msg-tip {
+        display: block;
+        width: 13px;
+        height: 13px;
+        background: #e55350;
+        border-radius: 50%;
+        position: absolute;
+        right: -25px;
+        top: 0;
+      }
+
+      span {
+        color: #999999;
+        line-height: 110px;
+        position: absolute;
+        right: 0;
+        font-size: 24px;
+        transform: translateX(150%);
+      }
+    }
+
+    &.right {
+      max-width: 400px;
+      height: 80px;
+      border-radius: 10px;
+      background-color: #a0e759;
+      position: relative;
+      float: right;
+      text-align: right;
+      box-shadow: 0 0 3px 1px rgba(0, 0, 0, .05);
+
+      background-image: url('../assets/images/voice_filp.png');
+      background-repeat: no-repeat;
+      background-size: 80px auto;
+      background-position-x: right;
+
+      span {
+        color: #999999;
+        line-height: 110px;
+        position: absolute;
+        left: 0;
+        font-size: 24px;
+        transform: translateX(-150%);
+      }
     }
   }
 </style>

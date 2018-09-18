@@ -1,7 +1,7 @@
 <template>
   <div class="view-page" :style="{paddingTop:0}">
     <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:'#fff',opacity:setHeadOpacity}"></div>
-    <div class="header-block" :style="{opacity:setHeadOpacity,top:statusBarHeight}">
+    <div class="header-block" :style="{opacity:1,top:statusBarHeight}">
       <div class="head-img" :style="{backgroundImage:'url(' + userInfo.headImg + ')'}"></div>
       <div class="user-info">
         <div class="user-name">{{userInfo.userName}}</div>

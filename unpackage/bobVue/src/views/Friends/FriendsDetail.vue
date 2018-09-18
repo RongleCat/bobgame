@@ -19,9 +19,7 @@
             <i class="iconfont icon-yuyin" :style="{backgroundColor:recordBtnColor}"></i>
           </div>
         </div>
-        <div class="face-block">
-          表情
-        </div>
+        <ChatFace @emitFace="addFace"  @deleteFace="deleteFace"></ChatFace>
         <div class="game-block">
           游戏
         </div>
@@ -72,8 +70,8 @@
                 <img :src="item.isMe?headUrl:friendInfo.headimg" alt="">
               </div>
 
-              <div class="text-content" v-if="item.type === 'text'">
-                {{item.content}}
+              <div class="text-content" v-if="item.type === 'text'" v-html="encodeFace(item.content)">
+
               </div>
 
               <ChatVoiceItem class="audio-content" v-else-if="item.type === 'voice'" v-bind="item"></ChatVoiceItem>
@@ -110,8 +108,9 @@
   import { Progress } from "vant";
   import ThePage from "@/components/ThePage";
   import ChatVoiceItem from "@/components/ChatVoiceItem";
+  import ChatFace from "@/components/ChatFace";
   export default {
-    components: { ThePage, Progress, ChatVoiceItem },
+    components: { ThePage, Progress, ChatVoiceItem, ChatFace },
     data() {
       return {
         luyin: null,
@@ -127,6 +126,8 @@
         currentPlayer: null,
         recordBtnColor: '#ccc',
         tipText: '长按开始录音',
+        cursorStart: null,
+        cursorEnd: null,
         friendInfo: {
           headimg: 'http://bobgame.cn/Uploads/Picture/2018-08-13/5b711405a3680.jpg',
           name: '大宝贝儿',
@@ -152,7 +153,8 @@
         },
         {
           type: 'voice',
-          fileName: '12c73da07edcd8d8_3515.mp3'
+          fileName: '12c73da07edcd8d8_3515.mp3',
+          isPlayDone: false
         },
         {
           type: 'voice',
@@ -189,6 +191,21 @@
         }
       }
     },
+    // filters:{
+    //   encodeFace(val){
+    //     let face_text = val;
+    // 		let zz = /\[em_(0|[1-9]\d?)\]/g;
+    // 		let zz_num = /(0|[1-9]\d?)/g;
+    // 		if(face_text.length){
+    // 			let fac = face_text.match(zz);
+    // 			for(let i in fac){
+    // 				let fac_num = fac[i].match(zz_num);
+    // 				face_text = face_text.replace("[em_"+fac_num+"]","<img src='/img/face/" + fac_num + ".png'/>");
+    // 			}
+    //     }
+    //     return face_text
+    //   }
+    // },
     mounted() {
       this.scrollBottom();
     },
@@ -287,6 +304,9 @@
         that.closeAllSlide();
       },
       chatBlur() {
+        this.cursorStart = this.$refs.emitInput.selectionStart
+        this.cursorEnd = this.$refs.emitInput.selectionEnd
+        console.log(this.$refs.emitInput.selectionStart);
         if (this.chatInput === "") {
           this.chatInput = "点击输入内容";
         }
@@ -307,6 +327,52 @@
         })
         that.scrollBottom();
         that.chatInput = ''
+      },
+      addFace(val) {
+        let that = this
+        if (this.chatInput === '点击输入内容') {
+          that.chatInput = val
+          that.cursorStart = that.cursorEnd = that.cursorEnd + val.length;
+        } else {
+          let text = that.chatInput
+          let resText = text.substr(0, that.cursorStart) + val + text.substr(that.cursorEnd, text.length);
+          this.chatInput = resText;
+          that.cursorStart = that.cursorEnd = that.cursorEnd + val.length;
+        }
+
+
+        // this.$refs.emitInput.focus();
+      },
+      deleteFace() {
+        let that = this
+        let text = that.chatInput;
+        // 获取光标之前的字符串
+        let changedText = text.substr(0, that.cursorStart);
+        let len = changedText.length;
+        let reg = /\[em_([0-9]*)\]$/g;
+        // 删除表情code块或最后一个字符
+        if (reg.test(changedText)) {
+          changedText = changedText.replace(reg, "");
+        } else {
+          changedText = changedText.substring(0, changedText.length - 1);
+        }
+        let resText = changedText + text.substr(that.cursorEnd, text.length);
+        that.chatInput = resText
+        // 调整光标位置
+        that.cursorStart = that.cursorEnd = that.cursorEnd - (len - changedText.length);
+      },
+      encodeFace(val) {
+        let face_text = val;
+        let zz = /\[em_(0|[1-9]\d?)\]/g;
+        let zz_num = /(0|[1-9]\d?)/g;
+        if (face_text.length) {
+          let fac = face_text.match(zz);
+          for (let i in fac) {
+            let fac_num = fac[i].match(zz_num);
+            face_text = face_text.replace("[em_" + fac_num + "]", "<img class='content-face' src='/img/face/" + fac_num + ".png'/>");
+          }
+        }
+        return face_text
       }
     },
     beforeDestroy() {
@@ -458,17 +524,7 @@
       user-select: none;
     }
 
-    .face-block {
-      height: 270px;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      transform: translateY(100%);
-      transition: transform 0.2s;
-    }
+
 
     .game-block {
       height: 260px;
@@ -734,5 +790,12 @@
       min-height: 80px;
       border-radius: 10px;
     }
+  }
+
+  .content-face {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: -9px;
   }
 </style>
