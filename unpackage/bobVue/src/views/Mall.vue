@@ -14,7 +14,7 @@
           <!-- 轮播图 -->
           <div class="banner-container" mall>
             <swiper :options="swiperOption" ref="mySwiper" class="mall-loop">
-              <swiperSlide v-for="(item,key,index) in pageData.swipper" :key="index">
+              <swiperSlide v-for="(item,key,index) in mallData.swipper" :key="index">
                 <img :src="item.rollpic | imgUrl" alt="">
               </swiperSlide>
               <div class="swiper-pagination mall-page" slot="pagination"></div>
@@ -49,19 +49,10 @@
           </div>
 
           <!-- 商品分类 -->
-          <MallGoodsGroup v-for="(item,index) in pageData.NoSpSaleProduct" :key="index" v-bind="item"></MallGoodsGroup>
+          <MallGoodsGroup v-for="(item,index) in mallData.NoSpSaleProduct" :key="index" v-bind="item"></MallGoodsGroup>
         </div>
       </transition>
     </div>
-    <!-- 打开抽奖页面 -->
-    <!-- <ThePopView v-if="enterLotteryPage" v-on:closeView="enterLotteryPage = false" full='true' btnType="close">
-      <template slot='header'>
-        金豆抽大奖
-      </template>
-      <template slot='content'>
-        宝贝儿
-      </template>
-    </ThePopView> -->
   </div>
 </template>
 
@@ -70,6 +61,7 @@
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import CountDown from '@/components/CountDown';
   import MallGoodsGroup from '@/components/MallGoodsGroup';
+  import { mapState } from "Vuex";
   export default {
     components: { swiper, swiperSlide, CountDown, MallGoodsGroup },
     data() {
@@ -87,8 +79,7 @@
             bulletActiveClass: 'mall-pagination-active'
           }
         },
-        reqDone: false,
-        pageData: null
+        reqDone:false
       };
     },
     computed: {
@@ -108,16 +99,23 @@
         } else {
           return "http://cdn.bobgame.cn" + url;
         }
-      }
+      },
+      ...mapState(['mallData'])
     },
     // beforeCreate(){},
     mounted() {
       let that = this
+      if (that.$store.state.mallData) {
+        setTimeout(() => {
+          that.reqDone = true
+        }, 400);
+        return false;
+      }
       that.$http.get('/Bobshop/index.html').then(r => {
         setTimeout(() => {
-          that.pageData = r.data
           that.reqDone = true
-        }, 300)
+        }, 400)
+        that.$store.commit('setMallData', r.data);
       })
     },
     beforeCreate() {

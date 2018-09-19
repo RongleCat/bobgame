@@ -34,7 +34,7 @@
               </div>
             </div>
             <div class="pop-btn-line">
-              <button>中奖纪录</button>
+              <button>中奖纪录{{homeData}}</button>
               <button>抽奖规则</button>
             </div>
           </div>
@@ -82,6 +82,7 @@
         lock: false,
         select: null,
         changeLevel: false,
+        reqDone: false,
         prizesList: [
         {
           img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-23/1529735455.png",
@@ -145,6 +146,12 @@
           return "http://cdn.bobgame.cn" + url;
         }
       },
+      homeData() {
+        return this.$store.state.homeData
+      },
+      homeDone() {
+        return this.$store.state.homeReqDone
+      }
     },
     watch: {
       count(newCount) {
@@ -219,11 +226,14 @@
           }, 300)
         }
       }
+    },
+    mounted() {
+      // let that = this
     }
   };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .lottery-container {
     padding: 25px;
     padding-top: 390px;
@@ -611,7 +621,8 @@
         border-radius: 50%;
         border: 2px solid #fff;
         position: relative;
-        &::after{
+
+        &::after {
           content: '';
           width: 2px;
           height: 30px;
@@ -620,9 +631,10 @@
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%,-50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
         }
-        &::before{
+
+        &::before {
           content: '';
           width: 2px;
           height: 30px;
@@ -631,7 +643,7 @@
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%,-50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
         }
       }
     }

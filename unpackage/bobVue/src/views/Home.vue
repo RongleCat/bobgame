@@ -14,7 +14,7 @@
         <div class="content-container" v-if="reqDone">
           <div class="banner-container" home>
             <swiper :options="swiperOption" ref="mySwiper" class="loop-container">
-              <swiperSlide v-for="item in pageData.adv_lists" :key="item.id">
+              <swiperSlide v-for="item in homeData.adv_lists" :key="item.id">
                 <img :src="item.path|imgUrl" alt="">
               </swiperSlide>
               <div class="swiper-pagination" slot="pagination"></div>
@@ -29,7 +29,7 @@
           </div>
           <div class="block-title">竞技游戏</div>
           <div class="jingji-game-list">
-            <div class="item" v-for="item in pageData.sportsGames" :key="item.id" :style="{'background-image':`url(${createImgUrl(item.cover,'bg')})`}">
+            <div class="item" v-for="item in homeData.sportsGames" :key="item.id" :style="{'background-image':`url(${createImgUrl(item.cover,'bg')})`}">
               <div class="icon" :style="{'background-image':`url(${createImgUrl(item.icon,'icon')})`}"></div>
               <div class="title">{{item.game_name}}</div>
               <div class="description">{{item.introduction}}</div>
@@ -45,6 +45,7 @@
 <script>
   import "swiper/dist/css/swiper.css";
   import { swiper, swiperSlide } from "vue-awesome-swiper";
+  import { mapState } from "Vuex";
   export default {
     components: { swiper, swiperSlide },
     data() {
@@ -56,7 +57,6 @@
           loop: true,
           spaceBetween: 10
         },
-        pageData: null,
         reqDone: false
       };
     },
@@ -77,28 +77,30 @@
       },
       setViewPaddingTop() {
         return this.$store.state.statusBarHeight + this.headHeight / 75 + "rem";
-      }
+      },
+      ...mapState(['homeData'])
     },
     mounted() {
-      let that = this;
-      console.log(that);
+      // let that = this;
+      // console.log(that);
     },
     beforeCreate() {
       let that = this;
-
       that.$atApp(() => {
-        window.plus.navigator.setStatusBarStyle("dark");
-      });
+        window.plus.navigator.setStatusBarStyle('dark');
+      })
 
-      if (that.reqDone) {
+      if (that.$store.state.homeData) {
+        setTimeout(() => {
+          that.reqDone = true
+        }, 400);
         return false;
       }
-
       this.$http.get("/Index/index.html").then(r => {
         setTimeout(() => {
-          that.pageData = r.data;
-          that.reqDone = true;
-        }, 300);
+          that.reqDone = true
+        }, 400);
+        that.$store.commit('setHomeData', r.data);
       });
     },
     methods: {

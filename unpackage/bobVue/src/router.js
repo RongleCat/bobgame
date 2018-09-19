@@ -109,11 +109,7 @@ router.beforeEach((to, from, next) => {
   if (startPage.indexOf(to.name) != -1) {
     store.commit('setShowTabber', true)
     atApp(() => {
-      if (to.name === 'My') {
-        window.plus.navigator.setStatusBarStyle('light');
-      } else {
-        window.plus.navigator.setStatusBarStyle('dark');
-      }
+      window.plus.navigator.setStatusBarStyle('dark');
     })
   } else {
     store.commit('setShowTabber', false)
