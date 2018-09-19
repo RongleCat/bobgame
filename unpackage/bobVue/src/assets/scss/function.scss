@@ -22,3 +22,9 @@
     filter: brightness(0.9) contrast(100%);
   }
 }
+
+@mixin textOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

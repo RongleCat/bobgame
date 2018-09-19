@@ -8,7 +8,15 @@
         <div class="lottery-container">
           <div class="lottery-main">
             <div class="level-block clearfix">
-              <div class="level-bean">初级场<span>每局10000金豆</span></div>
+              <div class="level-bean" v-if="level === 1">
+                初级场<span>每局100金豆</span>
+              </div>
+              <div class="level-bean" v-if="level === 2">
+                中级场<span>每局1000金豆</span>
+              </div>
+              <div class="level-bean" v-if="level === 3">
+                高级场<span>每局10000金豆</span>
+              </div>
               <div class="change-level" @click="changeLevel = true">更换奖池</div>
               <span class="pillar one"></span>
               <span class="pillar two"></span>
@@ -34,7 +42,7 @@
               </div>
             </div>
             <div class="pop-btn-line">
-              <button>中奖纪录{{homeData}}</button>
+              <button>中奖纪录</button>
               <button>抽奖规则</button>
             </div>
           </div>
@@ -56,20 +64,62 @@
         </div>
       </template>
     </ThePage>
-    <Popup v-model="changeLevel">
+    <Popup v-model="changeLevel" :full="setViewPaddingTop" :opacity="50" :maskClose="false" :plugMainStyle="plugMainStyle">
       <div class="change-level-container">
-        <div class="btn-close">
+        <div class="btn-close" @click="changeLevel = false">
           <div class="btn-center"></div>
         </div>
         <div class="pop-title">选择奖池</div>
+        <div class="level-line level-01" @click="level = 1">
+          <img src="../../assets/images/choujiang/lv1.png" class="label">
+          <p>每局100金豆</p>
+          <div class="goods-loop-container">
+            <div class="before-label">可中奖品</div>
+            <div class="goods-list-box">
+              <div class="item" v-for="(item,index) in prizesList" :key="index">
+                <img :src="item.img">
+                <p>{{item.text}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="level-line level-02" @click="level = 2">
+          <img src="../../assets/images/choujiang/lv2.png" class="label">
+          <p>每局1000金豆</p>
+          <div class="goods-loop-container">
+            <div class="before-label">可中奖品</div>
+            <div class="goods-list-box">
+              <div class="item" v-for="(item,index) in prizesList" :key="index">
+                <img :src="item.img">
+                <p>{{item.text}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="level-line level-03" @click="level = 3">
+          <img src="../../assets/images/choujiang/lv3.png" class="label">
+          <p>每局10000金豆</p>
+          <div class="goods-loop-container">
+            <div class="before-label">可中奖品</div>
+            <div class="goods-list-box">
+              <div class="item" v-for="(item,index) in prizesList" :key="index">
+                <img :src="item.img">
+                <p>{{item.text}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Popup>
+    <!-- <Popup v-model="test" :addZIndex="10" :full="setViewPaddingTop">
+      <div class="test" :style="{'background':'#fff'}">确定？</div>
+    </Popup> -->
   </div>
 </template>
 
 <script>
   // import test from "./test";
-  import { Popup } from 'vant';
+  import Popup from '@/components/Popup';
   import ThePage from "@/components/ThePage";
   export default {
     components: { ThePage, Popup },
@@ -83,6 +133,8 @@
         select: null,
         changeLevel: false,
         reqDone: false,
+        level: 1,
+        test:false,
         prizesList: [
         {
           img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-23/1529735455.png",
@@ -128,7 +180,13 @@
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' }
-        ]
+        ],
+        plugMainStyle:{
+          position: 'absolute',
+          top:'1rem',
+          left:'50%',
+          transform:'translateX(-50%)'
+        }
       };
     },
     computed: {
@@ -146,12 +204,9 @@
           return "http://cdn.bobgame.cn" + url;
         }
       },
-      homeData() {
-        return this.$store.state.homeData
+      setViewPaddingTop() {
+        return this.$store.state.statusBarHeight + 88 / 75 + "rem";
       },
-      homeDone() {
-        return this.$store.state.homeReqDone
-      }
     },
     watch: {
       count(newCount) {
@@ -196,7 +251,16 @@
             alert(`恭喜您获得${that.prizesList[that.select].text}`)
           }, 100);
         }
-      }
+      },
+      level(){
+        this.changeLevel = false
+      },
+      // changeLevel(){
+      //   let that = this
+      //   setTimeout(() => {
+      //     that.test = true
+      //   }, 2000);
+      // }
     },
     methods: {
       flashCtrl(state) {
@@ -596,6 +660,8 @@
   }
 
   .change-level-container {
+    padding: 0 25px;
+    padding-bottom: 1px;
     width: 650px;
     background: #372954;
     border-radius: 15px;
@@ -612,12 +678,15 @@
     .btn-close {
       width: 90px;
       height: 90px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding-top: 21px;
 
       .btn-center {
         width: 48px;
         height: 48px;
         margin: 0 auto;
-        margin-top: 26px;
         border-radius: 50%;
         border: 2px solid #fff;
         position: relative;
@@ -646,6 +715,112 @@
           transform: translate(-50%, -50%) rotate(45deg);
         }
       }
+    }
+  }
+
+  .level-line {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 25px;
+    // height: 240px;
+    background-repeat: no-repeat;
+    background-size: 150px auto;
+    background-position: right 20px;
+    position: relative;
+
+    >p {
+      padding-left: 215px;
+      color: #adadad;
+      height: 66px;
+      line-height: 84px;
+      font-size: 24px;
+    }
+
+    img.label {
+      position: absolute;
+      width: 200px;
+      height: 66px;
+      top: 0;
+      left: 0;
+    }
+
+    .goods-loop-container {
+      height: 176px;
+      position: relative;
+      padding-left: 86px;
+      padding-top: 25px;
+
+      .before-label {
+        color: #fff;
+        width: 34px;
+        height: 120px;
+        text-align: center;
+        line-height: 26px;
+        padding: 10px 0;
+        font-size: 22px;
+        border-radius: 3px;
+        position: absolute;
+        left: 30px;
+        top: 28px;
+      }
+
+      .goods-list-box {
+        width: 100%;
+        height: 145px;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        .item {
+          display: inline-block;
+          // width: 80px;
+          margin-right: 15px;
+          height: 120px;
+          position: relative;
+          text-align: center;
+          padding-top: 3px;
+
+          img {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #f0f0f0;
+            object-fit: contain;
+          }
+
+          p {
+            font-size: 18px;
+            line-height: 1.2;
+            position: absolute;
+            top: 95px;
+            width: 100%;
+            white-space: normal;
+            // @include textOverflow;
+          }
+        }
+      }
+    }
+
+
+    &.level-01 {
+      .before-label {
+        background: #969ca3;
+      }
+    }
+
+    &.level-02 {
+      .before-label {
+        background: #87a3b4;
+      }
+
+      background-image: url('../../assets/images/choujiang/menkan.png');
+    }
+
+    &.level-03 {
+      .before-label {
+        background: #be9b67;
+      }
+
+      background-image: url('../../assets/images/choujiang/menkan.png');
     }
   }
 </style>

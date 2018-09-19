@@ -35,13 +35,13 @@
         </div>
         <swiper :options="swiperOption" ref="mySwiper" class="my-container">
           <swiperSlide>
-            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images%2Fmy_banner.png" alt="">
+            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" alt="">
           </swiperSlide>
           <swiperSlide>
-            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images%2Fmy_banner.png" alt="">
+            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" alt="">
           </swiperSlide>
           <swiperSlide>
-            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images%2Fmy_banner.png" alt="">
+            <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" alt="">
           </swiperSlide>
           <div class="my-pagination" slot="pagination"></div>
         </swiper>
