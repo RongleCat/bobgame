@@ -115,6 +115,9 @@
       this.$http.get("/Index/index.html").then(r => {
         setTimeout(() => {
           that.reqDone = true
+          // if (r.data.) {
+            
+          // }
         }, 400);
         that.$store.commit('setHomeData', r.data);
       });
