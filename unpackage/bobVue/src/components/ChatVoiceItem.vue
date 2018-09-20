@@ -137,7 +137,7 @@
       border-radius: 10px;
       background-color: #fff;
       position: relative;
-      background-image: url('../assets/images/voice.png');
+      background-image: url('../assets/images/friends/voice.png');
       background-repeat: no-repeat;
       background-size: 80px auto;
       box-shadow: 0 0 3px 1px rgba(0, 0, 0, .05);
@@ -173,7 +173,7 @@
       text-align: right;
       box-shadow: 0 0 3px 1px rgba(0, 0, 0, .05);
 
-      background-image: url('../assets/images/voice_filp.png');
+      background-image: url('../assets/images/friends/voice_filp.png');
       background-repeat: no-repeat;
       background-size: 80px auto;
       background-position-x: right;

@@ -42,8 +42,8 @@
               </div>
             </div>
             <div class="pop-btn-line">
-              <button>中奖纪录</button>
-              <button>抽奖规则</button>
+              <button @click="myGetNote = true">中奖纪录</button>
+              <button @click="rulePop = true">抽奖规则</button>
             </div>
           </div>
           <div class="go-mall" :style="{'background-image':`url('http://ceshi2.bobgame.cn/Public/Mobile/bob2/img/convert.png')`}"></div>
@@ -61,10 +61,15 @@
               </div>
             </div>
           </div>
+          <transition name="pop-top">
+            <div class="global-message" v-if="globaMessage" :style="{top:setViewPaddingTop}">
+              恭喜 你妈炸了 获得<span>多功能洗碗机</span>一个
+            </div>
+          </transition>
         </div>
       </template>
     </ThePage>
-    <Popup v-model="changeLevel" :full="setViewPaddingTop" :opacity="50" :maskClose="false" :plugMainStyle="plugMainStyle">
+    <Popup v-model="changeLevel" :full="setViewPaddingTop" :opacity="50" :maskClose="false">
       <div class="change-level-container">
         <div class="btn-close" @click="changeLevel = false">
           <div class="btn-center"></div>
@@ -111,18 +116,92 @@
         </div>
       </div>
     </Popup>
-    <!-- <Popup v-model="test" :addZIndex="10" :full="setViewPaddingTop">
-      <div class="test" :style="{'background':'#fff'}">确定？</div>
-    </Popup> -->
+    <Popup :maskClose="false" v-model="myGetNote" :full="setViewPaddingTop">
+      <div class="my-get-note">
+        <div class="head-title"></div>
+        <div class="btn-close" @click="myGetNote = false"><i class="iconfont icon-guanbi"></i></div>
+        <ul class="get-list">
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+          <li>
+            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
+            100金豆
+            <span>2018-09-20 11:53</span>
+          </li>
+        </ul>
+      </div>
+    </Popup>
+    <Popup v-model="rulePop" :full="setViewPaddingTop">
+      <div class="rule-box">
+        <div class="head-title"></div>
+        <div class="btn-close" @click="rulePop = false"><i class="iconfont icon-guanbi"></i></div>
+        <p>
+          1、活动时间：2018.12.12-2018.12.12
+          <br><br>
+          2、活动规则：活动期间每个用户每日签到后有5次抽奖次数，免费次数用完后需要消耗积分进行抽奖，抽中实物大奖请联系客服进行领取
+        </p>
+      </div>
+    </Popup>
   </div>
 </template>
 
 <script>
-  // import test from "./test";
-  import Popup from '@/components/Popup';
   import ThePage from "@/components/ThePage";
   export default {
-    components: { ThePage, Popup },
+    components: { ThePage },
     data() {
       return {
         flashImg: true,
@@ -130,11 +209,13 @@
         count: -1,
         timer: null,
         lock: false,
-        select: null,
+        select: 5,
         changeLevel: false,
         reqDone: false,
         level: 1,
-        test:false,
+        myGetNote: false,
+        rulePop: false,
+        globaMessage:false,
         prizesList: [
         {
           img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-23/1529735455.png",
@@ -181,11 +262,11 @@
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' }
         ],
-        plugMainStyle:{
+        plugMainStyle: {
           position: 'absolute',
-          top:'1rem',
-          left:'50%',
-          transform:'translateX(-50%)'
+          top: '1rem',
+          left: '50%',
+          transform: 'translateX(-50%)'
         }
       };
     },
@@ -252,7 +333,7 @@
           }, 100);
         }
       },
-      level(){
+      level() {
         this.changeLevel = false
       },
       // changeLevel(){
@@ -292,13 +373,20 @@
       }
     },
     mounted() {
-      // let that = this
+      let that = this
+      setTimeout(() => {
+        that.globaMessage = true
+        setTimeout(() => {
+          that.globaMessage = false
+        }, 2000);
+      }, 2000);
     }
   };
 </script>
 
 <style lang="scss">
   .lottery-container {
+    position: relative;
     padding: 25px;
     padding-top: 390px;
     background-image: url("../../assets/images/choujiang/head.png"),
@@ -821,6 +909,138 @@
       }
 
       background-image: url('../../assets/images/choujiang/menkan.png');
+    }
+  }
+
+  .my-get-note {
+    width: 580px;
+    height: 680px;
+    background: #fffee7;
+    border-radius: 15px;
+    position: relative;
+    padding: 100px 30px 30px 30px;
+
+    .head-title {
+      width: 100%;
+      height: 100px;
+      background: url('../../assets/images/choujiang/pop_head_01.png');
+      background-repeat: no-repeat;
+      background-size: 330px auto;
+      background-position: center top;
+      position: absolute;
+      top: -15px;
+      left: 0;
+    }
+
+    .get-list {
+      width: 100%;
+      height: 100%;
+      background: #f4ecd5;
+      border-radius: 15px;
+      overflow-y: auto;
+      padding: 0 20px;
+
+      li {
+        height: 80px;
+        line-height: 84px;
+        position: relative;
+        padding-left: 56px;
+        font-size: 30px;
+        color: #7f3636;
+        @include onePXlineBottom;
+
+        img {
+          position: absolute;
+          width: 40px;
+          height: 40px;
+          object-fit: contain;
+          left: 0;
+          top: 20px;
+        }
+
+        span {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 22px;
+          color: #bfa193;
+        }
+      }
+    }
+
+    .btn-close {
+      position: absolute;
+      width: 100%;
+      height: 160px;
+      bottom: -160px;
+      left: 0;
+      color: #fff;
+      text-align: center;
+
+      .iconfont {
+        font-size: 80px;
+        line-height: 160px;
+      }
+    }
+  }
+
+  .rule-box {
+    width: 580px;
+    background: #fffee7;
+    border-radius: 15px;
+    position: relative;
+    padding: 100px 30px 30px 30px;
+
+    .head-title {
+      width: 100%;
+      height: 100px;
+      background: url('../../assets/images/choujiang/pop_head_01.png');
+      background-repeat: no-repeat;
+      background-size: 330px auto;
+      background-position: center top;
+      position: absolute;
+      top: -15px;
+      left: 0;
+    }
+
+    .btn-close {
+      position: absolute;
+      width: 100%;
+      height: 160px;
+      bottom: -160px;
+      left: 0;
+      color: #fff;
+      text-align: center;
+
+      .iconfont {
+        font-size: 80px;
+        line-height: 160px;
+      }
+    }
+
+    p {
+      font-size: 26px;
+      color: #7f3636;
+      line-height: 40px;
+    }
+  }
+
+  .global-message{
+    position: fixed;
+    background: #fffee7;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: 80px;
+    line-height: 82px;
+    text-align: center;
+    font-size: 30px;
+    z-index: 200;
+    color: #333;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    span{
+      color: #fe5f5f;
     }
   }
 </style>

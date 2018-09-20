@@ -53,6 +53,7 @@
     position: absolute;
     left: 0;
     right: 0;
+    z-index: 210;
 
     .btn-back {
       width: 88px;

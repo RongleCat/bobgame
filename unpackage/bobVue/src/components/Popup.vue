@@ -51,9 +51,6 @@
         return `rgba(0,0,0,${this.opacity/100})`
       }
     },
-    mounted() {
-      console.log(this.value);
-    },
     methods: {
       closePop() {
         if (this.maskClose) {

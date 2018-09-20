@@ -36,6 +36,18 @@
             </div>
           </div>
           <div class="block-title">金豆游戏</div>
+
+          <Popup v-model="sginView" :maskClose="false">
+            <div class="sgin-box">
+              <div class="sgin-day">
+                <div class="item" :class="[item.status === -2?'patch':'',item.status === 1?'end':'']" v-for="(item,index) in homeData.signInfo" :key="index">
+                  <div class="head">第{{index+1}}天</div>
+                  <div class="pic"><img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png"></div>
+                </div>
+              </div>
+              <div class="btn-sgin-comfirm" @click="sginView = false">确定</div>
+            </div>
+          </Popup>
         </div>
       </transition>
     </div>
@@ -53,6 +65,7 @@
         title: "首页",
         showMessageTip: true,
         headHeight: 136,
+        sginView: false,
         swiperOption: {
           loop: true,
           spaceBetween: 10
@@ -81,8 +94,11 @@
       ...mapState(['homeData'])
     },
     mounted() {
-      // let that = this;
+      let that = this;
       // console.log(that);
+      setTimeout(() => {
+        that.sginView = true
+      }, 1000);
     },
     beforeCreate() {
       let that = this;
@@ -181,7 +197,7 @@
     .message-icon {
       height: 136px;
       text-align: center;
-      background: url("../assets/images/icon_message.png") no-repeat;
+      background: url("../assets/images/home/icon_message.png") no-repeat;
       background-size: 40px auto;
       background-position: center 24px;
       position: absolute;
@@ -343,5 +359,133 @@
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 40px;
+  }
+
+  .sgin-box {
+    width: 650px;
+    height: 800px;
+    background: url('../assets/images/home/sign_bg.png') no-repeat;
+    background-size: 100%;
+    padding: 0 40px;
+    padding-top: 265px;
+
+    .sgin-day {
+      @include clearfix;
+
+      .item {
+        width: 120px;
+        margin-right: 30px;
+        margin-bottom: 38px;
+        height: 140px;
+        float: left;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        position: relative;
+
+        .head {
+          width: 100%;
+          height: 40px;
+          line-height: 44px;
+          background: #fd2442;
+          color: #fff;
+          font-size: 22px;
+        }
+
+        .pic {
+          width: 100%;
+          height: 100px;
+          padding-top: 15px;
+          background: #fff;
+        }
+
+        img {
+          width: 70px;
+          height: 70px;
+          object-fit: contain;
+        }
+
+        &.end {
+          &:after {
+            display: block;
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            opacity: .5;
+            z-index: 10;
+          }
+
+          &:before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 11;
+            background: url('../assets/images/home/sgin_mask.png') no-repeat top center;
+            background-size: 100% auto;
+          }
+        }
+
+        &.patch {
+          &:after {
+            display: block;
+            content: '';
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            opacity: .5;
+            z-index: 10;
+          }
+
+          &:before {
+            display: block;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 11;
+            background: url('../assets/images/home/sgin_mask.png') no-repeat bottom center;
+            background-size: 100% auto;
+
+          }
+        }
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .btn-sgin-comfirm {
+      width: 300px;
+      height: 80px;
+      background: #fed149;
+      color: #333;
+      line-height: 84px;
+      text-align: center;
+      font-size: 32px;
+      border-radius: 40px;
+      position: absolute;
+      bottom: 46px;
+      left: 50%;
+      transform: translateX(-50%);
+      @include tapColor;
+    }
   }
 </style>
