@@ -6,6 +6,7 @@ import { atApp } from "./unit/atApp";
 
 import mallRouter from './router/mall'
 import friendsRouter from './router/friends'
+import myRouter from './router/my'
 
 import Home from './views/Home.vue'
 import Friends from './views/Friends.vue'
@@ -94,7 +95,8 @@ const router = new Router({
       component: Login
     },
     ...friendsRouter,
-    ...mallRouter
+    ...mallRouter,
+    ...myRouter
     // {
     //   path: '/about',
     //   name: 'about',

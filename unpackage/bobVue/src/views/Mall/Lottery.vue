@@ -5,68 +5,70 @@
         抽奖使我快乐
       </template>
       <template slot="content">
-        <div class="lottery-container">
-          <div class="lottery-main">
-            <div class="level-block clearfix">
-              <div class="level-bean" v-if="level === 1">
-                初级场<span>每局100金豆</span>
-              </div>
-              <div class="level-bean" v-if="level === 2">
-                中级场<span>每局1000金豆</span>
-              </div>
-              <div class="level-bean" v-if="level === 3">
-                高级场<span>每局10000金豆</span>
-              </div>
-              <div class="change-level" @click="changeLevel = true">更换奖池</div>
-              <span class="pillar one"></span>
-              <span class="pillar two"></span>
-            </div>
-            <div class="lottery-box" :class="[flashImg?'one':'two']">
-              <div class="lottery-body">
-                <div class="item" :class="[`item-${index}`,index===isActive?'active':'']" v-for="(item,index) in prizesList" :key="index">
-                  <img :src="item.img" :alt="item.text">
-                  {{item.text}}
+        <transition name="fade-in">
+          <div class="lottery-container" v-if="reqDone">
+            <div class="lottery-main">
+              <div class="level-block clearfix">
+                <div class="level-bean" v-if="level === 1">
+                  初级场<span>每局100金豆</span>
                 </div>
-                <div class="item btn-start" @click="startLottery">立即<br>抽奖</div>
+                <div class="level-bean" v-if="level === 2">
+                  中级场<span>每局1000金豆</span>
+                </div>
+                <div class="level-bean" v-if="level === 3">
+                  高级场<span>每局10000金豆</span>
+                </div>
+                <div class="change-level" @click="changeLevel = true">更换奖池</div>
+                <span class="pillar one"></span>
+                <span class="pillar two"></span>
+              </div>
+              <div class="lottery-box" :class="[flashImg?'one':'two']">
+                <div class="lottery-body">
+                  <div class="item" :class="[`item-${index}`,index===isActive?'active':'']" v-for="(item,index) in prizesList[level]" :key="index">
+                    <img :src="item.reward_pic | imgUrl" :alt="item.reward_name">
+                    {{item.reward_name}}
+                  </div>
+                  <div class="item btn-start" @click="startLottery">立即<br>抽奖</div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="my-info">
-            <div class="info-line">
-              <div class="user-info">
-                <img :src="headUrl" alt="" class="head-img">
-                {{userInfo.nickname}}
+            <div class="my-info">
+              <div class="info-line">
+                <div class="user-info">
+                  <img :src="headUrl" alt="" class="head-img">
+                  {{userInfo.nickname}}
+                </div>
+                <div class="bean-block">
+                  {{userInfo.jifen}}
+                </div>
               </div>
-              <div class="bean-block">
-                {{userInfo.jifen}}
+              <div class="pop-btn-line">
+                <button @click="myGetNote = true">中奖纪录</button>
+                <button @click="rulePop = true">抽奖规则</button>
               </div>
             </div>
-            <div class="pop-btn-line">
-              <button @click="myGetNote = true">中奖纪录</button>
-              <button @click="rulePop = true">抽奖规则</button>
-            </div>
-          </div>
-          <div class="go-mall" :style="{'background-image':`url('http://ceshi2.bobgame.cn/Public/Mobile/bob2/img/convert.png')`}"></div>
-          <div class="all-get-block">
-            <div class="bg-block"></div>
-            <div class="all-get-main">
-              <div class="all-get-title">中奖纪录</div>
-              <div class="all-get-list-container">
-                <div class="all-get-list">
-                  <div class="item" v-for="(item,index) in getList" :key="index">
-                    <img :src="item.head">
-                    恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
+            <div class="go-mall" :style="{'background-image':`url('http://ceshi2.bobgame.cn/Public/Mobile/bob2/img/convert.png')`}"></div>
+            <div class="all-get-block">
+              <div class="bg-block"></div>
+              <div class="all-get-main">
+                <div class="all-get-title">中奖纪录</div>
+                <div class="all-get-list-container">
+                  <div class="all-get-list">
+                    <div class="item" v-for="(item,index) in getList" :key="index">
+                      <img :src="item.head">
+                      恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <transition name="pop-top">
+              <div class="global-message" v-if="globaMessage" :style="{top:setViewPaddingTop}">
+                恭喜 你妈炸了 获得<span>多功能洗碗机</span>一个
+              </div>
+            </transition>
           </div>
-          <transition name="pop-top">
-            <div class="global-message" v-if="globaMessage" :style="{top:setViewPaddingTop}">
-              恭喜 你妈炸了 获得<span>多功能洗碗机</span>一个
-            </div>
-          </transition>
-        </div>
+        </transition>
       </template>
     </ThePage>
     <Popup v-model="changeLevel" :full="setViewPaddingTop" :opacity="50" :maskClose="false">
@@ -75,41 +77,15 @@
           <div class="btn-center"></div>
         </div>
         <div class="pop-title">选择奖池</div>
-        <div class="level-line level-01" @click="level = 1">
-          <img src="../../assets/images/choujiang/lv1.png" class="label">
-          <p>每局100金豆</p>
+        <div class="level-line" :class="[`level-0${index}`]" @click="level = (+index)" v-for="(item,index) in prizesList" :key="index">
+          <img :src="`/img/staticImg/lv${index}.png`" class="label">
+          <p>每局{{index==1?'10':index == 2?'100':'1000'}}金豆</p>
           <div class="goods-loop-container">
             <div class="before-label">可中奖品</div>
             <div class="goods-list-box">
-              <div class="item" v-for="(item,index) in prizesList" :key="index">
-                <img :src="item.img">
-                <p>{{item.text}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="level-line level-02" @click="level = 2">
-          <img src="../../assets/images/choujiang/lv2.png" class="label">
-          <p>每局1000金豆</p>
-          <div class="goods-loop-container">
-            <div class="before-label">可中奖品</div>
-            <div class="goods-list-box">
-              <div class="item" v-for="(item,index) in prizesList" :key="index">
-                <img :src="item.img">
-                <p>{{item.text}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="level-line level-03" @click="level = 3">
-          <img src="../../assets/images/choujiang/lv3.png" class="label">
-          <p>每局10000金豆</p>
-          <div class="goods-loop-container">
-            <div class="before-label">可中奖品</div>
-            <div class="goods-list-box">
-              <div class="item" v-for="(item,index) in prizesList" :key="index">
-                <img :src="item.img">
-                <p>{{item.text}}</p>
+              <div class="item" v-for="(item,index) in prizesList[index]" :key="index">
+                <img :src="item.reward_pic | imgUrl">
+                <p>{{item.reward_name}}</p>
               </div>
             </div>
           </div>
@@ -199,9 +175,7 @@
 </template>
 
 <script>
-  import ThePage from "@/components/ThePage";
   export default {
-    components: { ThePage },
     data() {
       return {
         flashImg: true,
@@ -209,46 +183,15 @@
         count: -1,
         timer: null,
         lock: false,
-        select: 5,
+        select: null,
         changeLevel: false,
         reqDone: false,
         level: 1,
         myGetNote: false,
         rulePop: false,
-        globaMessage:false,
-        prizesList: [
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-23/1529735455.png",
-          text: "5金豆"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png",
-          text: "10金豆"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082822.png",
-          text: "100金豆"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-22/1529659184.png",
-          text: "10000金豆"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-22/1529659399.png",
-          text: "iPhone X 256G"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-08-30/1535609414.jpg",
-          text: "韩版女生背包"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-08-14/1534224774.jpg",
-          text: "触控头戴蓝牙耳机"
-        },
-        {
-          img: "http://cdn.bobgame.cn//Uploads/Picture/2018-06-22/1529659952.png",
-          text: "500金豆"
-        }],
+        globaMessage: false,
+        reqDone: false,
+        prizesList: null,
         getList: [
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
@@ -360,6 +303,7 @@
       },
       startLottery() {
         let that = this
+
         if (!that.lock) {
           that.select = Math.floor(Math.random() * 8)
           that.lock = true
@@ -374,6 +318,10 @@
     },
     mounted() {
       let that = this
+      that.$http.get('http://ceshi2.bobgame.cn/app.php?s=/Boblottery/index').then(r => {
+        that.prizesList = r.data.rewardInfo
+        that.reqDone = true
+      })
       setTimeout(() => {
         that.globaMessage = true
         setTimeout(() => {
@@ -742,10 +690,10 @@
     }
   }
 
-  .van-popup {
-    border-radius: 15px;
-    background: none;
-  }
+  // .van-popup {
+  //   border-radius: 15px;
+  //   background: none;
+  // }
 
   .change-level-container {
     padding: 0 25px;
@@ -1025,7 +973,7 @@
     }
   }
 
-  .global-message{
+  .global-message {
     position: fixed;
     background: #fffee7;
     width: 100%;
@@ -1039,7 +987,8 @@
     color: #333;
     border-radius: 0 0 20px 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    span{
+
+    span {
       color: #fe5f5f;
     }
   }

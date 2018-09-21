@@ -106,11 +106,10 @@
   import uploader from "../../unit/oss.js";
   import moment from "moment";
   import { Progress } from "vant";
-  import ThePage from "@/components/ThePage";
   import ChatVoiceItem from "@/components/ChatVoiceItem";
   import ChatFace from "@/components/ChatFace";
   export default {
-    components: { ThePage, Progress, ChatVoiceItem, ChatFace },
+    components: {  Progress, ChatVoiceItem, ChatFace },
     data() {
       return {
         luyin: null,

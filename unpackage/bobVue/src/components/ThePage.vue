@@ -34,6 +34,7 @@
       }
     },
     mounted() {
+      this.$emit('headerHeight',this.$store.state.statusBarHeight + this.headHeight / 75)
       // console.log(this.color)
       // this.$emit('setPaddingTop', parseInt(this.statusBarHeight) + 88 / 75 + 'rem')
     },

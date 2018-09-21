@@ -28,7 +28,7 @@
             <div class="data-value">1333</div>
             <div class="data-name">邀请的伙伴</div>
           </div>
-          <div class="item">
+          <div class="item" @click="go('incomenotes')">
             <div class="data-value">0</div>
             <div class="data-name">今日收益</div>
           </div>
@@ -195,6 +195,9 @@
         } else {
           this.getData = null
         }
+      },
+      go(value) {
+        this.$router.push('/my/' + value)
       }
     }
   };

@@ -10,6 +10,7 @@ import VueAxios from 'vue-axios'
 import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
 import Popup from './components/Popup.vue';
+import ThePage from './components/ThePage.vue';
 
 
 
@@ -27,6 +28,7 @@ import vueTools from "./unit/atApp";
 //全局注册组件
 Vue.component('ThePopView', ThePopView)
 Vue.component('Popup', Popup)
+Vue.component('ThePage', ThePage)
 //页面滚动插件配置
 Vue.use(vuescroll, {
   ops: {

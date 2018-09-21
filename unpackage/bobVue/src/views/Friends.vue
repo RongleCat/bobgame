@@ -3,7 +3,7 @@
         <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:'#f2f2f2'}"></div>
         <div class="head-block" :style="{top:statusBarHeight}">
             <div class="input-block">
-                <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入好友昵称" type="text" @focus="setFocus" @blur="setBlur" />
+                <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入好友昵称" type="text" @focus="isFocus = true" @blur="isFocus = false" />
             </div>
         </div>
         <div class="view-block">
