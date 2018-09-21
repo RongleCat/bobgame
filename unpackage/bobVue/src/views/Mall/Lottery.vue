@@ -10,13 +10,13 @@
             <div class="lottery-main">
               <div class="level-block clearfix">
                 <div class="level-bean" v-if="level === 1">
-                  初级场<span>每局100金豆</span>
+                  初级场<span>每局10金豆</span>
                 </div>
                 <div class="level-bean" v-if="level === 2">
-                  中级场<span>每局1000金豆</span>
+                  中级场<span>每局100金豆</span>
                 </div>
                 <div class="level-bean" v-if="level === 3">
-                  高级场<span>每局10000金豆</span>
+                  高级场<span>每局1000金豆</span>
                 </div>
                 <div class="change-level" @click="changeLevel = true">更换奖池</div>
                 <span class="pillar one"></span>
@@ -272,7 +272,7 @@
           that.timer = null
           that.ring = -1
           setTimeout(() => {
-            alert(`恭喜您获得${that.prizesList[that.select].text}`)
+            alert(`恭喜您获得${that.prizesList[that.level][that.select].reward_name}`)
           }, 100);
         }
       },
