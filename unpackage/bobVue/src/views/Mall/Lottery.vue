@@ -190,7 +190,6 @@
         myGetNote: false,
         rulePop: false,
         globaMessage: false,
-        reqDone: false,
         prizesList: null,
         getList: [
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
@@ -303,7 +302,9 @@
       },
       startLottery() {
         let that = this
-
+        that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
+          console.log(r);
+        })
         if (!that.lock) {
           that.select = Math.floor(Math.random() * 8)
           that.lock = true
@@ -318,7 +319,7 @@
     },
     mounted() {
       let that = this
-      that.$http.get('http://ceshi2.bobgame.cn/app.php?s=/Boblottery/index').then(r => {
+      that.$http.get('/Boblottery/index').then(r => {
         that.prizesList = r.data.rewardInfo
         that.reqDone = true
       })

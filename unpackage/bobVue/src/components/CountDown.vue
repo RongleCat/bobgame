@@ -1,6 +1,7 @@
 <template>
   <div class="countdown-container clearfix">
-    <div class="item" v-for="(item,key,index) in leftTime.split(':')" :key="index">{{item}}</div>
+    <div v-if="isEnd" class="item" v-for="(item,key,index) in leftTime.split(':')" :key="index">{{item}}</div>
+    <div class="show-end" v-else>限时兑换已结束</div>
   </div>
 </template>
 
@@ -14,10 +15,26 @@
         leftTime: '00:00:00:00'
       }
     },
+    computed: {
+      isEnd() {
+        if (this.leftTime.length) {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
     mounted() {
       let that = this
       let end = moment(that.endTime)
+      that.calcTime(end)
       setInterval(() => {
+        that.calcTime(end)
+      }, 1000)
+    },
+    methods: {
+      calcTime(end) {
+        let that = this
         let now = moment()
         let times = parseInt(end.diff(now) / 1000)
         let leftTime = []
@@ -34,7 +51,7 @@
         })
 
         that.leftTime = leftTime.join(':')
-      }, 1000)
+      }
     }
   }
 </script>
@@ -74,6 +91,11 @@
         line-height: 36px;
         top: 0;
       }
+    }
+
+    .show-end {
+      font-size: 24px;
+      color: #666;
     }
   }
 </style>

@@ -114,6 +114,7 @@ body {
 .content-container {
   max-width: 750px;
   padding: 25px;
+  position: relative;
 }
 
 .common-header {
@@ -124,4 +125,12 @@ body {
 
 .center-block {
   text-align: center !important;
+}
+
+
+@for $i from 0 through 5 {
+  .vip-#{$i} {
+    background-image: url('/img/staticImg/icon/#{$i}.png');
+    background-repeat: no-repeat;
+  }
 }

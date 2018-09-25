@@ -4,10 +4,11 @@
     <div class="header-block" :style="{top:statusBarHeight}">
       <div class="head-img" :style="{backgroundImage:'url(' + headUrl + ')'}"></div>
       <div class="user-info">
-        <div class="user-name">{{userInfo.nickname}}</div>
+        <div class="user-name vip-5">{{userInfo.nickname}}</div>
         <div class="bean-block">{{userInfo.jifen}}</div>
       </div>
       <div class="message-icon" :class="{active:showMessageTip}" @click="toggleTip">消息</div>
+      <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="toggleTip">月卡</div>
     </div>
     <div class="view-block">
       <transition name="fade-in">
@@ -19,6 +20,11 @@
               </swiperSlide>
               <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
+          </div>
+
+          <div class="game-entrance">
+            <div class="item"></div>
+            <div class="item"></div>
           </div>
           <div class="news-container">
             <div class="icon">公告</div>
@@ -35,7 +41,6 @@
               <div class="description">{{item.introduction}}</div>
             </div>
           </div>
-          <div class="block-title">金豆游戏</div>
 
           <Popup v-model="sginView" :maskClose="false">
             <div class="sgin-box">
@@ -48,6 +53,8 @@
               <div class="btn-sgin-comfirm" @click="sginView = false">确定</div>
             </div>
           </Popup>
+
+          <div class="float-icon"></div>
         </div>
       </transition>
     </div>
@@ -116,7 +123,7 @@
         setTimeout(() => {
           that.reqDone = true
           // if (r.data.) {
-            
+
           // }
         }, 400);
         that.$store.commit('setHomeData', r.data);
@@ -167,6 +174,7 @@
       left: 140px;
       top: 50%;
       transform: translateY(-50%);
+      padding-top: 48px;
 
       .user-name {
         color: #333;
@@ -176,6 +184,13 @@
         margin-bottom: 14px;
         text-align: left;
         padding-left: 7px;
+        padding-right: 32px;
+        background-size: 24px auto;
+        background-position: right center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
       }
 
       .bean-block {
@@ -234,6 +249,11 @@
       &:active {
         opacity: 0.5;
       }
+
+      &.card-icon {
+        right: 120px;
+        background-image: url('../assets/images/home/icon_m.png');
+      }
     }
   }
 
@@ -262,6 +282,8 @@
       background-size: cover;
       margin-bottom: 25px;
       position: relative;
+      border-radius: 15px;
+      overflow: hidden;
 
       .icon {
         width: 110px;
@@ -361,7 +383,7 @@
   .banner-container[home] {
     border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
   }
 
   .sgin-box {
@@ -490,5 +512,37 @@
       transform: translateX(-50%);
       @include tapColor;
     }
+  }
+
+  .game-entrance {
+    width: 100%;
+    height: 180px;
+    margin-bottom: 20px;
+    @include clearfix;
+
+    .item {
+      width: 340px;
+      height: 100%;
+      background: url('../assets/images/home/enter_01.png') no-repeat;
+      background-size: 100% auto;
+      float: left;
+
+      &:last-child {
+        float: right;
+        background-image: url('../assets/images/home/enter_02.png');
+      }
+    }
+  }
+
+  .float-icon {
+    width: 100px;
+    height: 100px;
+    background: url('../assets/images/home/float_icon.png') no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    position: fixed;
+    bottom: 300px;
+    right: 25px;
+    z-index: 150;
   }
 </style>

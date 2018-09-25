@@ -8,7 +8,7 @@
         <transition name="pop-top">
           <div class="filter-pop" v-if="filterOpen">
             <div class="time-line">
-              <div class="item" @click="startPop = true">
+              <div class="item active">
                 一个月内
               </div>
               <div class="item">
@@ -19,6 +19,18 @@
               </div>
             </div>
             <div class="time-label">选择时间段</div>
+            <div class="time-line">
+              <div class="item" @click="startPop = true">
+                <!-- <template v-if=""></template> -->
+                {{formatStart}}
+              </div>
+              <div class="item">
+                结束时间
+              </div>
+              <div class="item">
+                确定
+              </div>
+            </div>
           </div>
         </transition>
         <transition name="fade-in">
@@ -34,57 +46,77 @@
           </div>
         </div>
       </div>
-      <VanPopup v-model="startPop" position="bottom">
-        <DatetimePicker v-model="currentDate"></DatetimePicker>
+      <VanPopup v-model="startPop" position="bottom" :close-on-click-overlay="false">
+        <DatetimePicker v-model="startTime" type="date" :max-date="maxDate" title="选择开始时间" @cancel="startCancel" @confrim="startConfrim"></DatetimePicker>
       </VanPopup>
     </template>
   </ThePage>
 </template>
 
 <script>
-  import { DatetimePicker, Popup } from 'vant';
+  import { DatetimePicker, Popup } from "vant";
+  import moment from "moment";
+
   export default {
     components: {
-      'VanPopup': Popup,
+      VanPopup: Popup,
       DatetimePicker
     },
     data() {
       return {
         topHeight: 0,
         filterOpen: false,
-        keyword: '',
+        keyword: "",
         isFocus: false,
         showSearch: false,
         filterTop: null,
         timeOpen: false,
-        currentDate: new Date(),
-        startPop: null
-
-      }
+        maxDate: new Date(),
+        startPop: null,
+        startTime: moment(new Date()).subtract(1,'months').toDate()
+      };
     },
     watch: {
       isFocus(newValue) {
-        let that = this
+        let that = this;
         if (newValue) {
           setTimeout(() => {
-            that.$refs.search.focus()
+            that.$refs.search.focus();
           }, 200);
         }
       }
     },
     computed: {
       searchFocus() {
-        return this.keyword.length
+        return this.keyword.length;
+      },
+      formatStart() {
+        if (this.startTime) {
+          return moment(this.startTime).format('YYYY-MM-DD')
+        } else {
+          return '开始时间'
+        }
       }
     },
     methods: {
       setHeaderHeight(value) {
-        this.filterTop = value + 100 / 75 + 'rem'
+        this.filterTop = value + 100 / 75 + "rem"
         this.topHeight = value
       },
       closeSearch() {
         this.showSearch = false
-        this.keyword = ''
+        this.keyword = ""
+      },
+      startOpen() {
+        this.startPop = true
+        this.startTime = new Date()
+      },
+      startCancel() {
+        this.startPop = false
+        this.startTime = moment(new Date()).subtract(1,'months').toDate()
+      },
+      startConfrim() {
+        this.startPop = false
       }
     }
   }
@@ -107,7 +139,6 @@
     background: #fff;
     border-bottom: 1px solid #efefef;
 
-
     @include clearfix;
 
     .filter-item {
@@ -120,7 +151,7 @@
       font-size: 28px;
       position: relative;
       line-height: 104px;
-      transition: color .2s;
+      transition: color 0.2s;
 
       .iconfont {
         display: block;
@@ -130,7 +161,7 @@
         color: #999;
         top: 44px;
         right: 18px;
-        transition: transform .2s;
+        transition: transform 0.2s;
       }
 
       &.active {
@@ -147,13 +178,13 @@
         &:before {
           display: block;
           position: absolute;
-          content: '';
+          content: "";
           width: 1px;
           height: 30px;
           background: #999;
           top: 35px;
           left: 0;
-          transform: scaleX(.5);
+          transform: scaleX(0.5);
         }
       }
     }
@@ -230,6 +261,11 @@
         height: 56px;
         margin-right: 20px;
         border-radius: 5px;
+
+        &.active {
+          background: #ffe150;
+          color: #333;
+        }
       }
     }
 
@@ -246,6 +282,6 @@
     right: 0;
     bottom: 0;
     z-index: 50;
-    background: rgba(0, 0, 0, .2);
+    background: rgba(0, 0, 0, 0.2);
   }
 </style>

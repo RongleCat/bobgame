@@ -115,7 +115,7 @@
             <i class="iconfont icon-you"></i>
           </li>
         </ul>
-        <div class="my-block btn-logout">退出登录</div>
+        <div class="my-block btn-logout" @click="logout">退出登录</div>
       </div>
     </div>
   </div>
@@ -198,6 +198,10 @@
       },
       go(value) {
         this.$router.push('/my/' + value)
+      },
+      logout(){
+        window.localStorage.clear();
+        this.$router.replace('/home')
       }
     }
   };

@@ -21,7 +21,11 @@
             </swiper>
           </div>
           <!-- 抽奖页面 -->
-          <div class="lottery-block" @click="$router.push('/mall/lottery')"></div>
+
+          <div class="lottery-block">
+            <div class="item" @click="$router.push('/mall/lottery')"></div>
+            <div class="item" @click="$router.push('/mall/lottery')"></div>
+          </div>
           <!-- 限时兑换 -->
           <div class="block-title">限时兑换</div>
           <div class="time-get-list">
@@ -79,7 +83,7 @@
             bulletActiveClass: 'mall-pagination-active'
           }
         },
-        reqDone:false
+        reqDone: false
       };
     },
     computed: {
@@ -237,11 +241,25 @@
   .lottery-block {
     width: 100%;
     height: 160px;
-    background: url('http://bobgame.cn/Uploads/Picture/2018-08-22/1534924466.png');
-    background-size: 100% auto;
-    border-radius: 15px;
-    overflow: hidden;
     margin-bottom: 20px;
+    @include clearfix;
+
+    .item {
+      width: 340px;
+      height: 160px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: url('../assets/images/mall/btn_cj.png') no-repeat;
+      background-size: 100% auto;
+
+      &:first-child {
+        float: left;
+      }
+
+      &:last-child {
+        float: right;
+      }
+    }
   }
 
   .block-title {
