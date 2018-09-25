@@ -8,37 +8,41 @@
         <transition name="pop-top">
           <div class="filter-pop" v-if="filterOpen">
             <div class="time-line">
-              <div class="item active">
-                一个月内
-              </div>
-              <div class="item">
-                二个月内
-              </div>
-              <div class="item">
-                三个月内
+              <div class="item" v-for="(i,index) in 3" :key="index" @click="selectTimer === index?selectTimer = -1:selectTimer = index" :class="[index === selectTimer?'active':'']">
+                {{i==1?'一':i==2?'二':'三'}}个月内
               </div>
             </div>
             <div class="time-label">选择时间段</div>
             <div class="time-line">
-              <div class="item" @click="startPop = true">
+              <div class="item start-time" @click="startOpen">
                 <!-- <template v-if=""></template> -->
                 {{formatStart}}
               </div>
-              <div class="item">
-                结束时间
+              <div class="item" @click="endOpen">
+                {{formatEnd}}
               </div>
-              <div class="item">
+              <div class="item" :class="[timeBtnClass?'active':'']">
                 确定
               </div>
             </div>
           </div>
         </transition>
+        <transition name="pop-top">
+          <div class="class-pop" v-if="classOpen">
+            <div class="class-block">
+              <div class="item" v-for="(item,index) in classItems" :class="[classSelect === index?'active':'']" :key="index" @click="classSelect === index?classSelect = -1:classSelect = index">
+                <div class="icon" :class="[`icon-${index+1}`]"></div>
+                {{item}}
+              </div>
+            </div>
+          </div>
+        </transition>
         <transition name="fade-in">
-          <div class="income-mask" v-if="filterOpen || timeOpen"></div>
+          <div class="income-mask" v-if="filterOpen || classOpen"></div>
         </transition>
         <div class="filter-bar" :style="{top:topHeight+'rem'}">
           <div class="filter-item" :class="[filterOpen?'active':'']" @click="filterOpen = !filterOpen">筛选<i class="iconfont icon-xiala"></i></div>
-          <div class="filter-item">全部<i class="iconfont icon-xiala"></i></div>
+          <div class="filter-item" :class="[classOpen?'active':'']" @click="classOpen = !classOpen">全部<i class="iconfont icon-xiala"></i></div>
           <div class="filter-item btn-search" @click="showSearch = true">搜索</div>
           <div class="search-box" v-if="showSearch">
             <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入关键字" type="search" @focus="isFocus = true" @blur="isFocus = false" autofocus="true" ref="search" />
@@ -47,7 +51,10 @@
         </div>
       </div>
       <VanPopup v-model="startPop" position="bottom" :close-on-click-overlay="false">
-        <DatetimePicker v-model="startTime" type="date" :max-date="maxDate" title="选择开始时间" @cancel="startCancel" @confrim="startConfrim"></DatetimePicker>
+        <DatetimePicker v-model="startTime" type="date" :max-date="maxDate" title="选择开始时间" @cancel="startCancel" @confirm="startConfirm"></DatetimePicker>
+      </VanPopup>
+      <VanPopup v-model="endPop" position="bottom" :close-on-click-overlay="false">
+        <DatetimePicker v-model="endTime" type="date" :min-date="minDate" :max-date="endMax" title="选择开始时间" @cancel="endCancel" @confirm="endConfirm"></DatetimePicker>
       </VanPopup>
     </template>
   </ThePage>
@@ -70,10 +77,17 @@
         isFocus: false,
         showSearch: false,
         filterTop: null,
-        timeOpen: false,
-        maxDate: new Date(),
         startPop: null,
-        startTime: moment(new Date()).subtract(1,'months').toDate()
+        startTime: null,
+        startDone: false,
+        endPop: null,
+        endTime: null,
+        endDone: false,
+        selectTimer: -1,
+        endMax: new Date(),
+        classOpen: false,
+        classSelect: 0,
+        classItems: ['全部收益', '玩家充值', '提现', '比赛奖励', '红包']
       };
     },
     watch: {
@@ -84,6 +98,16 @@
             that.$refs.search.focus();
           }, 200);
         }
+      },
+      filterOpen(newValue) {
+        if (newValue) {
+          this.classOpen = false
+        }
+      },
+      classOpen(newValue) {
+        if (newValue) {
+          this.filterOpen = false
+        }
       }
     },
     computed: {
@@ -91,10 +115,34 @@
         return this.keyword.length;
       },
       formatStart() {
-        if (this.startTime) {
+        if (this.startDone) {
           return moment(this.startTime).format('YYYY-MM-DD')
         } else {
           return '开始时间'
+        }
+      },
+      formatEnd() {
+        if (this.endDone) {
+          return moment(this.endTime).format('YYYY-MM-DD')
+        } else {
+          return '结束时间'
+        }
+      },
+      timeBtnClass() {
+        return (this.endDone && this.startDone) || this.selectTimer != -1
+      },
+      minDate() {
+        if (!this.startDone) {
+          return moment('2008-01-01').toDate()
+        } else {
+          return this.startTime
+        }
+      },
+      maxDate() {
+        if (!this.endDone) {
+          return moment(new Date()).toDate()
+        } else {
+          return this.endTime
         }
       }
     },
@@ -109,14 +157,33 @@
       },
       startOpen() {
         this.startPop = true
-        this.startTime = new Date()
+        if (!this.startDone) {
+          this.startTime = moment(new Date()).subtract(1, 'months').toDate()
+        }
       },
       startCancel() {
+        this.startTime = null
+        this.startDone = false
         this.startPop = false
-        this.startTime = moment(new Date()).subtract(1,'months').toDate()
       },
-      startConfrim() {
+      startConfirm() {
+        this.startDone = true
         this.startPop = false
+      },
+      endOpen() {
+        this.endPop = true
+        if (!this.endDone) {
+          this.endTime = new Date()
+        }
+      },
+      endCancel() {
+        this.endTime = null
+        this.endDone = false
+        this.endPop = false
+      },
+      endConfirm() {
+        this.endDone = true
+        this.endPop = false
       }
     }
   }
@@ -261,10 +328,26 @@
         height: 56px;
         margin-right: 20px;
         border-radius: 5px;
+        position: relative;
 
         &.active {
           background: #ffe150;
           color: #333;
+        }
+
+        &.start-time {
+          &:after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 1px;
+            /* no */
+            background: #adadad;
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
         }
       }
     }
@@ -283,5 +366,58 @@
     bottom: 0;
     z-index: 50;
     background: rgba(0, 0, 0, 0.2);
+  }
+
+  .class-pop {
+    background: #fff;
+    position: relative;
+    z-index: 99;
+    padding: 40px 25px;
+    padding-bottom: 0;
+
+    .class-block {
+      width: 100%;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 40px;
+
+      .item {
+        display: inline-block;
+        width: 100px;
+        margin-right: 30px;
+        text-align: center;
+        line-height: 1;
+        font-size: 24px;
+
+        .icon {
+          width: 100px;
+          height: 100px;
+          background: #f5f5f5;
+          background-image: url('../../assets/images/icon/shouyi.png');
+          background-repeat: no-repeat, repeat;
+          background-size: 100px auto, 100px 100px;
+          border-radius: 10px;
+          margin-bottom: 20px;
+
+          @for $i from 1 through 5 {
+            &.icon-#{$i} {
+              background-position-y: ($i - 1) * -100px;
+            }
+          }
+
+        }
+
+        &.active {
+          .icon {
+            background-image: url('../../assets/images/icon/shouyi_active.png');
+            background-color: #333;
+          }
+        }
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
   }
 </style>

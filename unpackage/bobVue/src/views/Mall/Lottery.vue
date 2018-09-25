@@ -302,18 +302,21 @@
       },
       startLottery() {
         let that = this
-        that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
-          console.log(r);
-        })
+
         if (!that.lock) {
-          that.select = Math.floor(Math.random() * 8)
+
           that.lock = true
-          that.count = -1;
-          that.flashCtrl();
-          that.flashCtrl("start");
-          that.timer = window.setInterval(() => {
-            that.count += 1
-          }, 300)
+          that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
+            that.select = r.data
+            that.count = -1;
+            that.flashCtrl();
+            that.flashCtrl("start");
+            that.timer = window.setInterval(() => {
+              that.count += 1
+            }, 300)
+          }).catch(err => {
+            that.lock = false
+          })
         }
       }
     },
