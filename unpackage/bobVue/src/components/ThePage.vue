@@ -8,7 +8,7 @@
       </div>
     </div>
     <slot v-else name="header"></slot>
-    <div class="view-block">
+    <div class="view-block" :style="{backgroundColor:contentBg?contentBg:'#fff'}">
       <slot name="content"></slot>
     </div>
   </div>
@@ -16,7 +16,7 @@
 
 <script>
   export default {
-    props: ['btnType', 'diy', 'color'],
+    props: ['btnType', 'diy', 'color', 'contentBg'],
     data() {
       return {
         headHeight: 88
@@ -34,13 +34,12 @@
       }
     },
     mounted() {
-      this.$emit('headerHeight',this.$store.state.statusBarHeight + this.headHeight / 75)
+      this.$emit('headerHeight', this.$store.state.statusBarHeight + this.headHeight / 75)
       // console.log(this.color)
       // this.$emit('setPaddingTop', parseInt(this.statusBarHeight) + 88 / 75 + 'rem')
     },
     methods: {
       btnBackEvent() {
-        console.log('ss');
         this.$router.go(-1)
       }
     }

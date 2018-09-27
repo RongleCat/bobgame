@@ -1,52 +1,232 @@
 <template>
-  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight">
+  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight" contentBg="#f0f0f0">
     <template slot="headerContent">
       收益明细
+      <div class="filter-bar" :style="{top:topHeight+'rem'}">
+        <div class="filter-item" :class="[filterOpen?'active':'']" @click="filterOpen = !filterOpen">筛选<i class="iconfont icon-xiala"></i></div>
+        <div class="filter-item" :class="[classOpen?'active':'']" @click="classOpen = !classOpen">全部<i class="iconfont icon-xiala"></i></div>
+        <div class="filter-item btn-search" @click="showSearch = true">搜索</div>
+        <div class="search-box" v-if="showSearch">
+          <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入关键字" type="search" @focus="isFocus = true" @blur="isFocus = false" autofocus="true" ref="search" />
+          <div class="btn-cancel" @click="closeSearch">取消</div>
+        </div>
+      </div>
     </template>
     <template slot="content">
+      <transition name="fade-in">
+        <div class="income-mask" v-if="filterOpen || classOpen"></div>
+      </transition>
+      <transition name="pop-top">
+        <div class="filter-pop" v-if="filterOpen" :style="{top:filterTop}">
+          <div class="time-line">
+            <div class="item" v-for="(i,index) in 3" :key="index" @click="selectTimer === index?selectTimer = -1:selectTimer = index" :class="[index === selectTimer?'active':'']">
+              {{i==1?'一':i==2?'二':'三'}}个月内
+            </div>
+          </div>
+          <div class="time-label">选择时间段</div>
+          <div class="time-line">
+            <div class="item start-time" @click="startOpen">
+              <!-- <template v-if=""></template> -->
+              {{formatStart}}
+            </div>
+            <div class="item" @click="endOpen">
+              {{formatEnd}}
+            </div>
+            <div class="item" :class="[timeBtnClass?'active':'']">
+              确定
+            </div>
+          </div>
+        </div>
+      </transition>
+      <transition name="pop-top">
+        <div class="class-pop" v-if="classOpen" :style="{top:filterTop}">
+          <div class="class-block">
+            <div class="item" v-for="(item,index) in classItems" :class="[classSelect === index?'active':'']" :key="index" @click="classSelect === index?classSelect = -1:classSelect = index">
+              <div class="icon" :class="[`icon-${index+1}`]"></div>
+              {{item}}
+            </div>
+          </div>
+        </div>
+      </transition>
       <div class="income-container">
-        <transition name="pop-top">
-          <div class="filter-pop" v-if="filterOpen">
-            <div class="time-line">
-              <div class="item" v-for="(i,index) in 3" :key="index" @click="selectTimer === index?selectTimer = -1:selectTimer = index" :class="[index === selectTimer?'active':'']">
-                {{i==1?'一':i==2?'二':'三'}}个月内
-              </div>
+        <div class="notes-list">
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
             </div>
-            <div class="time-label">选择时间段</div>
-            <div class="time-line">
-              <div class="item start-time" @click="startOpen">
-                <!-- <template v-if=""></template> -->
-                {{formatStart}}
+            <div class="tow-line">
+              <div class="get-type">
+                <img class="img-head" src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1609112R1-17.jpg">
+                <div class="type-name">
+                  高呼呼
+                </div>
+                <div class="type-tip">
+                  <span class="n-text">充值99元</span>
+                </div>
               </div>
-              <div class="item" @click="endOpen">
-                {{formatEnd}}
-              </div>
-              <div class="item" :class="[timeBtnClass?'active':'']">
-                确定
-              </div>
-            </div>
-          </div>
-        </transition>
-        <transition name="pop-top">
-          <div class="class-pop" v-if="classOpen">
-            <div class="class-block">
-              <div class="item" v-for="(item,index) in classItems" :class="[classSelect === index?'active':'']" :key="index" @click="classSelect === index?classSelect = -1:classSelect = index">
-                <div class="icon" :class="[`icon-${index+1}`]"></div>
-                {{item}}
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
               </div>
             </div>
           </div>
-        </transition>
-        <transition name="fade-in">
-          <div class="income-mask" v-if="filterOpen || classOpen"></div>
-        </transition>
-        <div class="filter-bar" :style="{top:topHeight+'rem'}">
-          <div class="filter-item" :class="[filterOpen?'active':'']" @click="filterOpen = !filterOpen">筛选<i class="iconfont icon-xiala"></i></div>
-          <div class="filter-item" :class="[classOpen?'active':'']" @click="classOpen = !classOpen">全部<i class="iconfont icon-xiala"></i></div>
-          <div class="filter-item btn-search" @click="showSearch = true">搜索</div>
-          <div class="search-box" v-if="showSearch">
-            <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入关键字" type="search" @focus="isFocus = true" @blur="isFocus = false" autofocus="true" ref="search" />
-            <div class="btn-cancel" @click="closeSearch">取消</div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img class="img-head" src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1609112R1-17.jpg">
+                <div class="type-name">
+                  高呼呼
+                </div>
+                <div class="type-tip">
+                  <span class="n-text">充值99元</span><span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/hb.png">
+                <div class="type-name">
+                  平台红包奖励
+                </div>
+                <div class="type-tip">
+                  <span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/jb.png">
+                <div class="type-name one">
+                  余额提现-处理中
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span>-14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/hb.png">
+                <div class="type-name one">
+                  比赛获胜奖励
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img class="img-head" src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1609112R1-17.jpg">
+                <div class="type-name">
+                  高呼呼
+                </div>
+                <div class="type-tip">
+                  <span class="n-text">充值99元</span>
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img class="img-head" src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1609112R1-17.jpg">
+                <div class="type-name">
+                  高呼呼
+                </div>
+                <div class="type-tip">
+                  <span class="n-text">充值99元</span><span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/hb.png">
+                <div class="type-name">
+                  平台红包奖励
+                </div>
+                <div class="type-tip">
+                  <span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/jb.png">
+                <div class="type-name one">
+                  余额提现-处理中
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span>-14.8</span>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="one-line">
+              订单号：15648645884<span>2018-08-24 09:19:55</span>
+            </div>
+            <div class="tow-line">
+              <div class="get-type">
+                <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/hb.png">
+                <div class="type-name one">
+                  比赛获胜奖励
+                </div>
+              </div>
+              <div class="get-money">
+                余额：<span class="add">+14.8</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -54,7 +234,7 @@
         <DatetimePicker v-model="startTime" type="date" :max-date="maxDate" title="选择开始时间" @cancel="startCancel" @confirm="startConfirm"></DatetimePicker>
       </VanPopup>
       <VanPopup v-model="endPop" position="bottom" :close-on-click-overlay="false">
-        <DatetimePicker v-model="endTime" type="date" :min-date="minDate" :max-date="endMax" title="选择开始时间" @cancel="endCancel" @confirm="endConfirm"></DatetimePicker>
+        <DatetimePicker v-model="endTime" type="date" :min-date="minDate" :max-date="endMax" title="选择结束时间" @cancel="endCancel" @confirm="endConfirm"></DatetimePicker>
       </VanPopup>
     </template>
   </ThePage>
@@ -194,13 +374,15 @@
     width: 100%;
     position: relative;
     padding-top: 100px;
+    background: #f0f0f0;
+    min-height: 100%;
   }
 
   .filter-bar {
     position: fixed;
     left: 0;
     right: 0;
-    z-index: 200;
+    z-index: 10;
     height: 100px;
     width: 100%;
     background: #fff;
@@ -277,6 +459,7 @@
       background-image: url("../../assets/images/icon_sousuo.png");
       background-repeat: no-repeat;
       font-size: 28px;
+      line-height: 72px;
       background-size: 36px auto;
       background-position-y: center;
       background-position-x: 170px;
@@ -311,7 +494,7 @@
     left: 0;
     right: 0;
     top: 100px;
-    z-index: 99;
+    z-index: 51;
     background: #fff;
 
     .time-line {
@@ -371,7 +554,11 @@
   .class-pop {
     background: #fff;
     position: relative;
-    z-index: 99;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    z-index: 51;
     padding: 40px 25px;
     padding-bottom: 0;
 
@@ -416,6 +603,120 @@
 
         &:last-child {
           margin: 0;
+        }
+      }
+    }
+  }
+
+  .notes-list {
+    background: #f0f0f0;
+
+    .item {
+      width: 100%;
+      height: 190px;
+      background: #fff;
+      margin-bottom: 15px;
+
+      .one-line {
+        line-height: 80px;
+        font-size: 24px;
+        color: #adadad;
+        padding-left: 64px;
+        position: relative;
+        padding-right: 25px;
+
+        span {
+          float: right;
+        }
+
+        &::before {
+          display: block;
+          content: '';
+          width: 20px;
+          height: 20px;
+          background: #ffe04e;
+          border-radius: 50%;
+          position: absolute;
+          left: 26px;
+          top: 30px;
+        }
+      }
+
+      .tow-line {
+        @include clearfix;
+        height: 70px;
+        padding-left: 60px;
+
+        .get-type {
+          float: left;
+          padding-left: 90px;
+          position: relative;
+          height: 70px;
+
+          img {
+            width: 70px;
+            height: 70px;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            object-fit: contain;
+
+            &.img-head {
+              border-radius: 50%;
+            }
+          }
+
+          .type-name {
+            font-size: 28px;
+            color: #333;
+            line-height: 1;
+            position: absolute;
+            left: 90px;
+            top: 0;
+            white-space: nowrap;
+
+            &.one {
+              line-height: 70px;
+            }
+          }
+
+          .type-tip {
+            line-height: 1;
+            font-size: 22px;
+            color: #adadad;
+            bottom: 0;
+            left: 90px;
+            position: absolute;
+            white-space: nowrap;
+
+            .tip-question {
+              .iconfont {
+                font-size: 24px;
+                vertical-align: -1px;
+              }
+            }
+
+            .n-text+.tip-question {
+              padding-left: 20px;
+            }
+          }
+        }
+
+        .get-money {
+          float: right;
+          line-height: 70px;
+          font-size: 28px;
+          color: #adadad;
+          padding-right: 25px;
+
+          span {
+            color: #333;
+
+            &.add {
+              color: #ff4463;
+            }
+          }
         }
       }
     }

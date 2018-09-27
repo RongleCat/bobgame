@@ -7,23 +7,26 @@
     <div class="view-block" my>
       <div class="head-container" my>
         <div class="card-block">
-          <img :src="headUrl" class="user-head">
-          <h3 class="user-name">{{userInfo.nickname}}</h3>
-          <div class="user-id">ID:Wx_56598566</div>
+          <img :src="headUrl" class="user-head" @click="go('mysettings')">
+          <h3 class="user-name" @click="go('mysettings')">{{userInfo.nickname}}</h3>
+          <div class="user-id" @click="go('mysettings')">ID:Wx_56598566</div>
           <div class="view-power">查看权益<i class="iconfont icon-you"></i></div>
           <div class="level-exp">
             已累计经验值：100000/100000
+            <div class="tip-icon">
+              <i class="iconfont icon-wenhaoshi"></i>
+            </div>
             <div class="exp-bar">
               <div class="exp-bar-inside" :style="{'width':expValue+'%'}"></div>
             </div>
           </div>
         </div>
         <div class="my-data">
-          <div class="item">
+          <div class="item" @click="go('balance')">
             <div class="data-value">4833.25</div>
             <div class="data-name">余额</div>
           </div>
-          <div class="item">
+          <div class="item" @click="go('myinvitation')">
             <div class="tip-box">+1</div>
             <div class="data-value">1333</div>
             <div class="data-name">邀请的伙伴</div>
@@ -108,9 +111,9 @@
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-09">
+          <li class="icon icon-09" @click="go('mysettings')">
             <h3 class="block-title">
-              设置
+              个人设置
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
@@ -199,7 +202,7 @@
       go(value) {
         this.$router.push('/my/' + value)
       },
-      logout(){
+      logout() {
         window.localStorage.clear();
         this.$router.replace('/home')
       }
@@ -333,6 +336,21 @@
       color: #fff;
       left: 30px;
       bottom: 35px;
+
+      .tip-icon {
+        width: 56px;
+        height: 56px;
+        position: absolute;
+        right: -70px;
+        top: 30%;
+        text-align: center;
+        line-height: 56px;
+
+        .iconfont {
+          font-size: 28px;
+          color: #edeeef;
+        }
+      }
 
       .exp-bar {
         width: 100%;

@@ -7,10 +7,12 @@ import vuescroll from 'vuescroll';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 // import Vconsole from 'vconsole';
-import 'vuescroll/dist/vuescroll.css';
+// import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
 import Popup from './components/Popup.vue';
 import ThePage from './components/ThePage.vue';
+
+import "swiper/dist/css/swiper.css";
 
 
 

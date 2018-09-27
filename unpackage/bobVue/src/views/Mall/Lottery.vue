@@ -315,6 +315,7 @@
               that.count += 1
             }, 300)
           }).catch(err => {
+            console.log(err);
             that.lock = false
           })
         }

@@ -4,7 +4,7 @@
       <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}" v-if="showTabber"></TheTabber>
     </transition>
     <transition :name="direction">
-        <router-view class="view-main" />
+      <router-view class="view-main" />
     </transition>
   </div>
 </template>
@@ -12,7 +12,7 @@
 <script>
   import TheTabber from "@/components/TheTabbar.vue";
   import unit from './unit/back.js';
-  let allRouter = ['Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
+  let allRouter = ['IncomeNotes','Balance','Address', 'MySettings','Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
 
   export default {
     components: {

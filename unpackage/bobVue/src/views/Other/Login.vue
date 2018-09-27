@@ -283,6 +283,7 @@
     padding: 0px 75px;
     padding-top: 860px;
     position: absolute;
+    overflow-y: scroll;
     top: 0;
     left: 0;
     transform: translateX(0);

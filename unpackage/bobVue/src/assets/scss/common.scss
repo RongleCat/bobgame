@@ -32,6 +32,13 @@ body {
   user-select: none;
 }
 
+input,textarea {
+  -webkit-user-select: auto;
+  user-select: auto;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .com-tabber {
   position: fixed;
   bottom: 0;
@@ -127,10 +134,42 @@ body {
   text-align: center !important;
 }
 
+.no-data {
+  width: 100%;
+  padding-top: 310px;
+  background: url('/img/staticImg/nodata.png') no-repeat;
+  background-size: 250px auto;
+  background-position: center 25px;
+  text-align: center;
+  line-height: 70px;
+  font-size: 30px;
+
+  span {
+    color: #ffcf3d;
+  }
+}
 
 @for $i from 0 through 5 {
   .vip-#{$i} {
     background-image: url('/img/staticImg/icon/#{$i}.png');
     background-repeat: no-repeat;
+  }
+}
+
+//地址编辑
+
+.address-pop {
+  .van-address-edit__buttons {
+    padding-bottom: 20px !important;
+  }
+  .van-cell{
+    padding-left: 0;
+    padding-right: 0;
+    .van-cell__title{
+      width: 4em;
+    }
+    &:after{
+      left: 0;
+    }
   }
 }

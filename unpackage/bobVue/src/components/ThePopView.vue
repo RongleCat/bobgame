@@ -1,6 +1,6 @@
 <template>
   <transition :name="transition">
-    <div class="pop-page" :style="{paddingTop:setViewPaddingTop}" ref="pop">
+    <div class="pop-page" :style="{paddingTop:setViewPaddingTop}" ref="pop" v-if="value">
       <div class="statusBar" :style="{height:statusBarHeight,backgroundColor:'#f2f2f2'}" v-if="hasHeader"></div>
       <div class="pop-header" :style="{top:statusBarHeight}" v-if="hasHeader">
         <button class="btn-back iconfont" :class="[btnClass]" @click="closePopView"></button>
@@ -18,7 +18,7 @@
 <script>
   import unit from '../unit/back.js';
   export default {
-    props: ['full', 'back', 'popType', 'btnType', 'header', 'close'],
+    props: ['full', 'back', 'popType', 'btnType', 'header', 'close', 'value'],
     data() {
       return {
         headHeight: 88,
@@ -50,9 +50,10 @@
       }
     },
     watch: {
-      close() {
-        console.log(this.close);
-        this.closePopView()
+      value(newValue) {
+        if (!newValue) {
+          this.closePopView()
+        }
       }
     },
     methods: {
@@ -65,7 +66,7 @@
           that.transitionNone = true
         }
         if (moveX > width) {
-          that.$emit('closeView')
+          that.$emit('closeView') && that.$emit('input', false)
         } else if (moveX > 0) {
           that.pop.style.transform = `translateX(${moveX}px)`
         }
@@ -96,7 +97,7 @@
             } else {
               that.transitionNone = false
               window.clearInterval(window.popTimer)
-              that.$emit('closeView')
+              that.$emit('closeView') && that.$emit('input', false)
             }
           }, 1)
         }
@@ -117,7 +118,7 @@
         let that = this;
         window.clearInterval(window.popTimer)
         if (this.full) {
-          that.$emit('closeView')
+          that.$emit('closeView') && that.$emit('input', false)
         } else {
           that.transitionNone = true
           let moveCount = 0
@@ -128,14 +129,14 @@
             } else {
               that.transitionNone = false
               window.clearInterval(window.popTimer)
-              that.$emit('closeView')
+              that.$emit('closeView') && that.$emit('input', false)
             }
           }, 1)
         }
       },
       backBtnClose() {
         if (window.that.full) {
-          window.that.$emit('closeView')
+          window.that.$emit('closeView') && window.that.$emit('input', false)
         } else {
           window.that.closePopView()
         }
