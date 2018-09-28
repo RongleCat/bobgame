@@ -1,22 +1,21 @@
 <template>
   <ThePage color="#f2f2f2" contentBg="#f0f0f0">
     <template slot="headerContent">
-      {{bind ? '绑定手机' : '修改绑定手机'}}
+      绑定支付宝账号
     </template>
     <template slot="content">
       <div class="bind-container">
         <div class="input-list">
           <div class="item">
-            <label for="phone"><i class="iconfont icon-phone"></i>手机号</label>
+            <label for="phone"><i class="iconfont icon-zhifubao"></i>支付宝账号</label>
             <input type="number" id="phone">
           </div>
-          <div class="item code">
-            <label for="code"><i class="iconfont icon-youjian"></i>验证码</label>
+          <div class="item">
+            <label for="code"><i class="iconfont icon-zhanghu"></i>真实姓名</label>
             <input type="number" id="code">
-            <span class="emitCode">发送验证码</span>
           </div>
-          <div class="item" v-if="bind">
-            <label for="password"><i class="iconfont icon-password"></i>密码</label>
+          <div class="item">
+            <label for="password"><i class="iconfont icon-phone"></i>手机号码</label>
             <input type="password" id="password">
           </div>
         </div>
@@ -32,14 +31,6 @@
       return {
 
       }
-    },
-    computed: {
-      bind() {
-        return this.$route.name === 'BindPhone'
-      }
-    },
-    mounted() {
-      // console.log(this.$route);
     }
   }
 </script>
@@ -48,6 +39,7 @@
   .bind-container {
     padding: 25px;
   }
+
 
   .input-list {
     border-radius: 15px;
@@ -59,7 +51,7 @@
       height: 100px;
       line-height: 100px;
       position: relative;
-      padding-left: 200px;
+      padding-left: 240px;
       @include onePXlineBottom;
 
       &:before {
@@ -72,7 +64,7 @@
       label {
         display: block;
         position: absolute;
-        width: 200px;
+        width: 240px;
         left: 0;
         top: 0;
         padding-left: 90px;
@@ -89,6 +81,10 @@
           left: 0;
           top: 0;
           color: #666;
+
+          &.icon-zhifubao {
+            color: #00a0e9;
+          }
         }
       }
 

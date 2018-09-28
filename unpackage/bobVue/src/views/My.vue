@@ -81,13 +81,13 @@
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-04">
+          <li class="icon icon-04" @click="go('sgin')">
             <h3 class="block-title">
               签到
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-05">
+          <li class="icon icon-05" @click="go('task')">
             <h3 class="block-title">
               任务
             </h3>

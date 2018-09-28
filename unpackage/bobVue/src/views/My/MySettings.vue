@@ -17,7 +17,7 @@
           <div class="item" @click="showNickName = true">
             <div class="item-main">
               <div class="text">昵称</div>
-              <div class="right-value">高呼呼</div>
+              <div class="right-value">{{nickname}}</div>
               <i class="iconfont icon-you"></i>
             </div>
           </div>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="settings-block">
-          <div class="item alipay">
+          <div class="item alipay" @click="go('bindalipay')">
             <div class="item-main">
               <div class="iconfont icon-zhifubao"></div>
               <div class="text">支付宝账号</div>
@@ -79,6 +79,13 @@
             <div class="item-main">
               <div class="text">收货地址</div>
               <div class="right-value">去填写</div>
+              <i class="iconfont icon-you"></i>
+            </div>
+          </div>
+          <div class="item" @click="go('changepassword')">
+            <div class="item-main">
+              <div class="text">修改密码</div>
+              <div class="right-value">去修改</div>
               <i class="iconfont icon-you"></i>
             </div>
           </div>

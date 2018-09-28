@@ -39,9 +39,6 @@
       '$route': function (to, form) {
         let _before = allRouter.indexOf(to.name),
           _after = allRouter.indexOf(form.name);
-        // if (allRouter.indexOf(to.name) === -1) {
-        //   this.direction = 'pop-left';
-        // } else 
         if (_before < _after) {
           this.direction = 'fade-left';
         } else {
@@ -68,7 +65,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    width: 100%;
+    // width: 100%;
+    max-width: 10rem;
     height: 100%;
   }
 </style>

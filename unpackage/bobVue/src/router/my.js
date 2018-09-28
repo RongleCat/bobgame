@@ -4,6 +4,13 @@ import MyInvitation from "../views/My/MyInvitation.vue";
 import MySettings from "../views/My/MySettings.vue";
 import AddressList from "../views/My/AddressList.vue";
 import BindPhone from "../views/My/BindPhone.vue";
+import BindAlipay from "../views/My/BindAlipay.vue";
+import ChangePassword from "../views/My/ChangePassword.vue";
+import Task from "../views/My/Task.vue";
+import Withdraw from "../views/My/Withdraw.vue";
+import Sgin from "../views/My/Sgin.vue";
+
+
 
 export default [
   //收益明细
@@ -47,5 +54,35 @@ export default [
     path: '/my/changephone',
     name: 'ChangePhone',
     component: BindPhone
+  },
+  //绑定支付宝
+  {
+    path: '/my/bindalipay',
+    name: 'BindAlipay',
+    component: BindAlipay
+  },
+  //修改密码
+  {
+    path: '/my/changepassword',
+    name: 'ChangePassword',
+    component: ChangePassword
+  },
+  //任务
+  {
+    path: '/my/task',
+    name: 'Task',
+    component: Task
+  },
+  //提现
+  {
+    path: '/my/withdraw',
+    name: 'Withdraw',
+    component: Withdraw
+  },
+  //签到
+  {
+    path: '/my/sgin',
+    name: 'Sgin',
+    component: Sgin
   }
 ]

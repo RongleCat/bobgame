@@ -13,6 +13,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  color: #333;
 }
 
 body {
@@ -172,4 +173,19 @@ input,textarea {
       left: 0;
     }
   }
+}
+
+.btn-common {
+  width: 100%;
+  height: 100px;
+  background: $by;
+  text-align: center;
+  line-height: 100px;
+  border-radius: 15px;
+  font-size: 30px;
+  @include tapColor;
+}
+
+.padding-container{
+  padding: 0 25px;
 }

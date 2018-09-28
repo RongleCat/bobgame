@@ -11,7 +11,7 @@
               <div class="value">44.4</div>
               <div class="name">当前余额</div>
             </div>
-            <div class="btn-withdraw">提现</div>
+            <div class="btn-withdraw" @click="$router.push('/my/withdraw')">提现</div>
           </div>
           <div class="one-line">
             <div class="item">

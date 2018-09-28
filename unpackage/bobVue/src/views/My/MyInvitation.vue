@@ -85,7 +85,8 @@
       }
     },
     mounted() {
-      console.log(this.swiper);
+      //调用自动计算
+      this.swiper
     }
   }
 </script>

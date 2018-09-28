@@ -1,26 +1,21 @@
 <template>
   <ThePage color="#f2f2f2" contentBg="#f0f0f0">
     <template slot="headerContent">
-      {{bind ? '绑定手机' : '修改绑定手机'}}
+      修改密码
     </template>
     <template slot="content">
       <div class="bind-container">
         <div class="input-list">
           <div class="item">
-            <label for="phone"><i class="iconfont icon-phone"></i>手机号</label>
-            <input type="number" id="phone">
+            <label for="oldPassword"><i class="iconfont icon-password"></i>原密码</label>
+            <input type="password" id="oldPassword">
           </div>
-          <div class="item code">
-            <label for="code"><i class="iconfont icon-youjian"></i>验证码</label>
-            <input type="number" id="code">
-            <span class="emitCode">发送验证码</span>
-          </div>
-          <div class="item" v-if="bind">
-            <label for="password"><i class="iconfont icon-password"></i>密码</label>
-            <input type="password" id="password">
+          <div class="item">
+            <label for="newPassword"><i class="iconfont icon-password"></i>新密码</label>
+            <input type="password" id="newPassword">
           </div>
         </div>
-        <div class="btn-confirm">立即绑定</div>
+        <div class="btn-confirm">立即修改</div>
       </div>
     </template>
   </ThePage>
@@ -32,14 +27,6 @@
       return {
 
       }
-    },
-    computed: {
-      bind() {
-        return this.$route.name === 'BindPhone'
-      }
-    },
-    mounted() {
-      // console.log(this.$route);
     }
   }
 </script>
