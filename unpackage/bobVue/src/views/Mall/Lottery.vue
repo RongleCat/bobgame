@@ -902,6 +902,10 @@
         color: #7f3636;
         @include onePXlineBottom;
 
+        &:before{
+          background: #e5dbc0;
+        }
+
         img {
           position: absolute;
           width: 40px;

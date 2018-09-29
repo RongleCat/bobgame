@@ -55,7 +55,6 @@
       @include onePXlineBottom;
 
       &:before {
-        background: #f0f0f0;
         z-index: 200;
         left: 25px;
         right: 25px !important;

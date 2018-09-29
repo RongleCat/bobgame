@@ -59,7 +59,7 @@
         <div class="my-block icon icon-02 order-info" :class="[order?'hasorder':'']">
           <h3 class="block-title">
             订单详情
-            <span class="view-more" v-if="order">查看更多<i class="iconfont icon-you"></i></span>
+            <span class="view-more" v-if="order" @click="go('orderlist')">查看更多<i class="iconfont icon-you"></i></span>
           </h3>
 
           <div class="order-item" v-if="order">
@@ -93,13 +93,19 @@
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
+          <li class="icon icon-010" @click="go('rankinglist')">
+            <h3 class="block-title">
+              排行榜
+            </h3>
+            <i class="iconfont icon-you"></i>
+          </li>
           <li class="icon icon-06">
             <h3 class="block-title">
               会员代充
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-07">
+          <li class="icon icon-07" @click="go('school')">
             <h3 class="block-title">
               波波学院
             </h3>
@@ -148,7 +154,7 @@
         //   img:'http://cdn.bobgame.cn//Uploads/Picture/2018-08-15/5b73f07a78cf72.00191710.jpg'
         // },
         getData: null,
-        order: false
+        order: true
       }
     },
     computed: {
@@ -229,7 +235,7 @@
     .icon {
       position: relative;
 
-      @for $i from 1 through 9 {
+      @for $i from 1 through 10 {
         &.icon-0#{$i} {
           &::after {
             background-position-y: ($i - 1) * -64px;
@@ -245,7 +251,7 @@
         content: '';
         width: 64px;
         height: 64px;
-        background-image: url('../assets/images/my/icon_list.png');
+        background-image: url('../assets/images/my/icon_list.jpg');
         background-repeat: no-repeat;
         background-size: 64px auto;
       }

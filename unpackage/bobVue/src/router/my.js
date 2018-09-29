@@ -9,6 +9,10 @@ import ChangePassword from "../views/My/ChangePassword.vue";
 import Task from "../views/My/Task.vue";
 import Withdraw from "../views/My/Withdraw.vue";
 import Sgin from "../views/My/Sgin.vue";
+import School from "../views/My/School.vue";
+import SchoolDetails from "../views/My/SchoolDetails.vue";
+import OrderList from "../views/My/OrderList.vue";
+import RankingList from "../views/My/RankingList.vue";
 
 
 
@@ -84,5 +88,29 @@ export default [
     path: '/my/sgin',
     name: 'Sgin',
     component: Sgin
+  },
+  //波波学院
+  {
+    path: '/my/school',
+    name: 'School',
+    component: School
+  },
+  //波波学院详情
+  {
+    path: '/my/school/:id',
+    name: 'SchoolDetails',
+    component: SchoolDetails
+  },
+  //我的订单列表
+  {
+    path: '/my/orderlist',
+    name: 'OrderList',
+    component: OrderList
+  },
+  //排行榜
+  {
+    path: '/my/rankinglist',
+    name: 'RankingList',
+    component: RankingList
   }
 ]

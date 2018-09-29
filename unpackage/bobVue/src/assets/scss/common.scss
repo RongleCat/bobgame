@@ -33,7 +33,8 @@ body {
   user-select: none;
 }
 
-input,textarea {
+input,
+textarea {
   -webkit-user-select: auto;
   user-select: auto;
   -webkit-appearance: none;
@@ -152,7 +153,7 @@ input,textarea {
 
 @for $i from 0 through 5 {
   .vip-#{$i} {
-    background-image: url('/img/staticImg/icon/#{$i}.png');
+    background-image: url('/img/staticImg/icon/#{$i}.jpg');
     background-repeat: no-repeat;
   }
 }
@@ -163,13 +164,16 @@ input,textarea {
   .van-address-edit__buttons {
     padding-bottom: 20px !important;
   }
-  .van-cell{
+
+  .van-cell {
     padding-left: 0;
     padding-right: 0;
-    .van-cell__title{
+
+    .van-cell__title {
       width: 4em;
     }
-    &:after{
+
+    &:after {
       left: 0;
     }
   }
@@ -186,6 +190,19 @@ input,textarea {
   @include tapColor;
 }
 
-.padding-container{
+.padding-container {
   padding: 0 25px;
+}
+
+
+.btn-r {
+  width: 180px;
+  height: 60px;
+  background: #ffce49;
+  color: #333;
+  border-radius: 30px;
+  text-align: center;
+  line-height: 62px;
+  font-size: 26px;
+  @include tapColor;
 }

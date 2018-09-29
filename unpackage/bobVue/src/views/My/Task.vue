@@ -295,10 +295,6 @@
     @include clearfix;
     @include onePXlineBottom;
 
-    &:before {
-      background-color: #f0f0f0;
-    }
-
     .item {
       width: 50%;
       float: left;
@@ -363,10 +359,6 @@
       }
 
       @include onePXlineBottom;
-
-      &:before {
-        background-color: #f0f0f0;
-      }
 
       .complete-box {
         width: 120px;

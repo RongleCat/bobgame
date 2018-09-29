@@ -49,10 +49,6 @@
     background: #fff;
     @include onePXlineBottom;
 
-    &:before {
-      background-color: #f0f0f0;
-    }
-
 
     img {
       width: 70px;
@@ -68,10 +64,6 @@
       position: relative;
       padding-top: 28px;
       @include onePXlineBottom;
-
-      &:before {
-        background-color: #f0f0f0;
-      }
 
       .info-one {
         font-size: 28px;

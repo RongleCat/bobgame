@@ -237,10 +237,6 @@
 
           @include clearfix;
           @include onePXlineBottom;
-
-          &:before {
-            background-color: #f0f0f0;
-          }
         }
 
 

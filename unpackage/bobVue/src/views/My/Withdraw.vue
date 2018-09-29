@@ -169,10 +169,6 @@
         @include onePXlineTop;
         @include clearfix;
 
-        &::before {
-          background: #f0f0f0;
-        }
-
         .now-balance {
           float: left;
 
