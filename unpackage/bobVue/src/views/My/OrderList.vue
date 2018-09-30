@@ -146,7 +146,15 @@
   export default {
     data() {
       return {
-
+        orderId:'ssssssssssssssss'
+      }
+    },
+    methods:{
+      onCopy(){
+        alert('复制成功')
+      },
+      onError(){
+        alert('复制失败')
       }
     }
   }

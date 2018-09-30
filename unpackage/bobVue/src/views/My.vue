@@ -111,7 +111,7 @@
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-08">
+          <li class="icon icon-08" @click="go('contactus')">
             <h3 class="block-title">
               联系我们
             </h3>

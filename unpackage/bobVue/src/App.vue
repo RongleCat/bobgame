@@ -12,7 +12,7 @@
 <script>
   import TheTabber from "@/components/TheTabbar.vue";
   import unit from './unit/back.js';
-  let allRouter = ['SchoolDetails','School','IncomeNotes','Balance','Address', 'MySettings','Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
+  let allRouter = ['Rule','ContactUs','SchoolDetails','School','IncomeNotes','Balance','Address', 'MySettings','Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
 
   export default {
     components: {

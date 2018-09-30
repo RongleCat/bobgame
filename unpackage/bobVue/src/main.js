@@ -6,6 +6,7 @@ import FastClick from 'fastclick'
 import vuescroll from 'vuescroll';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueClipboard from 'vue-clipboard2'
 // import Vconsole from 'vconsole';
 // import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
@@ -87,7 +88,9 @@ axios.interceptors.response.use(function (response) {
 });
 
 Vue.use(vueTools)
+Vue.use(VueClipboard)
 Vue.use(VueAxios, axios)
+
 
 //全局过滤器
 Vue.filter('imgUrl', function (value) {

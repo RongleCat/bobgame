@@ -13,6 +13,9 @@ import School from "../views/My/School.vue";
 import SchoolDetails from "../views/My/SchoolDetails.vue";
 import OrderList from "../views/My/OrderList.vue";
 import RankingList from "../views/My/RankingList.vue";
+import ContactUs from "../views/My/ContactUs.vue";
+import Rule from "../views/My/Rule.vue";
+import Feedback from "../views/My/Feedback.vue";
 
 
 
@@ -112,5 +115,24 @@ export default [
     path: '/my/rankinglist',
     name: 'RankingList',
     component: RankingList
+  },
+  //联系我们
+  {
+    path: '/my/contactus',
+    name: 'ContactUs',
+    component: ContactUs
+  },
+  //用户协议
+  {
+    path: '/my/rule',
+    name: 'Rule',
+    component: Rule
+  },
+  //意见反馈
+  {
+    path: '/my/feedback',
+    name: 'Feedback',
+    component: Feedback
   }
+
 ]
