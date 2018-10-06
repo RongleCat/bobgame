@@ -1,11 +1,13 @@
 <template>
   <div class="view-page" :style="{paddingTop:setViewPaddingTop}">
     <div class="statusBar" :style="{height:statusBarHeight}"></div>
-    <div class="header-block" :style="{top:statusBarHeight}">
+    <div class="header-block" home :style="{top:statusBarHeight}">
       <div class="head-img" :style="{backgroundImage:'url(' + headUrl + ')'}"></div>
       <div class="user-info">
         <div class="user-name vip-5">{{userInfo.nickname}}</div>
-        <div class="bean-block">{{userInfo.jifen}}</div>
+        <div class="bean-block" @click="$router.push('/my/recharge')">{{userInfo.jifen}}
+          <div class="iconfont icon-add"></div>
+        </div>
       </div>
       <div class="message-icon" :class="{active:showMessageTip}" @click="toggleTip">消息</div>
       <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="toggleTip">月卡</div>
@@ -148,7 +150,7 @@
 </script>
 
 <style lang="scss">
-  .header-block {
+  .header-block[home] {
     height: 136px;
     padding-left: 25px;
     position: absolute;
@@ -208,6 +210,22 @@
         line-height: 48px;
         font-weight: bold;
         float: left;
+        position: relative;
+        padding-right: 48px;
+
+        .iconfont {
+          position: absolute;
+          width: 36px;
+          height: 36px;
+          right: 4px;
+          top: 4px;
+          background: #adadad;
+          color: #fff;
+          border-radius: 50%;
+          font-size: 24px;
+          text-align: center;
+          line-height: 36px;
+        }
       }
     }
 

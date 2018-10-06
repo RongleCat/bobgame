@@ -1,10 +1,11 @@
 <template>
   <div class="view-page" :style="{paddingTop:setViewPaddingTop}">
     <div class="statusBar" :style="{height:statusBarHeight}"></div>
-    <div class="head-block" :style="{top:statusBarHeight}">
-      <div class="user-info">
+    <div class="head-block" mall :style="{top:statusBarHeight}">
+      <div class="user-info" @click="$router.push('/my/recharge')">
         {{userInfo.jifen}}
         <img :src="headUrl" alt="" class="head-img">
+        <div class="iconfont icon-add"></div>
       </div>
       <div class="my-order">我的订单</div>
     </div>
@@ -136,7 +137,7 @@
 </script>
 
 <style lang="scss">
-  .head-block {
+  .head-block[mall] {
     height: 100px;
     width: 100%;
     position: absolute;
@@ -164,6 +165,8 @@
       background-position-y: center;
       background-position-x: 70px;
 
+      padding-right: 64px;
+
       .head-img {
         width: 60px;
         height: 60px;
@@ -171,6 +174,20 @@
         left: 0;
         top: 0;
         border-radius: 50%;
+      }
+
+      .iconfont {
+        position: absolute;
+        width: 52px;
+        height: 52px;
+        right: 4px;
+        top: 4px;
+        background: #adadad;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 24px;
+        text-align: center;
+        line-height: 52px;
       }
     }
 

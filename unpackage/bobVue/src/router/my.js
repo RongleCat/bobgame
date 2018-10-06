@@ -16,6 +16,9 @@ import RankingList from "../views/My/RankingList.vue";
 import ContactUs from "../views/My/ContactUs.vue";
 import Rule from "../views/My/Rule.vue";
 import Feedback from "../views/My/Feedback.vue";
+import Recharge from "../views/My/Recharge.vue";
+import GiveBean from "../views/My/GiveBean.vue";
+
 
 
 
@@ -133,6 +136,17 @@ export default [
     path: '/my/feedback',
     name: 'Feedback',
     component: Feedback
+  },
+  //充值
+  {
+    path: '/my/recharge',
+    name: 'Recharge',
+    component: Recharge
+  },
+  //会员代充
+  {
+    path: '/my/givebean',
+    name: 'GiveBean',
+    component: GiveBean
   }
-
 ]
