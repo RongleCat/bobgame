@@ -236,7 +236,7 @@
           padding-right: 40px;
 
           @include clearfix;
-          @include onePXlineBottom;
+          @include oneB;
         }
 
 

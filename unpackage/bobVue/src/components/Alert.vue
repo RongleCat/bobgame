@@ -57,7 +57,7 @@
       height: 80px;
       position: relative;
       @include clearfix;
-      @include onePXlineTop;
+      @include oneT;
 
       &.two {
         .item {
@@ -65,7 +65,7 @@
 
           &:last-child {
             position: relative;
-            @include onePXlineLeft;
+            @include oneL;
           }
         }
       }

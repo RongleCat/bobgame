@@ -47,7 +47,7 @@
     padding-right: 25px;
     position: relative;
     background: #fff;
-    @include onePXlineBottom;
+    @include oneB;
 
 
     img {
@@ -63,7 +63,7 @@
       height: 130px;
       position: relative;
       padding-top: 28px;
-      @include onePXlineBottom;
+      @include oneB;
 
       .info-one {
         font-size: 28px;

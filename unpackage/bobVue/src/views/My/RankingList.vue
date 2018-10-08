@@ -226,7 +226,7 @@
     background: #fff;
     position: relative;
     padding-left: 210px;
-    @include onePXlineBottom;
+    @include oneB;
 
     &:last-child {
       &::before {
@@ -293,7 +293,7 @@
       float: left;
       font-size: 24px;
       font-weight: bold;
-      @include textOverflow;
+      @include textof;
 
       span {
         display: block;

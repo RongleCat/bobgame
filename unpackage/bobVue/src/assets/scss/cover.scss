@@ -1,0 +1,49 @@
+//会员代充
+.give-container {
+  .van-icon-checked {
+    color: #fb3f55;
+  }
+
+  .van-radio-group {
+    text-align: right;
+  }
+
+  .radio-item {
+    display: inline-block;
+    height: 100px;
+    line-height: 102px;
+    margin-left: 30px;
+
+    .van-radio__input {
+      line-height: 0;
+    }
+
+    .van-radio__label {
+      position: relative;
+      padding-left: 45px;
+      padding-right: 15px;
+      background: #f0f0f0;
+      border-radius: 5px;
+      height: 36px;
+      line-height: 38px;
+      font-size: 24px;
+
+      .iconfont {
+        font-size: 36px;
+        color: #00a0e9;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.icon-weixinzhifu {
+          color: #59b64c;
+        }
+      }
+    }
+  }
+}
+
+//分享模板
+.van-popup{
+  background:rgba(0,0,0,0);
+}

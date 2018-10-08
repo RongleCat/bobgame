@@ -78,7 +78,7 @@
         </div>
         <div class="pop-title">选择奖池</div>
         <div class="level-line" :class="[`level-0${index}`]" @click="level = (+index)" v-for="(item,index) in prizesList" :key="index">
-          <img :src="`/img/staticImg/lv${index}.png`" class="label">
+          <img :src="`/img/lv${index}.png`" class="label">
           <p>每局{{index==1?'10':index == 2?'100':'1000'}}金豆</p>
           <div class="goods-loop-container">
             <div class="before-label">可中奖品</div>
@@ -835,7 +835,7 @@
             top: 95px;
             width: 100%;
             white-space: normal;
-            // @include textOverflow;
+            // @include textof;
           }
         }
       }
@@ -900,7 +900,7 @@
         padding-left: 56px;
         font-size: 30px;
         color: #7f3636;
-        @include onePXlineBottom;
+        @include oneB;
 
         &:before{
           background: #e5dbc0;

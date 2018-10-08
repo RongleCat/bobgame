@@ -293,7 +293,7 @@
     background: #fff;
     position: relative;
     @include clearfix;
-    @include onePXlineBottom;
+    @include oneB;
 
     .item {
       width: 50%;
@@ -358,7 +358,7 @@
         }
       }
 
-      @include onePXlineBottom;
+      @include oneB;
 
       .complete-box {
         width: 120px;

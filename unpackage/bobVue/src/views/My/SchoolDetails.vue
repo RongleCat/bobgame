@@ -44,7 +44,7 @@
     .head-box {
       position: relative;
       // padding-bottom: 20px;
-      @include onePXlineBottom;
+      @include oneB;
 
       .title {
         font-size: 40px;

@@ -97,7 +97,7 @@
     width: 100%;
     background: #fff;
     @include clearfix;
-    @include onePXlineBottom;
+    @include oneB;
 
     .item {
       width: 33.33%;

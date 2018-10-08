@@ -53,7 +53,7 @@
         height: 100px;
         position: relative;
         padding-left: 110px;
-        @include onePXlineBottom;
+        @include oneB;
 
         label {
           line-height: 102px;
@@ -107,7 +107,7 @@
         color: #999;
         padding-left: 30px;
         position: relative;
-        @include onePXlineBottom;
+        @include oneB;
 
       }
 

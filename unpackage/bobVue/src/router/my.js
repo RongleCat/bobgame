@@ -18,6 +18,8 @@ import Rule from "../views/My/Rule.vue";
 import Feedback from "../views/My/Feedback.vue";
 import Recharge from "../views/My/Recharge.vue";
 import GiveBean from "../views/My/GiveBean.vue";
+import Share from "../views/My/Share.vue";
+
 
 
 
@@ -148,5 +150,11 @@ export default [
     path: '/my/givebean',
     name: 'GiveBean',
     component: GiveBean
+  },
+  //分享模板
+  {
+    path: '/my/share',
+    name: 'Share',
+    component: Share
   }
 ]

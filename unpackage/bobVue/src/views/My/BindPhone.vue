@@ -60,7 +60,7 @@
       line-height: 100px;
       position: relative;
       padding-left: 200px;
-      @include onePXlineBottom;
+      @include oneB;
 
       &:before {
         z-index: 200;

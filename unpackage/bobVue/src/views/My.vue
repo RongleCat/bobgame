@@ -54,7 +54,7 @@
           <h3 class="block-title">
             邀请好友
           </h3>
-          <div class="btn btn-invite">立即邀请</div>
+          <div class="btn btn-invite" @click="go('share')">立即邀请</div>
         </div>
         <div class="my-block icon icon-02 order-info" :class="[order?'hasorder':'']">
           <h3 class="block-title">

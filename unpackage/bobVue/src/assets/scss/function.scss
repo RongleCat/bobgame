@@ -52,13 +52,13 @@ $br:#fe6f49;
   }
 }
 
-@mixin textOverflow {
+@mixin textof {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-@mixin onePXlineBottom {
+@mixin oneB {
   &:before {
     // width: 100%;
     height: 1px;
@@ -74,7 +74,7 @@ $br:#fe6f49;
   }
 }
 
-@mixin onePXlineTop {
+@mixin oneT {
   &:before {
     width: 100%;
     height: 1px;
@@ -90,7 +90,7 @@ $br:#fe6f49;
   }
 }
 
-@mixin onePXlineLeft {
+@mixin oneL {
   &:before {
     width: 1px;
     height: 100%;

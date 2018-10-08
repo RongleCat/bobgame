@@ -166,7 +166,7 @@
         height: 70px;
         line-height: 72px;
         position: relative;
-        @include onePXlineTop;
+        @include oneT;
         @include clearfix;
 
         .now-balance {

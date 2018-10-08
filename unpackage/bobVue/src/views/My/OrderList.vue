@@ -236,7 +236,7 @@
         .goods-name {
           font-size: 26px;
           font-weight: bold;
-          @include textOverflow;
+          @include textof;
         }
 
         .bottom-tip {
@@ -247,7 +247,7 @@
 
       .get-info {
         position: relative;
-        @include onePXlineTop;
+        @include oneT;
         padding-left: 170px;
         height: 136px;
         // background-image: linear-gradient(135deg, #fff 12.5%, #6f8ff7 0, #6f8ff7 37.5%, #fff 0, #fff 62.5%, #f76f6f 0, #f76f6f 87.5%, #fff 0, #fff 100%);

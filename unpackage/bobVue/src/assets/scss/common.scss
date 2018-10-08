@@ -139,7 +139,7 @@ textarea {
 .no-data {
   width: 100%;
   padding-top: 310px;
-  background: url('/img/staticImg/nodata.png') no-repeat;
+  background: url('/img/nodata.png') no-repeat;
   background-size: 250px auto;
   background-position: center 25px;
   text-align: center;
@@ -153,7 +153,7 @@ textarea {
 
 @for $i from 0 through 5 {
   .vip-#{$i} {
-    background-image: url('/img/staticImg/icon/#{$i}.jpg');
+    background-image: url('/img/icon/#{$i}.jpg');
     background-repeat: no-repeat;
   }
 }
