@@ -25,9 +25,6 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      meta: {
-        keepAlive: true // 需要被缓存
-      },
       beforeEnter: (to, from, next) => {
         if (!window.localStorage.showGuide) {
           next('/guide')
@@ -47,18 +44,12 @@ const router = new Router({
     {
       path: '/friends',
       name: 'Friends',
-      component: Friends,
-      meta: {
-        keepAlive: true // 需要被缓存
-      }
+      component: Friends
     },
     {
       path: '/mall',
       name: 'Mall',
-      component: Mall,
-      // meta: {
-      //   keepAlive: true // 需要被缓存
-      // }
+      component: Mall
     },
     {
       path: '/my',

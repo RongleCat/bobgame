@@ -38,10 +38,9 @@
 </template>
 
 <script>
-  import { swiper, swiperSlide } from "vue-awesome-swiper";
   import InviteItem from "@/components/InviteItem.vue";
   export default {
-    components: { swiper, swiperSlide, InviteItem },
+    components: { InviteItem },
     data() {
       return {
         keyword: '',

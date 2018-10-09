@@ -3,14 +3,14 @@
     <div class="btn-skip" :style="{top:paddingTop}" @click="navToHome">跳过</div>
     <swiper :options="swiperOption" ref="mySwiper" class="guide-container" guide>
       <!-- slides -->
-      <swiper-slide class="item-01"></swiper-slide>
-      <swiper-slide class="item-02"></swiper-slide>
-      <swiper-slide class="item-03"></swiper-slide>
-      <swiper-slide class="item-04">
+      <swiperSlide class="item-01"></swiperSlide>
+      <swiperSlide class="item-02"></swiperSlide>
+      <swiperSlide class="item-03"></swiperSlide>
+      <swiperSlide class="item-04">
         <div class="enter-home" @click="navToHome">
           开始游戏
         </div>
-      </swiper-slide>
+      </swiperSlide>
       <!-- Optional controls -->
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
@@ -18,13 +18,7 @@
 </template>
 
 <script>
-  import 'swiper/dist/css/swiper.css'
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   export default {
-    components: {
-      swiper,
-      swiperSlide
-    },
     computed: {
       paddingTop() {
         return this.$store.state.statusBarHeight + 20 / 75 + 'rem'

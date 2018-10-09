@@ -27,12 +27,7 @@
 </template>
 
 <script>
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   export default {
-    components: {
-      swiper,
-      swiperSlide
-    },
     props: ['goodslist', 'typeinfo'],
     data() {
       return {

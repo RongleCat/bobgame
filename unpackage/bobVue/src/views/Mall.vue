@@ -63,12 +63,11 @@
 
 
 <script>
-  import { swiper, swiperSlide } from 'vue-awesome-swiper'
   import CountDown from '@/components/CountDown';
   import MallGoodsGroup from '@/components/MallGoodsGroup';
   import { mapState } from "Vuex";
   export default {
-    components: { swiper, swiperSlide, CountDown, MallGoodsGroup },
+    components: {  CountDown, MallGoodsGroup },
     data() {
       return {
         title: "商城",

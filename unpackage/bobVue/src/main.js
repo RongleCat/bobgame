@@ -13,6 +13,9 @@ import ThePopView from './components/ThePopView.vue';
 import Popup from './components/Popup.vue';
 import ThePage from './components/ThePage.vue';
 
+import { swiperSlide } from "vue-awesome-swiper";
+import swiper from "./components/fixSlide.js";
+
 import "swiper/dist/css/swiper.css";
 
 
@@ -32,6 +35,8 @@ import vueTools from "./unit/atApp";
 Vue.component('ThePopView', ThePopView)
 Vue.component('Popup', Popup)
 Vue.component('ThePage', ThePage)
+Vue.component('swiperSlide', swiperSlide)
+Vue.component('swiper', swiper)
 //页面滚动插件配置
 Vue.use(vuescroll, {
   ops: {

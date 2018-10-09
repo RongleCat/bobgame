@@ -64,10 +64,8 @@
 </template>
 
 <script>
-  import { swiper, swiperSlide } from "vue-awesome-swiper";
   import { mapState } from "Vuex";
   export default {
-    components: { swiper, swiperSlide },
     data() {
       return {
         title: "首页",

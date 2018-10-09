@@ -19,8 +19,7 @@ import Feedback from "../views/My/Feedback.vue";
 import Recharge from "../views/My/Recharge.vue";
 import GiveBean from "../views/My/GiveBean.vue";
 import Share from "../views/My/Share.vue";
-
-
+import MyPower from "../views/My/MyPower.vue";
 
 
 
@@ -156,5 +155,11 @@ export default [
     path: '/my/share',
     name: 'Share',
     component: Share
+  },
+  //我的权益
+  {
+    path: '/my/mypower',
+    name: 'MyPower',
+    component: MyPower
   }
 ]

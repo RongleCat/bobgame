@@ -6,13 +6,13 @@
     <template slot="content">
       <div class="share-container">
         <div class="share-main-block">
-          <div class="btn-help">
+          <div class="btn-help" @click="showHelp = true">
             <i class="iconfont icon-wenhao"></i>
             帮助
           </div>
           <template v-if="!diy">
             <div class="btn-screen" @click="showScreen = true">场景筛选</div>
-            <div class="btn-QC"><i class="iconfont icon-erweima"></i></div>
+            <div class="btn-QC" @click="showQC = true"><i class="iconfont icon-erweima"></i></div>
           </template>
           <div class="img-box">
             <img @click="startShare" :src="diy?'/img/share_diy_main.jpg':'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share_demo.jpg'" class="main-img">
@@ -32,31 +32,31 @@
             <div class="item" :style="{backgroundImage:`url('/img/share_diy.jpg')`}" @click="diy = true">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
+            <div class="item" @click="select = 1" :class="[select == 1?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
+            <div class="item" @click="select = 2" :class="[select == 2?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
+            <div class="item" @click="select = 3" :class="[select == 3?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
+            <div class="item" @click="select = 4" :class="[select == 4?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
+            <div class="item" @click="select = 5" :class="[select == 5?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
+            <div class="item" @click="select = 6" :class="[select == 6?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
+            <div class="item" @click="select = 7" :class="[select == 7?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_01.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
+            <div class="item" @click="select = 8" :class="[select == 8?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_02.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
-            <div class="item" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
+            <div class="item" @click="select = 9" :class="[select == 9?'selected':'']" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/share/share_03.jpg')`}">
               <i class="iconfont icon-dagou"></i>
             </div>
           </div>
@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-      <van-popup v-model="showScreen" position="bottom" :close-on-click-overlay="false">
+      <van-popup v-model="showScreen" position="bottom" :close-on-click-overlay="false" share>
         <div class="screen-block">
           <div class="list-title">请选择应用场景
             <div class="btn-close" @click="showScreen = false"><i class="iconfont icon-fullclose"></i></div>
@@ -148,6 +148,23 @@
           </div>
         </div>
       </van-popup>
+      <Popup :maskClose="false" v-model="showQC">
+        <div class="qc-pop-container">
+          <div class="list-title">{{!atApp?'长按二维码保存':'点击图片保存到手机'}}
+            <div class="btn-close" @click="showQC = false"><i class="iconfont icon-fullclose"></i></div>
+          </div>
+          <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/qc.jpg">
+        </div>
+      </Popup>
+      <Popup :maskClose="false" v-model="showHelp">
+        <div class="help-pop-container">
+          <div class="list-title">帮助</div>
+          <div class="help-content">
+            写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢
+          </div>
+          <div class="btn-bottom btn-common" @click="showHelp = false">我知道了</div>
+        </div>
+      </Popup>
     </template>
   </ThePage>
 </template>
@@ -161,7 +178,10 @@
         atApp: false,
         diy: false,
         reDiy: false,
-        showScreen: false
+        showScreen: false,
+        showQC: false,
+        showHelp: false,
+        select: 1
       }
     },
     methods: {
@@ -234,10 +254,17 @@
           border-radius: 50%;
           bottom: 6px;
           right: 6px;
+          opacity: 0;
         }
 
         &:first-child {
           margin-left: 0;
+        }
+
+        &.selected {
+          .iconfont {
+            opacity: 1;
+          }
         }
       }
     }
@@ -438,6 +465,68 @@
           margin-right: 0;
         }
       }
+    }
+  }
+
+  .qc-pop-container {
+    background: #fff;
+    padding: 25px;
+    padding-top: 100px;
+
+    img {
+      width: 500px;
+    }
+
+    .list-title {
+      line-height: 100px;
+      font-size: 38px;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      text-align: center;
+
+      .btn-close {
+        right: 0;
+        top: 0;
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        @include tapMask;
+        position: absolute;
+
+        .iconfont {
+          font-size: 40px;
+        }
+      }
+    }
+  }
+
+  .help-pop-container {
+    width: 600px;
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+
+    .list-title {
+      font-size: 40px;
+      font-weight: bold;
+      line-height: 120px;
+      padding-left: 40px;
+    }
+
+    .help-content {
+      padding: 0 40px;
+      max-height: 500px;
+      overflow-y: auto;
+      font-size: 24px;
+    }
+
+    .btn-bottom {
+      margin-top: 40px;
+      width: 100%;
+      border-radius: 0;
     }
   }
 </style>

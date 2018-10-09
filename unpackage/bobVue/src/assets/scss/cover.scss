@@ -44,6 +44,36 @@
 }
 
 //分享模板
-.van-popup{
-  background:rgba(0,0,0,0);
+.van-popup[share] {
+  background: rgba(0, 0, 0, 0);
+}
+
+//我的权益
+.power-container {
+  .card-pagination {
+    position: absolute;
+    bottom: 0px !important;
+    text-align: center;
+    line-height: 50px;
+
+    .card-item {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      background: #ccc;
+      transition: all 0.2s;
+      margin-left: 12px;
+      vertical-align: 2px;
+
+      &.card-item-active {
+        background: #666;
+        width: 60px;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
 }
