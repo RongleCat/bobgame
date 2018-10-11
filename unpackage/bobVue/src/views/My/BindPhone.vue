@@ -7,17 +7,17 @@
       <div class="bind-container">
         <div class="input-list">
           <div class="item">
-            <label for="phone"><i class="iconfont icon-phone"></i>手机号</label>
-            <input type="number" id="phone">
+            <label for="phone"><i class="iconfont icon-phone"></i></label>
+            <input type="number" id="phone" placeholder="请输入手机号码">
           </div>
           <div class="item code">
-            <label for="code"><i class="iconfont icon-youjian"></i>验证码</label>
-            <input type="number" id="code">
+            <label for="code"><i class="iconfont icon-youjian"></i></label>
+            <input type="number" id="code" placeholder="请输入验证码">
             <span class="emitCode">发送验证码</span>
           </div>
           <div class="item" v-if="bind">
-            <label for="password"><i class="iconfont icon-password"></i>密码</label>
-            <input type="password" id="password">
+            <label for="password"><i class="iconfont icon-password"></i></label>
+            <input type="password" id="password" placeholder="请输入密码">
           </div>
         </div>
         <div class="btn-confirm">立即绑定</div>
@@ -59,7 +59,7 @@
       height: 100px;
       line-height: 100px;
       position: relative;
-      padding-left: 200px;
+      padding-left: 100px;
       @include oneB;
 
       &:before {
@@ -71,7 +71,7 @@
       label {
         display: block;
         position: absolute;
-        width: 200px;
+        width: 100px;
         left: 0;
         top: 0;
         padding-left: 90px;
@@ -98,6 +98,12 @@
         width: 100%;
         font-size: 30px;
         display: block;
+        // text-align: right;
+        padding-right: 25px;
+
+        &::-webkit-input-placeholder {
+          color: #adadad;
+        }
       }
 
       &.code {

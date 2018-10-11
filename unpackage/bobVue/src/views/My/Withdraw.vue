@@ -26,7 +26,7 @@
           </div>
           <div class="withdraw-bottom">
             <div class="now-balance">当前余额：6.48元</div>
-            <div class="frozen-balance">(冻结：2.48元) <i class="iconfont icon-wenhao"></i></div>
+            <div class="frozen-balance" @click="vipTip = true">(冻结：2.48元) <i class="iconfont icon-wenhao"></i></div>
           </div>
 
           <div class="all-withdraw">全部提现</div>
@@ -37,15 +37,21 @@
           <div class="bottom-tip"><i class="iconfont icon-info"></i>提现将于24小时内转入您绑定的支付宝账号</div>
         </div>
       </div>
+      <VIPPopup v-model="vipTip"></VIPPopup>
     </template>
   </ThePage>
 </template>
 
 <script>
+  import VIPPopup from "@/components/VIPPopup.vue";
   export default {
+    components:{
+      VIPPopup
+    },
     data() {
       return {
-        hasAccount: true
+        hasAccount: true,
+        vipTip:false
       }
     },
     mounted() {

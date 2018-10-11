@@ -158,7 +158,7 @@ export default [
   },
   //我的权益
   {
-    path: '/my/mypower',
+    path: '/my/mypower/:vipLevel',
     name: 'MyPower',
     component: MyPower
   }

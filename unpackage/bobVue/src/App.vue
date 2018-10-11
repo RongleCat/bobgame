@@ -12,7 +12,7 @@
 <script>
   import TheTabber from "@/components/TheTabbar.vue";
   import unit from './unit/back.js';
-  let allRouter = ['Rule','ContactUs','SchoolDetails','School','IncomeNotes','Balance','Address', 'MySettings','Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
+  let allRouter = ['GoodDetail', 'GoodSearch', 'Rule', 'ContactUs', 'SchoolDetails', 'School', 'IncomeNotes', 'Balance', 'Address', 'MySettings', 'Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
 
   export default {
     components: {
@@ -65,7 +65,7 @@
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+    color: #333;
     // width: 100%;
     max-width: 10rem;
     height: 100%;

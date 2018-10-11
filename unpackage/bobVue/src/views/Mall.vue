@@ -7,7 +7,7 @@
         <img :src="headUrl" alt="" class="head-img">
         <div class="iconfont icon-add"></div>
       </div>
-      <div class="my-order">我的订单</div>
+      <div class="my-order" @click="$router.push('/my/orderlist')">我的订单</div>
     </div>
     <div class="view-block">
       <transition name="fade-in">
@@ -25,7 +25,7 @@
 
           <div class="lottery-block">
             <div class="item" @click="$router.push('/mall/lottery')"></div>
-            <div class="item" @click="$router.push('/mall/lottery')"></div>
+            <div class="item" @click="$router.push('/mall/goodsearch')"></div>
           </div>
           <!-- 限时兑换 -->
           <div class="block-title">限时兑换</div>
@@ -67,7 +67,7 @@
   import MallGoodsGroup from '@/components/MallGoodsGroup';
   import { mapState } from "Vuex";
   export default {
-    components: {  CountDown, MallGoodsGroup },
+    components: { CountDown, MallGoodsGroup },
     data() {
       return {
         title: "商城",

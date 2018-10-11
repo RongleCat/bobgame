@@ -7,16 +7,16 @@
       <div class="bind-container">
         <div class="input-list">
           <div class="item">
-            <label for="phone"><i class="iconfont icon-zhifubao"></i>支付宝账号</label>
-            <input type="number" id="phone">
+            <label for="account"><i class="iconfont icon-zhifubao"></i>支付宝账号</label>
+            <input type="text" id="account" placeholder="请输入您的支付宝账号">
           </div>
           <div class="item">
-            <label for="code"><i class="iconfont icon-zhanghu"></i>真实姓名</label>
-            <input type="number" id="code">
+            <label for="realname"><i class="iconfont icon-zhanghu"></i>真实姓名</label>
+            <input type="text" id="realname" placeholder="请输入您的真实姓名">
           </div>
           <div class="item">
-            <label for="password"><i class="iconfont icon-phone"></i>手机号码</label>
-            <input type="password" id="password">
+            <label for="phone"><i class="iconfont icon-phone"></i>手机号码</label>
+            <input type="number" id="phone" placeholder="请输入您的手机号码">
           </div>
         </div>
         <div class="btn-confirm">立即绑定</div>
@@ -94,6 +94,11 @@
         width: 100%;
         font-size: 30px;
         display: block;
+        text-align: right;
+        padding-right: 25px;
+        &::-webkit-input-placeholder{
+          color: #adadad;
+        }
       }
 
       &.code {

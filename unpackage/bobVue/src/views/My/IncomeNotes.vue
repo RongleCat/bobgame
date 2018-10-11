@@ -80,7 +80,7 @@
                   高呼呼
                 </div>
                 <div class="type-tip">
-                  <span class="n-text">充值99元</span><span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                  <span class="n-text">充值99元</span><span class="tip-question" @click="vipTip = true">冻结 <i class="iconfont icon-wenhao"></i></span>
                 </div>
               </div>
               <div class="get-money">
@@ -99,7 +99,7 @@
                   平台红包奖励
                 </div>
                 <div class="type-tip">
-                  <span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                  <span class="tip-question" @click="vipTip = true">冻结 <i class="iconfont icon-wenhao"></i></span>
                 </div>
               </div>
               <div class="get-money">
@@ -169,7 +169,7 @@
                   高呼呼
                 </div>
                 <div class="type-tip">
-                  <span class="n-text">充值99元</span><span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                  <span class="n-text">充值99元</span><span class="tip-question" @click="vipTip = true">冻结 <i class="iconfont icon-wenhao"></i></span>
                 </div>
               </div>
               <div class="get-money">
@@ -188,7 +188,7 @@
                   平台红包奖励
                 </div>
                 <div class="type-tip">
-                  <span class="tip-question">冻结 <i class="iconfont icon-wenhao"></i></span>
+                  <span class="tip-question" @click="vipTip = true">冻结 <i class="iconfont icon-wenhao"></i></span>
                 </div>
               </div>
               <div class="get-money">
@@ -236,18 +236,21 @@
       <VanPopup v-model="endPop" position="bottom" :close-on-click-overlay="false">
         <DatetimePicker v-model="endTime" type="date" :min-date="minDate" :max-date="endMax" title="选择结束时间" @cancel="endCancel" @confirm="endConfirm"></DatetimePicker>
       </VanPopup>
+      <VIPPopup v-model="vipTip"></VIPPopup>
     </template>
   </ThePage>
 </template>
 
 <script>
   import { DatetimePicker, Popup } from "vant";
+  import VIPPopup from "@/components/VIPPopup.vue";
   import moment from "moment";
 
   export default {
     components: {
       VanPopup: Popup,
-      DatetimePicker
+      DatetimePicker,
+      VIPPopup
     },
     data() {
       return {
@@ -267,7 +270,8 @@
         endMax: new Date(),
         classOpen: false,
         classSelect: 0,
-        classItems: ['全部收益', '玩家充值', '提现', '比赛奖励', '红包']
+        classItems: ['全部收益', '玩家充值', '提现', '比赛奖励', '红包'],
+        vipTip:false
       };
     },
     watch: {

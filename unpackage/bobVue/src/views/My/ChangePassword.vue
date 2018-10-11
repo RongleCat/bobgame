@@ -8,11 +8,11 @@
         <div class="input-list">
           <div class="item">
             <label for="oldPassword"><i class="iconfont icon-password"></i>原密码</label>
-            <input type="password" id="oldPassword">
+            <input type="password" id="oldPassword" placeholder="请输入原密码">
           </div>
           <div class="item">
             <label for="newPassword"><i class="iconfont icon-password"></i>新密码</label>
-            <input type="password" id="newPassword">
+            <input type="password" id="newPassword" placeholder="请输入新密码">
           </div>
         </div>
         <div class="btn-confirm">立即修改</div>
@@ -85,6 +85,12 @@
         width: 100%;
         font-size: 30px;
         display: block;
+        text-align: right;
+        padding-right: 25px;
+
+        &::-webkit-input-placeholder {
+          color: #adadad;
+        }
       }
 
       &.code {

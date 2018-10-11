@@ -12,7 +12,7 @@
             <div class="vip-label" :class="[`vip-${vipLevel}`]">{{vipName[vipLevel]}}</div>
           </h3>
           <div class="user-id" @click="go('mysettings')">ID:Wx_56598566</div>
-          <div class="view-power" @click="go('mypower')">查看权益<i class="iconfont icon-you"></i></div>
+          <div class="view-power" @click="go('mypower/1')">查看权益<i class="iconfont icon-you"></i></div>
           <div class="level-exp">
             已累计经验值：100000/100000
             <div class="tip-icon">
@@ -22,7 +22,7 @@
               <div class="exp-bar-inside" :style="{'width':expValue+'%'}"></div>
             </div>
           </div>
-          <div class="card-time">2018-12-21 到期</div>
+          <div class="card-time" @click="go('mypower/0')">2018-12-21 到期</div>
         </div>
         <div class="my-data">
           <div class="item" @click="go('balance')">
