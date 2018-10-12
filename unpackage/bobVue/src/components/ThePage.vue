@@ -10,6 +10,7 @@
       </div>
       <slot v-else name="header"></slot>
     </template>
+    <slot name="plug"></slot>
     <div class="view-block" :style="{backgroundColor:contentBg?contentBg:'#fff'}">
       <slot name="content"></slot>
     </div>

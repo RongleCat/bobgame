@@ -25,7 +25,7 @@
 
           <div class="lottery-block">
             <div class="item" @click="$router.push('/mall/lottery')"></div>
-            <div class="item" @click="$router.push('/mall/goodsearch')"></div>
+            <div class="item" @click="$router.push('/mall/goodsearch/0_all')"></div>
           </div>
           <!-- 限时兑换 -->
           <div class="block-title">限时兑换</div>
@@ -119,6 +119,8 @@
         setTimeout(() => {
           that.reqDone = true
         }, 400)
+
+        console.log(r.data);
         that.$store.commit('setMallData', r.data);
       })
     },
@@ -312,8 +314,8 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 24px;
-        line-height: 24px;
+        margin-bottom: 20px;
+        line-height: 30px;
       }
 
       .bean-block {

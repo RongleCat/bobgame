@@ -8,7 +8,7 @@ export default [{
   component: Lottery
 },
 {
-  path: '/mall/goodsearch',
+  path: '/mall/goodsearch/:condition',
   name: 'GoodSearch',
   component: GoodSearch
 },

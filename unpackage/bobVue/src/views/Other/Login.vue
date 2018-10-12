@@ -161,9 +161,8 @@
             let { head_icon, nickname, jifen } = r.info
             that.$store.commit('setUserInfo', { head_icon, nickname, jifen })
             window.localStorage.setItem('userBaseInfo', JSON.stringify({ head_icon, nickname, jifen }))
-            window.localStorage.setItem('token', r.data)
+            window.localStorage.token = r.data
             this.$http.defaults.headers.get['Authorization'] = r.data
-            console.log('登录成功');
             if (that.$route.params.to) {
               that.$router.replace('/' + that.$route.params.to)
             } else {

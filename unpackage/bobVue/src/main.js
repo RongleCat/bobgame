@@ -18,6 +18,11 @@ import swiper from "./components/fixSlide.js";
 
 import "swiper/dist/css/swiper.css";
 
+import { Lazyload } from 'vant';
+
+// options 为可选参数，无则不传
+Vue.use(Lazyload);
+
 
 
 //判断是否在H5+app环境

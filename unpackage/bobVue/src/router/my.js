@@ -20,6 +20,8 @@ import Recharge from "../views/My/Recharge.vue";
 import GiveBean from "../views/My/GiveBean.vue";
 import Share from "../views/My/Share.vue";
 import MyPower from "../views/My/MyPower.vue";
+import WaitWithdraw from "../views/My/WaitWithdraw.vue";
+
 
 
 
@@ -161,5 +163,11 @@ export default [
     path: '/my/mypower/:vipLevel',
     name: 'MyPower',
     component: MyPower
+  },
+  //等待提现
+  {
+    path: '/my/waitwithdraw',
+    name: 'WaitWithdraw',
+    component: WaitWithdraw
   }
 ]

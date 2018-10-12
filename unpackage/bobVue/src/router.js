@@ -30,7 +30,8 @@ const router = new Router({
           next('/guide')
           window.localStorage.showGuide = 'end'
         } else if (!window.localStorage.token) {
-          next('/login/home')
+          // console.log('未检测到');
+          next('/login')
         } else {
           store.commit('setShowTabber', true)
           next()

@@ -47,9 +47,6 @@
       this.$atApp(() => {
         window.plus.navigator.setStatusBarStyle('dark');
       })
-    },
-    mounted() {
-      console.log('sss');
     }
   }
 </script>

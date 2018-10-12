@@ -66,6 +66,7 @@ export default {
     li {
       float: left;
       width: 25%;
+      height: 100px;
       > a {
         display: flex;
         width: 100%;

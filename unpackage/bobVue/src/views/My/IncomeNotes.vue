@@ -12,9 +12,9 @@
         </div>
       </div>
     </template>
-    <template slot="content">
+    <template slot="plug">
       <transition name="fade-in">
-        <div class="income-mask" v-if="filterOpen || classOpen"></div>
+        <div class="income-mask" v-if="filterOpen || classOpen" @touchstart="closeAllPop"></div>
       </transition>
       <transition name="pop-top">
         <div class="filter-pop" v-if="filterOpen" :style="{top:filterTop}">
@@ -48,6 +48,9 @@
           </div>
         </div>
       </transition>
+    </template>
+    <template slot="content">
+
       <div class="income-container">
         <div class="notes-list">
           <div class="item">
@@ -271,7 +274,7 @@
         classOpen: false,
         classSelect: 0,
         classItems: ['全部收益', '玩家充值', '提现', '比赛奖励', '红包'],
-        vipTip:false
+        vipTip: false
       };
     },
     watch: {
@@ -368,6 +371,10 @@
       endConfirm() {
         this.endDone = true
         this.endPop = false
+      },
+      closeAllPop(){
+        this.filterOpen = this.classOpen = false
+        // this.minBeen = this.maxBeen = null
       }
     }
   }

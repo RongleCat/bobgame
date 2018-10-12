@@ -33,7 +33,7 @@
         </div>
 
         <div class="padding-container">
-          <div class="btn-common btn-withdraw">提现</div>
+          <div class="btn-common btn-withdraw" @click="$router.replace('/my/waitwithdraw')">提现</div>
           <div class="bottom-tip"><i class="iconfont icon-info"></i>提现将于24小时内转入您绑定的支付宝账号</div>
         </div>
       </div>
@@ -51,7 +51,8 @@
     data() {
       return {
         hasAccount: true,
-        vipTip:false
+        vipTip:false,
+        showWait:false
       }
     },
     mounted() {
@@ -211,6 +212,11 @@
           padding-right: 5px;
         }
       }
+    }
+    .wait-withdraw{
+      width: 100%;
+      height: 100%;
+      background: #000;
     }
   }
 </style>

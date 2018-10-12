@@ -48,6 +48,13 @@
             <div class="vip-add vip-0">+15%金豆</div>
           </div>
         </div>
+        <transition name="fade-in">
+          <div class="float-tip" v-if="showTip" @click="showTip = false">
+            <i class="iconfont icon-cuo"></i>
+            正如同我刚开始所说的，想要将不同的图标纳入到一个系统当中来，设计师主要的工作目标就是确保一致性。经验丰富的设计师会从各个角度和属性上来针对图标进行优化，今天的文章已经将潜在的、需要关注的问题都梳理出来了，图标的设计工作做好了，界面的设计才会更加顺畅。
+          </div>
+        </transition>
+        <div class="bottom-tip" @click="showTip = !showTip">您将先充值钻石，充值后自动转换<i class="iconfont icon-wenhao"></i></div>
       </div>
     </template>
   </ThePage>
@@ -57,7 +64,7 @@
   export default {
     data() {
       return {
-
+        showTip: false
       }
     },
     computed: {
@@ -82,6 +89,49 @@
     background: url('../../assets/images/my/r_bg.png') no-repeat center top;
     background-size: 100% auto;
     padding: 25px;
+
+    .float-tip {
+      width: 500px;
+      padding: 30px;
+      background: #333;
+      color: #fff;
+      font-size: 22px;
+      line-height: 1.4;
+      border-radius: 15px;
+      position: absolute;
+      bottom: 100px;
+      left: 125px;
+      padding-right: 40px;
+
+      .iconfont {
+        display: block;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        line-height: 52px;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+    }
+
+    .bottom-tip {
+      line-height: 100px;
+      text-align: center;
+      font-size: 22px;
+      color: #a3a3a3;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+
+      .iconfont {
+        font-size: 30px;
+        padding-left: 10px;
+        vertical-align: -3px;
+        color: #bbb;
+      }
+    }
 
     .top-block {
       position: relative;

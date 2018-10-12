@@ -1,10 +1,10 @@
 <template>
-  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight" contentBg="#fff">
+  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight" contentBg="#fff" class="good-page">
     <template slot="headerContent">
       全部商品
       <div class="filter-bar" :style="{top:topHeight+'rem'}">
         <div class="filter-item" :class="[filterOpen?'active':'']" @click="filterOpen = !filterOpen">筛选<i class="iconfont icon-xiala"></i></div>
-        <div class="filter-item" :class="[classOpen?'active':'']" @click="classOpen = !classOpen">全部<i class="iconfont icon-xiala"></i></div>
+        <div class="filter-item" :class="[classOpen?'active':'']" @click="classOpen = !classOpen">{{typeSelect!=-1?typeName:'全部'}}<i class="iconfont icon-xiala"></i></div>
         <div class="filter-item btn-search" @click="openSearch">搜索</div>
         <div class="search-box" v-if="showSearch">
           <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入关键字" type="search" @focus="isFocus = true" @blur="isFocus = false" autofocus="true" ref="search" />
@@ -12,9 +12,10 @@
         </div>
       </div>
     </template>
-    <template slot="content">
+
+    <template slot="plug">
       <transition name="fade-in">
-        <div class="income-mask" v-if="filterOpen || classOpen" @click="closeAllPop"></div>
+        <div class="income-mask" v-if="filterOpen || classOpen" @touchstart="closeAllPop"></div>
       </transition>
       <transition name="pop-top">
         <div class="filter-pop" v-if="filterOpen" :style="{top:filterTop}">
@@ -38,15 +39,13 @@
       <transition name="pop-top">
         <div class="class-pop" v-if="classOpen" :style="{top:filterTop}">
           <div class="time-line">
-            <div class="item">家居厨具</div>
-            <div class="item">美妆护肤</div>
-            <div class="item">家用电器</div>
-            <div class="item">手机数码</div>
-            <div class="item">个护清洁</div>
-            <div class="item">休闲零食</div>
+            <div class="item" v-for="(i,index) in typeArr" :key="index" :class="[index === typeSelect?'active':'']" @click="typeSelect = index">{{i}}</div>
           </div>
         </div>
       </transition>
+    </template>
+    <template slot="content">
+
       <div class="good-container">
         <List v-model="loading" :finished="finished" @load="onLoad">
           <div class="item" v-for="(i,index) in list" :key="index" @click="$router.push('/mall/gooddetail/'+i)">
@@ -87,7 +86,11 @@
         maxBeen: null,
         finished: false,
         loading: false,
-        list: 10
+        list: 10,
+        typeId: this.$route.params['condition'].split('_')[0],
+        typeName: decodeURI(decodeURI(this.$route.params['condition'].split('_')[1])),
+        typeArr: ['家具厨具', '美妆护肤', '家用电器', '手机数码', '个护清洁', '休闲零食'],
+        typeSelect: -1
       };
     },
     watch: {
@@ -108,7 +111,16 @@
         if (newValue) {
           this.filterOpen = false
         }
+      },
+      typeSelect(v) {
+        this.typeName = this.typeArr[v]
+        this.classOpen = false
       }
+    },
+    mounted() {
+      // console.log(this.typeName);
+      this.typeSelect = this.typeArr.indexOf(this.typeName);
+      console.log(this.typeSelect);
     },
     computed: {
       searchFocus() {
@@ -153,6 +165,7 @@
     padding-top: 100px;
     // min-height: 100%;
     height: 100%;
+    // overflow: hidden;
   }
 
   .filter-bar {
@@ -164,20 +177,22 @@
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #efefef;
+    padding-left: 25px;
 
     @include clearfix;
 
     .filter-item {
       height: 100px;
-      width: 120px;
+      // width: 120px;
       float: left;
       text-align: center;
-      padding-right: 15px;
+      padding-right: 40px;
       color: #999;
       font-size: 28px;
       position: relative;
       line-height: 104px;
       transition: color 0.2s;
+      margin-right: 25px;
 
       .iconfont {
         display: block;
@@ -200,6 +215,9 @@
 
       &.btn-search {
         float: right;
+        width: 120px;
+        padding-right: 15px;
+        margin-right: 0;
 
         &:before {
           display: block;
@@ -385,6 +403,11 @@
       position: relative;
       overflow: hidden;
       @include tapMask;
+
+      &.active {
+        background: #ffe150;
+        color: #333;
+      }
     }
   }
 

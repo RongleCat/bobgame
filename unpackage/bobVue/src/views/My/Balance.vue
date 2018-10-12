@@ -40,7 +40,7 @@
               <div class="name">今日收益</div>
             </div>
           </div> -->
-          <div class="no-data">
+          <div class="no-data" @click="$router.push('/my/share')">
             暂无收益，<span>去邀请好友</span>
           </div>
         </div>

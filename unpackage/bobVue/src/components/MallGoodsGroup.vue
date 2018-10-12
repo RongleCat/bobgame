@@ -1,13 +1,13 @@
 <template>
   <div class="group-container">
-    <a href="#" class="group-head-img">
+    <div class="group-head-img" @click="goList">
       <img :src="typeinfo.pic | imgUrl">
-    </a>
+    </div>
     <div class="group-swiper">
       <swiper :options="swiperOption" ref="mySwiper">
         <!-- slides -->
         <swiper-slide v-for="item in goodslist" :key="item.id">
-          <div class="goods-item">
+          <div class="goods-item" @click="$router.push('/mall/gooddetail/'+item.id)">
             <span class="left-block">剩余 {{parseInt(item.initstore/item.store*100)}}%</span>
             <img :src="item.img | imgUrl">
             <div class="title">{{item.prname}}</div>
@@ -17,7 +17,7 @@
           </div>
         </swiper-slide>
         <swiper-slide>
-          <div class="goods-item">
+          <div class="goods-item" @click="goList">
             <div class="enter-more"><i class="iconfont icon-you"></i>查看更多</div>
           </div>
         </swiper-slide>
@@ -36,6 +36,11 @@
           freeMode: true,
           slidesPerView: 2.5
         }
+      }
+    },
+    methods:{
+      goList(){
+        this.$router.push(`/mall/goodsearch/${this.typeinfo.id}_${encodeURI(encodeURI(this.typeinfo.type_name))}`)
       }
     },
     mounted() {
@@ -133,6 +138,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    @include tapColor;
 
     .iconfont {
       display: block;
