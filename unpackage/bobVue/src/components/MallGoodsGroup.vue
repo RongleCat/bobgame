@@ -1,7 +1,7 @@
 <template>
   <div class="group-container">
     <div class="group-head-img" @click="goList">
-      <img :src="typeinfo.pic | imgUrl">
+      <img v-lazy="createUrl(typeinfo.pic)">
     </div>
     <div class="group-swiper">
       <swiper :options="swiperOption" ref="mySwiper">
@@ -9,7 +9,7 @@
         <swiper-slide v-for="item in goodslist" :key="item.id">
           <div class="goods-item" @click="$router.push('/mall/gooddetail/'+item.id)">
             <span class="left-block">剩余 {{parseInt(item.initstore/item.store*100)}}%</span>
-            <img :src="item.img | imgUrl">
+            <img v-lazy="createUrl(item.img)">
             <div class="title">{{item.prname}}</div>
             <div class="center-block">
               <div class="bean-block">{{item.jifen}}</div>
@@ -38,9 +38,12 @@
         }
       }
     },
-    methods:{
-      goList(){
+    methods: {
+      goList() {
         this.$router.push(`/mall/goodsearch/${this.typeinfo.id}_${encodeURI(encodeURI(this.typeinfo.type_name))}`)
+      },
+      createUrl(url) {
+        return `http://cdn.bobgame.cn${url}`
       }
     },
     mounted() {

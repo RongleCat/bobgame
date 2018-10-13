@@ -16,7 +16,7 @@
           <div class="banner-container" mall>
             <swiper :options="swiperOption" ref="mySwiper" class="mall-loop">
               <swiperSlide v-for="(item,key,index) in mallData.swipper" :key="index">
-                <img :src="item.rollpic | imgUrl" alt="">
+                <img v-lazy="createUrl(item.rollpic)" alt="">
               </swiperSlide>
               <div class="swiper-pagination mall-page" slot="pagination"></div>
             </swiper>
@@ -132,6 +132,9 @@
     methods: {
       closeView() {
         this.enterLotteryPage = false
+      },
+      createUrl(url){
+        return `http://cdn.bobgame.cn${url}`
       }
     }
   };

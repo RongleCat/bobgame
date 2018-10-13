@@ -10,10 +10,10 @@
         <div class="btn-back" :style="{top:statusBarHeight}" @click="$router.go(-1)"><i class="iconfont icon-zuo"></i></div>
         <div class="btn-duihuan btn-common">确定兑换</div>
         <div class="guding-block">
-          <div class="cover-list">
+          <div class="cover-list" ref="cover">
             <swiper :options="coverOption" ref="pay" class="swiper-cover">
               <swiperSlide v-for="i in 12" :key="i">
-                <img :src="`https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/detail/detail_${i}.jpg`">
+                <img :data-src="`https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/detail/detail_${i}.jpg`">
               </swiperSlide>
             </swiper>
             <div class="cover-pagination"></div>
@@ -34,8 +34,8 @@
           </div>
           <div class="long-container">
             <div class="long-title">图文详情</div>
-            <div class="content-block">
-              <img :src="`https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/detail/detail_long_${i}.jpg`" v-for="i in 20" :key="i" v-lazy="`https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/detail/detail_long_${i}.jpg`">
+            <div class="content-block" ref="long">
+              <img v-for="i in 20" :key="i" v-lazy="`https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/detail/detail_long_${i}.jpg`">
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
         coverOption: {
           loop: true,
           spaceBetween: 0,
-          preloadImages:false,
+          preloadImages: false,
           pagination: {
             el: '.cover-pagination',
             clickable: true,
@@ -68,6 +68,31 @@
     computed: {
       statusBarHeight() {
         return this.$store.state.statusBarHeight + 'rem'
+      }
+    },
+    mounted() {
+      let that = this
+      let $root = that.$refs.cover
+      if (window.IntersectionObserver) {
+        let observer = new IntersectionObserver(this.enter, $root);
+
+        $root.querySelectorAll('img').forEach((item) => {
+          observer.observe(item);
+        });
+      } else {
+        $root.querySelectorAll('img').forEach(item => {
+          item.target.src = item.target.dataset.src
+        })
+      }
+    },
+    methods: {
+      enter(arr) {
+        arr.forEach(item => {
+          if (item.isIntersecting) {
+            item.target.src = item.target.dataset.src
+          }
+          console.log(item);
+        })
       }
     }
   }
@@ -209,6 +234,10 @@
       width: 100%;
       margin-top: 20px;
       background: #fff;
+
+      img {
+        min-height: 300px;
+      }
 
       .long-title {
         font-size: 34px;

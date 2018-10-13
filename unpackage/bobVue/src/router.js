@@ -45,7 +45,10 @@ const router = new Router({
     {
       path: '/friends',
       name: 'Friends',
-      component: Friends
+      component: Friends,
+      beforeEnter: (to, from, next) => {
+        next('/friends/filinfomation')
+      }
     },
     {
       path: '/mall',
@@ -100,6 +103,7 @@ const router = new Router({
 let startPage = ['Home', 'Friends', 'Mall', 'My']
 
 router.beforeEach((to, from, next) => {
+  // console.log(to,from);
   if (startPage.indexOf(to.name) != -1) {
     store.commit('setShowTabber', true)
     atApp(() => {
