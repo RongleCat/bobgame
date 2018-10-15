@@ -2,7 +2,7 @@
   <div>
     <ThePage>
       <template slot="headerContent">
-        抽奖使我快乐
+        抽金豆赢大奖
       </template>
       <template slot="content">
         <transition name="fade-in">
@@ -171,6 +171,7 @@
         </p>
       </div>
     </Popup>
+    <Popup></Popup>
   </div>
 </template>
 

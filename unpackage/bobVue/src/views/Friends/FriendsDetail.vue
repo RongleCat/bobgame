@@ -1,9 +1,16 @@
 <template>
-  <ThePage color="#fff">
+  <ThePage color="#f2f2f2">
     <template slot="headerContent">
       <div class="head-name">
         <div class="name">傻子</div>
         <div class="status">当前在线</div>
+        <div class="info-card" @click="$router.push('/friends/friendinfomation/10')"><i class="iconfont icon-wode"></i></div>
+        <div class="info-bar">
+          <img :src="friendInfo.headimg">
+          <div class="line-one">{{friendInfo.name}}</div>
+          <div class="line-two">{{`${friendInfo.sex?'女':'男'}·${friendInfo.star}·${friendInfo.city}`}}</div>
+          <div class="btn-addfriend"><i class="iconfont icon-add"></i>加好友</div>
+        </div>
       </div>
     </template>
     <template slot="content">
@@ -19,11 +26,45 @@
             <i class="iconfont icon-yuyin" :style="{backgroundColor:recordBtnColor}"></i>
           </div>
         </div>
-        <ChatFace @emitFace="addFace"  @deleteFace="deleteFace"></ChatFace>
+        <ChatFace @emitFace="addFace" @deleteFace="deleteFace"></ChatFace>
         <div class="game-block">
-          游戏
+          <swiper :options="gameOption" ref="mySwiper" class="face-container">
+            <swiperSlide v-for="i in 5" :key="i">
+              <div class="game-slide">
+                <div class="swiper-game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  疯狂兔子
+                </div>
+                <div class="swiper-game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  疯狂兔子
+                </div>
+                <div class="swiper-game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  疯狂兔子
+                </div>
+                <div class="swiper-game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  疯狂兔子
+                </div>
+                <div class="swiper-game-item">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  疯狂兔子
+                </div>
+              </div>
+            </swiperSlide>
+            <div class="game-pagination" slot="pagination"></div>
+          </swiper>
         </div>
         <div class="chat-input">
+          <div class="quick-msg">
+            <div class="item">这把完了加好友！</div>
+            <div class="item">来啊，决战到天亮！</div>
+            <div class="item">连麦么，我萝莉音</div>
+            <div class="item">老铁666啊</div>
+            <div class="item">就算是神我也要杀给你看！</div>
+            <div class="item">蒙多说你是个大娘们儿</div>
+          </div>
           <div class="icon icon-01" @click="openSlide('record')"><i class="iconfont icon-yuyinzuo"></i></div>
           <textarea v-model="chatInput" @focus="chatFocus" @blur="chatBlur" :class="[chatClass]" @keypress.enter="emitMessage" ref="emitInput"></textarea>
           <div class="icon icon-02" @click="openSlide('game')"><i class="iconfont icon-gamepad"></i></div>
@@ -32,49 +73,51 @@
         <!-- <div class="friend-info">
           <div class="btn-add"></div>
         </div> -->
-        <div class="chat-main" ref="chatBlock" @click="closeAllSlide">
-          <div class="chat-line center">
-            <div class="center-main">2018-09-16 20:32</div>
-          </div>
-          <div class="chat-line">
-            <div class="battle-info-block">
-              <div class="battle-head-block">
-                <img :src="friendInfo.headimg">
-                <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png">
-              </div>
-              <div class="top-block">
-                <h3>一起聊天玩游戏吧~</h3>
-                <h4>我们都爱玩的游戏</h4>
-              </div>
-              <div class="bottom-block">
-                <div class="game-item">
-                  <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+        <div class="chat-main has-topbar" ref="chatBlock" @click="closeAllSlide">
+          <div class="chat-list">
+            <div class="chat-line center">
+              <div class="center-main">2018-09-16 20:32</div>
+            </div>
+            <div class="chat-line">
+              <div class="battle-info-block">
+                <div class="battle-head-block">
+                  <img :src="friendInfo.headimg">
+                  <img src="http://bobgame.cn/Uploads/Picture/2018-06-30/5b374f918199d.png">
                 </div>
-                <div class="game-item">
-                  <img src="http://bobgame.cn/Uploads/Picture/2018-08-27/5b84002384301.jpg">
+                <div class="top-block">
+                  <h3>一起聊天玩游戏吧~</h3>
+                  <h4>我们都爱玩的游戏</h4>
                 </div>
-                <div class="game-item">
-                  <img src="http://bobgame.cn/Uploads/Picture/2018-08-22/5b7d267a247a5.png">
+                <div class="bottom-block">
+                  <div class="game-item">
+                    <img src="http://bobgame.cn/Uploads/Picture/2018-09-12/5b98b0612b4e9.png">
+                  </div>
+                  <div class="game-item">
+                    <img src="http://bobgame.cn/Uploads/Picture/2018-08-27/5b84002384301.jpg">
+                  </div>
+                  <div class="game-item">
+                    <img src="http://bobgame.cn/Uploads/Picture/2018-08-22/5b7d267a247a5.png">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="chat-line center">
-            <div class="center-main">临时对话保留24小时，成为好友永久保留对话。</div>
-          </div>
+            <div class="chat-line center">
+              <div class="center-main">临时对话保留24小时，成为好友永久保留对话。</div>
+            </div>
 
 
-          <div class="chat-line" v-for="(item,index) in chatData" :key="index">
-            <div :class="[`chat-item-${item.isMe?'right':'left'}`]">
-              <div class="head">
-                <img :src="item.isMe?headUrl:friendInfo.headimg" alt="">
+            <div class="chat-line" v-for="(item,index) in chatData" :key="index">
+              <div :class="[`chat-item-${item.isMe?'right':'left'}`]">
+                <div class="head">
+                  <img :src="item.isMe?headUrl:friendInfo.headimg" alt="">
+                </div>
+
+                <div class="text-content" v-if="item.type === 'text'" v-html="encodeFace(item.content)">
+
+                </div>
+
+                <ChatVoiceItem class="audio-content" v-else-if="item.type === 'voice'" v-bind="item"></ChatVoiceItem>
               </div>
-
-              <div class="text-content" v-if="item.type === 'text'" v-html="encodeFace(item.content)">
-
-              </div>
-
-              <ChatVoiceItem class="audio-content" v-else-if="item.type === 'voice'" v-bind="item"></ChatVoiceItem>
             </div>
           </div>
 
@@ -109,7 +152,7 @@
   import ChatVoiceItem from "@/components/ChatVoiceItem";
   import ChatFace from "@/components/ChatFace";
   export default {
-    components: {  Progress, ChatVoiceItem, ChatFace },
+    components: { Progress, ChatVoiceItem, ChatFace },
     data() {
       return {
         luyin: null,
@@ -165,7 +208,17 @@
           type: 'text',
           content: '《守望先锋》官微宣布中国队在2018《守望先锋》世界杯泰国曼谷站的小组赛中，以小组第一的战绩顺利晋级八强，并将与另外七支晋级队伍一同登上2018暴雪嘉年华的舞台，争夺最终的冠军。',
           isMe: true
-        }]
+        }],
+        gameOption: {
+          loop: false,
+          spaceBetween: 10,
+          pagination: {
+            el: '.game-pagination',
+            clickable: true,
+            bulletClass: 'game-item',
+            bulletActiveClass: 'game-item-active'
+          }
+        }
       };
     },
     computed: {
@@ -409,6 +462,56 @@
     }
   }
 
+  .info-bar {
+    height: 88px;
+    background: #fff;
+    position: absolute;
+    bottom: -88px;
+    width: 100%;
+    padding-top: 15px;
+    padding-left: 100px;
+    text-align: left;
+    line-height: 30px;
+
+    .line-one {
+      font-size: 24px;
+    }
+
+    .line-two {
+      font-size: 18px;
+      color: #adadad;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: block;
+      position: absolute;
+      left: 25px;
+      top: 12px;
+    }
+
+    .btn-addfriend {
+      position: absolute;
+      right: 25px;
+      padding: 0 15px;
+      height: 50px;
+      background: #fa3a50;
+      color: #fff;
+      top: 19px;
+      border-radius: 25px;
+      line-height: 52px;
+      font-size: 20px;
+      @include tapColor;
+
+      .iconfont {
+        font-size: 20px;
+        padding-right: 5px;
+      }
+    }
+  }
+
   .chat-container {
     background: #f5f5f5;
     width: 100%;
@@ -505,7 +608,44 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
       transition: bottom 0.2s;
-      padding-top: 40px;
+
+      .chat-list {
+        position: relative;
+        padding-top: 40px;
+        padding-bottom: 90px;
+      }
+
+      &.has-topbar {
+        .chat-list {
+          padding-top: 128px;
+        }
+      }
+    }
+
+    .quick-msg {
+      position: absolute;
+      top: -90px;
+      left: 0;
+      right: 0;
+      height: 90px;
+      z-index: 100;
+      white-space: nowrap;
+      overflow-y: auto;
+      padding-right: 15px;
+
+      .item {
+        display: inline-block;
+        padding: 0 24px;
+        font-size: 24px;
+        line-height: 72px;
+        height: 70px;
+        border-radius: 35px;
+        background: #fff;
+        margin-left: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, .05);
+        @include tapMask;
+        overflow: hidden;
+      }
     }
 
     .record-block {
@@ -796,5 +936,65 @@
     width: 40px;
     height: 40px;
     vertical-align: -9px;
+  }
+
+  .info-card {
+    right: 10px;
+    top: 0;
+    width: 88px;
+    height: 88px;
+    position: absolute;
+
+    .iconfont {
+      font-size: 48px;
+      color: #666;
+    }
+  }
+
+  .game-slide {
+    padding: 0 45px;
+    padding-top: 40px;
+
+    .swiper-game-item {
+      width: 100px;
+      display: inline-block;
+      padding-bottom: 20px;
+      margin-right: 40px;
+      font-size: 22px;
+      text-align: center;
+      line-height: 56px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        display: block;
+        border-radius: 15px;
+      }
+    }
+  }
+
+
+  .game-pagination {
+    text-align: center;
+    position: absolute;
+    bottom: 10px !important;
+
+    .game-item {
+      margin-left: 12px;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #c2c2c2;
+
+      &.game-item-active {
+        background: #999;
+      }
+    }
   }
 </style>

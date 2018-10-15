@@ -47,7 +47,11 @@ const router = new Router({
       name: 'Friends',
       component: Friends,
       beforeEnter: (to, from, next) => {
-        next('/friends/filinfomation')
+        if (window.localStorage.friends != 'end') {
+          next('/friends/filinfomation')
+        } else {
+          next()
+        }
       }
     },
     {

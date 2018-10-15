@@ -206,8 +206,8 @@
             }
           }
         },
-        chatList: [],
-        friendsList: []
+        chatList: [1],
+        friendsList: [1]
       }
     },
     components: {

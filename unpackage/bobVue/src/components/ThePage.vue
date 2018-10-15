@@ -70,6 +70,7 @@
       background: transparent;
       border: 0;
       font-size: 36px;
+      color: #666;
 
       &.icon-close {
 
@@ -82,7 +83,7 @@
           width: 4px;
           height: 42px;
           border-radius: 5px;
-          background: #333;
+          background: #666;
         }
 
         &::after {
