@@ -8,7 +8,7 @@
         <div class="top-card">
           <div class="card-main">
             <div class="today-activity">今日活跃度：<img src="../../assets/images/my/active_icon.png"> 1000</div>
-            <div class="top-tip">每周日24时重置周奖励 <i class="iconfont icon-wenhaoshi"></i></div>
+            <div class="top-tip" @click="showTip = true">每周日24时重置周奖励 <i class="iconfont icon-wenhaoshi"></i></div>
             <div class="today-progress">
               <div class="item get-icon icon-1">30</div>
               <div class="item get-icon icon-2">50</div>
@@ -84,6 +84,15 @@
           </swiper>
         </div>
       </div>
+      <Help v-model="showTip">
+        <template slot="title">
+          任务说明
+        </template>
+        <template slot="content">
+          <p>日常任务：每日24点进行刷新，充值完成次数，完成后可以获得活跃度及金豆奖励，活跃度可以用于开启活跃度宝箱，金豆可以拥有商城兑换及抽奖。</p>
+          <p>成长任务：成长任务只可以完成一次，同样可以获得金豆及活跃度奖励。</p>
+        </template>
+      </Help>
     </template>
   </ThePage>
 </template>
@@ -93,6 +102,7 @@
     data() {
       return {
         selectTab: 0,
+        showTip: false,
         swiperOption: {
           loop: false,
           autoHeight: true,

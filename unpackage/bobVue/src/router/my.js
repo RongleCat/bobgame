@@ -21,6 +21,7 @@ import GiveBean from "../views/My/GiveBean.vue";
 import Share from "../views/My/Share.vue";
 import MyPower from "../views/My/MyPower.vue";
 import WaitWithdraw from "../views/My/WaitWithdraw.vue";
+import CustomGame from "../views/My/CustomGame.vue";
 
 
 
@@ -169,5 +170,11 @@ export default [
     path: '/my/waitwithdraw',
     name: 'WaitWithdraw',
     component: WaitWithdraw
+  },
+  //专属比赛
+  {
+    path: '/my/customgame',
+    name: 'CustomGame',
+    component: CustomGame
   }
 ]

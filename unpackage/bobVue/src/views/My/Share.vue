@@ -156,15 +156,16 @@
           <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/qc.jpg">
         </div>
       </Popup>
-      <Popup :maskClose="false" v-model="showHelp">
-        <div class="help-pop-container">
-          <div class="list-title">帮助</div>
-          <div class="help-content">
-            写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢写点什么呢
-          </div>
-          <div class="btn-bottom btn-common" @click="showHelp = false">我知道了</div>
-        </div>
-      </Popup>
+      <Help v-model="showHelp">
+        <template slot="title">帮助</template>
+        <template slot="content">
+          <p>1、点击自定义可以上传自定义图片，上传以后会自动生成推广图，请根据说明上传对应图片。</p>
+          <p>
+            2、长按推广图后点击保存或发送给朋友，用户扫描推广图上二维码可绑定对应关系。</p>
+          <p>
+            3、系统预设推广图会定期更换，请及时保存您喜欢的推广图。</p>
+        </template>
+      </Help>
     </template>
   </ThePage>
 </template>
@@ -500,33 +501,6 @@
           font-size: 40px;
         }
       }
-    }
-  }
-
-  .help-pop-container {
-    width: 600px;
-    background: #fff;
-    border-radius: 15px;
-    overflow: hidden;
-
-    .list-title {
-      font-size: 40px;
-      font-weight: bold;
-      line-height: 120px;
-      padding-left: 40px;
-    }
-
-    .help-content {
-      padding: 0 40px;
-      max-height: 500px;
-      overflow-y: auto;
-      font-size: 24px;
-    }
-
-    .btn-bottom {
-      margin-top: 40px;
-      width: 100%;
-      border-radius: 0;
     }
   }
 </style>

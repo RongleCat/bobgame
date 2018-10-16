@@ -43,6 +43,8 @@
           leftTime[1] = Math.floor(times / (60 * 60)) - (leftTime[0] * 24);
           leftTime[2] = Math.floor(times / 60) - (leftTime[0] * 24 * 60) - (leftTime[1] * 60);
           leftTime[3] = Math.floor(times) - (leftTime[0] * 24 * 60 * 60) - (leftTime[1] * 60 * 60) - (leftTime[2] * 60);
+        } else {
+          this.$emit('end')
         }
         leftTime.map((item, index) => {
           if (item.toString().length < 2) {
