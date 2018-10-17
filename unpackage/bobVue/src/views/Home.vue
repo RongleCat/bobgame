@@ -9,8 +9,9 @@
           <div class="iconfont icon-add"></div>
         </div>
       </div>
-      <div class="message-icon" :class="{active:showMessageTip}" @click="toggleTip">消息</div>
-      <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="toggleTip">月卡</div>
+      <div class="message-icon" :class="{active:showMessageTip}" @click="$router.push('/message')">消息</div>
+      <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="$router.push('/my/mypower/1')">会员卡</div>
+      <div class="float-icon"></div>
     </div>
     <div class="view-block">
       <transition name="fade-in">
@@ -28,7 +29,7 @@
             <div class="item"></div>
             <div class="item"></div>
           </div>
-          <div class="news-container">
+          <div class="news-container" @click="$router.push('/news/100')">
             <div class="icon">公告</div>
             <div class="title">平台政策汇总</div>
             <div class="view">立即查看
@@ -56,7 +57,16 @@
             </div>
           </Popup>
 
-          <div class="float-icon"></div>
+          <Popup v-model="showGetBeen" :opacity="80">
+            <div class="getbeen-pop" @click="showGetBeen = false">
+              <div class="route-bg"></div>
+              <div class="content">
+                <div class="title">签到成功</div>
+                <img src="../assets/images/been_more.png" class="goods-img">
+                <div class="get-number">金豆 × 1</div>
+              </div>
+            </div>
+          </Popup>
         </div>
       </transition>
     </div>
@@ -72,6 +82,7 @@
         showMessageTip: true,
         headHeight: 136,
         sginView: false,
+        showGetBeen: false,
         swiperOption: {
           loop: true,
           spaceBetween: 10
@@ -99,13 +110,12 @@
       },
       ...mapState(['homeData'])
     },
-    mounted() {
-      let that = this;
-      // console.log(that);
-      setTimeout(() => {
-        that.sginView = true
-      }, 1000);
-    },
+    // mounted() {
+    //   let that = this;
+    //   setTimeout(() => {
+    //     that.sginView = true
+    //   }, 1000);
+    // },
     beforeCreate() {
       let that = this;
       that.$atApp(() => {
@@ -121,9 +131,9 @@
       this.$http.get("/Index/index.html").then(r => {
         setTimeout(() => {
           that.reqDone = true
-          // if (r.data.) {
-
-          // }
+          if (r.data.TodySign.singned) {
+            that.sginView = that.showGetBeen = true
+          }
         }, 400);
         that.$store.commit('setHomeData', r.data);
       });
@@ -131,8 +141,6 @@
     methods: {
       toggleTip() {
         this.showMessageTip = !this.showMessageTip;
-        window.localStorage.removeItem("token");
-        this.$http.defaults.headers.get["Authorization"] = null;
       },
       createImgUrl(value, type) {
         if (!value && type === "icon") {
@@ -559,5 +567,52 @@
     bottom: 300px;
     right: 25px;
     z-index: 150;
+  }
+
+  .getbeen-pop {
+    width: 600px;
+    height: 600px;
+
+    .route-bg {
+      width: 100%;
+      height: 100%;
+      background: url('../assets/images/get_bg.png') no-repeat center;
+      background-size: 100% auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      animation: rotation 3s linear infinite;
+    }
+
+    .content {
+      width: 100%;
+      height: 100%;
+      z-index: 15;
+      position: relative;
+      color: #fff;
+      text-align: center;
+      line-height: 80px;
+      font-size: 48px;
+      font-weight: bold;
+
+      .goods-img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+      }
+
+      .get-number {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
   }
 </style>

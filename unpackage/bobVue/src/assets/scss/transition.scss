@@ -70,10 +70,21 @@
 
 .scale-top-enter-active,
 .scale-top-leave-active {
-  transition: transform .4s cubic-bezier(.39, .05, .09, .92)
+  transition: all .4s cubic-bezier(.39, .05, .09, .92)
 }
 
 .scale-top-enter,
-.scale-top-leave-to{
-  height: 0;
+.scale-top-leave-to {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

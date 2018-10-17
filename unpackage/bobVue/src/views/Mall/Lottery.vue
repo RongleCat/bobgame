@@ -53,12 +53,14 @@
               <div class="all-get-main">
                 <div class="all-get-title">中奖纪录</div>
                 <div class="all-get-list-container">
-                  <div class="all-get-list">
-                    <div class="item" v-for="(item,index) in getList" :key="index">
-                      <img :src="item.head">
-                      恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
-                    </div>
-                  </div>
+                  <swiper>
+                    <swiperSlide>
+                      <div class="item" v-for="(item,index) in getList" :key="index">
+                        <img :src="item.head">
+                        恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
+                      </div>
+                    </swiperSlide>
+                  </swiper>
                 </div>
               </div>
             </div>
@@ -67,6 +69,22 @@
                 恭喜 你妈炸了 获得<span>多功能洗碗机</span>一个
               </div>
             </transition>
+
+            <Popup v-model="showGetPop" v-if="getInfo">
+              <div class="getgood-pop" @click="showGetBeen = false">
+                <div class="route-bg"></div>
+                <div class="goods-img">
+                  <img :src="`http://cdn.bobgame.cn/${getInfo.reward_pic}`">
+                </div>
+                <div class="content">
+                  <div class="get-title">{{getInfo.reward_name}}</div>
+                  <div class="btn-item" v-if="getInfo.isJD" @click="startLottery">再抽一次</div>
+                  <div class="btn-item" v-else @click="$router.push('/my/orderlist')">前去领奖</div>
+                  <div class="btn-item share" @click="$router.push('/my/share')">分享</div>
+                </div>
+                <i class="iconfont icon-guanbi" @click="showGetPop = false"></i>
+              </div>
+            </Popup>
           </div>
         </transition>
       </template>
@@ -171,7 +189,6 @@
         </p>
       </div>
     </Popup>
-    <Popup></Popup>
   </div>
 </template>
 
@@ -192,6 +209,7 @@
         rulePop: false,
         globaMessage: false,
         prizesList: null,
+        showGetPop: false,
         getList: [
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
           { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
@@ -210,7 +228,8 @@
           top: '1rem',
           left: '50%',
           transform: 'translateX(-50%)'
-        }
+        },
+        getInfo: null
       };
     },
     computed: {
@@ -230,7 +249,7 @@
       },
       setViewPaddingTop() {
         return this.$store.state.statusBarHeight + 88 / 75 + "rem";
-      },
+      }
     },
     watch: {
       count(newCount) {
@@ -272,13 +291,15 @@
           that.timer = null
           that.ring = -1
           setTimeout(() => {
-            alert(`恭喜您获得${that.prizesList[that.level][that.select].reward_name}`)
+            that.showGetPop = true
+            that.getInfo = that.prizesList[that.level][that.select]
+            // alert(`恭喜您获得${that.prizesList[that.level][that.select].reward_name}`)
           }, 100);
         }
       },
       level() {
         this.changeLevel = false
-      },
+      }
       // changeLevel(){
       //   let that = this
       //   setTimeout(() => {
@@ -303,9 +324,8 @@
       },
       startLottery() {
         let that = this
-
+        that.showGetPop = false
         if (!that.lock) {
-
           that.lock = true
           that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
             that.select = r.data
@@ -903,7 +923,7 @@
         color: #7f3636;
         @include oneB;
 
-        &:before{
+        &:before {
           background: #e5dbc0;
         }
 
@@ -1000,6 +1020,92 @@
 
     span {
       color: #fe5f5f;
+    }
+  }
+
+  .getgood-pop {
+    width: 600px;
+
+    .route-bg {
+      width: 100%;
+      height: 600px;
+      background: url('../../assets/images/get_bg.png') no-repeat center;
+      background-size: 100% auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      animation: rotation 3s linear infinite;
+    }
+
+    .iconfont {
+      display: block;
+      width: 60px;
+      height: 60px;
+      font-size: 48px;
+      line-height: 62px;
+      text-align: center;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 20;
+    }
+
+    .goods-img {
+      width: 100%;
+      height: 600px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 12;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .content {
+      width: 100%;
+      z-index: 15;
+      position: relative;
+      color: #fff;
+      padding-top: 500px;
+
+      .get-title {
+        text-align: center;
+        line-height: 80px;
+        font-size: 48px;
+        font-weight: bold;
+      }
+
+      .btn-item {
+        width: 400px;
+        height: 80px;
+        background: #fed149;
+        font-size: 34px;
+        line-height: 82px;
+        text-align: center;
+        border-radius: 40px;
+        margin: 0 auto;
+        margin-top: 50px;
+        color: #333;
+        @include tapColor;
+
+        &.share {
+          background: #fe6f49;
+          color: #fff;
+          margin-top: 30px;
+        }
+      }
     }
   }
 </style>

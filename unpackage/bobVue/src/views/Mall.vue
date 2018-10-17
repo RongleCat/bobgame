@@ -24,17 +24,17 @@
           <!-- 抽奖页面 -->
 
           <div class="lottery-block">
-            <div class="item" @click="$router.push('/mall/lottery')"></div>
-            <div class="item" @click="$router.push('/mall/goodsearch/0_all')"></div>
+            <div class="item" @click="$router.push('/mall/lottery')" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/mall_btn_0.png')`}"></div>
+            <div class="item" @click="$router.push('/mall/goodsearch/0_all')" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/mall_btn_1.png')`}"></div>
           </div>
           <!-- 限时兑换 -->
           <div class="block-title">限时兑换</div>
           <div class="time-get-list">
-            <div class="item" v-for="(item,index) in timeList" :key="index">
+            <div class="item" v-for="(item,index) in timeList" :key="index" v-show="item.show">
               <img :src="item.img">
               <div class="title">{{item.title}}</div>
               <div class="bean-block">{{item.price}}</div>
-              <CountDown :endTime="item.endTime" @end="deleteItem(index)"></CountDown>
+              <CountDown :endTime="item.endTime" @end="hideItem(index)"></CountDown>
               <div class="left-count">剩余 {{item.left}}/{{item.count}}</div>
             </div>
           </div>
@@ -73,24 +73,27 @@
         timeList: [{
           title: 'Apple 苹果 iPhone X 全面屏手机深空灰色 全网通 64GB 【原封国行正品】下单送全屏钢化膜+保护壳套装 加80元得无线充 苹果8 Plus低价抢购',
           price: 999999,
-          endTime: '2018-09-30 18:00:00',
+          endTime: '2018-10-17 10:09:00',
           count: 50,
           left: 45,
-          img: 'http://cdn.bobgame.cn//Uploads/Picture/2018-08-14/5b724956036686.19917269.jpg'
+          img: 'http://cdn.bobgame.cn//Uploads/Picture/2018-08-14/5b724956036686.19917269.jpg',
+          show: true
         }, {
           title: '微星（MSI）GeForce GTX 1060 GAMING X 6G 1594-1809MHZ GDDR5 192BIT PCI-E 3.0 旗舰红龙 吃鸡显卡',
           price: 999999,
           endTime: '2018-11-20 15:00:00',
           count: 50,
           left: 45,
-          img: 'https://img10.360buyimg.com/n1/s450x450_jfs/t18442/74/2071557420/119185/e4e3d236/5ae3f0e5N46bba1d8.jpg'
+          img: 'https://img10.360buyimg.com/n1/s450x450_jfs/t18442/74/2071557420/119185/e4e3d236/5ae3f0e5N46bba1d8.jpg',
+          show: true
         }, {
           title: '酷冷至尊(CoolerMaster)额定500W MWE500机箱电源(80PLUS铜牌/DCtoDC架构/日系固态电容/静音/台式机电源)',
           price: 999999,
           endTime: '2018-09-20 10:00:00',
           count: 50,
           left: 45,
-          img: 'https://img14.360buyimg.com/n1/s450x450_jfs/t5611/82/7427724363/219214/dd6676db/59704e4fN68089350.jpg'
+          img: 'https://img14.360buyimg.com/n1/s450x450_jfs/t5611/82/7427724363/219214/dd6676db/59704e4fN68089350.jpg',
+          show: true
         }]
       };
     },
@@ -144,9 +147,8 @@
       createUrl(url) {
         return `http://cdn.bobgame.cn${url}`
       },
-      deleteItem(_index) {
-        console.log(_index);
-        this.timeList.splice(_index, 1);
+      hideItem(_index) {
+        this.timeList[_index].show = false;
       }
     }
   };

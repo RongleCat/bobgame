@@ -7,12 +7,12 @@
 
 <script>
   import moment from "moment";
-  import { setInterval } from 'timers';
   export default {
     props: ['endTime'],
     data() {
       return {
-        leftTime: '00:00:00:00'
+        leftTime: '00:00:00:00',
+        timer: null
       }
     },
     computed: {
@@ -28,7 +28,7 @@
       let that = this
       let end = moment(that.endTime)
       that.calcTime(end)
-      setInterval(() => {
+      this.timer = setInterval(() => {
         that.calcTime(end)
       }, 1000)
     },
@@ -44,6 +44,7 @@
           leftTime[2] = Math.floor(times / 60) - (leftTime[0] * 24 * 60) - (leftTime[1] * 60);
           leftTime[3] = Math.floor(times) - (leftTime[0] * 24 * 60 * 60) - (leftTime[1] * 60 * 60) - (leftTime[2] * 60);
         } else {
+          window.clearInterval(this.timer)
           this.$emit('end')
         }
         leftTime.map((item, index) => {

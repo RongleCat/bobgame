@@ -109,7 +109,7 @@
             </h3>
             <i class="iconfont icon-you"></i>
           </li>
-          <li class="icon icon-07" @click="go('school')">
+          <li class="icon icon-07" @click="$router.push('/school')">
             <h3 class="block-title">
               波波学院
             </h3>
