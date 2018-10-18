@@ -11,7 +11,7 @@
       </div>
       <div class="message-icon" :class="{active:showMessageTip}" @click="$router.push('/message')">消息</div>
       <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="$router.push('/my/mypower/1')">会员卡</div>
-      <div class="float-icon"></div>
+      <div class="float-icon" @click="showRedActive = true"></div>
     </div>
     <div class="view-block">
       <transition name="fade-in">
@@ -26,7 +26,7 @@
           </div>
 
           <div class="game-entrance">
-            <div class="item"></div>
+            <div class="item" @click="showRedPack = true"></div>
             <div class="item"></div>
           </div>
           <div class="news-container" @click="$router.push('/news/100')">
@@ -67,6 +67,34 @@
               </div>
             </div>
           </Popup>
+
+          <Popup v-model="showRedActive" :maskClose="false" :opacity="60">
+            <div class="redactive-pop">
+              <div class="content">
+                <div class="text-rule">您将随机分配一款游戏跟对手匹配对战，对战结束后会根据您的输赢情况分配给你不同金额的现金红包奖励存入余额。</div>
+              </div>
+              <i class="iconfont icon-guanbi" @click="showRedActive = false"></i>
+              <div class="btn-play">立即匹配</div>
+            </div>
+          </Popup>
+
+          <Popup :maskClose="false" v-model="showRedPack">
+            <div class="redpack-pop">
+              <div class="close-box" v-if="!redPackOpen">
+                <div class="text-title">大红包</div>
+                <div class="btn-open" @click="redPackOpen = true"></div>
+                <div class="btn-close" @click="showRedPack = false"></div>
+              </div>
+              <div class="open-box" v-else>
+                <div class="btn-close"></div>
+                <div class="money-text">0.58<span>元</span></div>
+                <div class="center-tip"><img src="../assets/images/other/vip_text.png"></div>
+                <div class="btn-tixian btn-border" @click="$router.push('/my/balance')">去提现</div>
+                <div class="btn-fanbei btn-border" @click="$router.push('/my/mypower/1')">红包翻倍</div>
+              </div>
+            </div>
+          </Popup>
+
         </div>
       </transition>
     </div>
@@ -83,6 +111,9 @@
         headHeight: 136,
         sginView: false,
         showGetBeen: false,
+        showRedActive: false,
+        showRedPack: false,
+        redPackOpen: true,
         swiperOption: {
           loop: true,
           spaceBetween: 10
@@ -108,7 +139,7 @@
       setViewPaddingTop() {
         return this.$store.state.statusBarHeight + this.headHeight / 75 + "rem";
       },
-      ...mapState(['homeData'])
+      ...mapState(["homeData"])
     },
     // mounted() {
     //   let that = this;
@@ -119,23 +150,23 @@
     beforeCreate() {
       let that = this;
       that.$atApp(() => {
-        window.plus.navigator.setStatusBarStyle('dark');
-      })
+        window.plus.navigator.setStatusBarStyle("dark");
+      });
 
       if (that.$store.state.homeData) {
         setTimeout(() => {
-          that.reqDone = true
+          that.reqDone = true;
         }, 400);
         return false;
       }
       this.$http.get("/Index/index.html").then(r => {
         setTimeout(() => {
-          that.reqDone = true
+          that.reqDone = true;
           if (r.data.TodySign.singned) {
-            that.sginView = that.showGetBeen = true
+            that.sginView = that.showGetBeen = true;
           }
         }, 400);
-        that.$store.commit('setHomeData', r.data);
+        that.$store.commit("setHomeData", r.data);
       });
     },
     methods: {
@@ -275,7 +306,7 @@
 
       &.card-icon {
         right: 120px;
-        background-image: url('../assets/images/home/icon_m.png');
+        background-image: url("../assets/images/home/icon_m.png");
       }
     }
   }
@@ -412,7 +443,7 @@
   .sgin-box {
     width: 650px;
     height: 800px;
-    background: url('../assets/images/home/sign_bg.png') no-repeat;
+    background: url("../assets/images/home/sign_bg.png") no-repeat;
     background-size: 100%;
     padding: 0 40px;
     padding-top: 265px;
@@ -456,7 +487,7 @@
         &.end {
           &:after {
             display: block;
-            content: '';
+            content: "";
             width: 100%;
             height: 100%;
             position: absolute;
@@ -465,20 +496,20 @@
             right: 0;
             bottom: 0;
             background: #000;
-            opacity: .5;
+            opacity: 0.5;
             z-index: 10;
           }
 
           &:before {
             display: block;
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             z-index: 11;
-            background: url('../assets/images/home/sgin_mask.png') no-repeat top center;
+            background: url("../assets/images/home/sgin_mask.png") no-repeat top center;
             background-size: 100% auto;
           }
         }
@@ -486,7 +517,7 @@
         &.patch {
           &:after {
             display: block;
-            content: '';
+            content: "";
             width: 100%;
             height: 100%;
             position: absolute;
@@ -495,22 +526,21 @@
             right: 0;
             bottom: 0;
             background: #000;
-            opacity: .5;
+            opacity: 0.5;
             z-index: 10;
           }
 
           &:before {
             display: block;
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             z-index: 11;
-            background: url('../assets/images/home/sgin_mask.png') no-repeat bottom center;
+            background: url("../assets/images/home/sgin_mask.png") no-repeat bottom center;
             background-size: 100% auto;
-
           }
         }
 
@@ -546,13 +576,13 @@
     .item {
       width: 340px;
       height: 100%;
-      background: url('../assets/images/home/enter_01.png') no-repeat;
+      background: url("../assets/images/home/enter_01.png") no-repeat;
       background-size: 100% auto;
       float: left;
 
       &:last-child {
         float: right;
-        background-image: url('../assets/images/home/enter_02.png');
+        background-image: url("../assets/images/home/enter_02.png");
       }
     }
   }
@@ -560,7 +590,7 @@
   .float-icon {
     width: 100px;
     height: 100px;
-    background: url('../assets/images/home/float_icon.png') no-repeat;
+    background: url("../assets/images/home/float_icon.png") no-repeat;
     background-size: 100% auto;
     background-position: center;
     position: fixed;
@@ -576,7 +606,7 @@
     .route-bg {
       width: 100%;
       height: 100%;
-      background: url('../assets/images/get_bg.png') no-repeat center;
+      background: url("../assets/images/get_bg.png") no-repeat center;
       background-size: 100% auto;
       position: absolute;
       top: 0;
@@ -612,6 +642,149 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+      }
+    }
+  }
+
+  .redactive-pop {
+    width: 660px;
+    height: 680px;
+    background: url("../assets/images/home/red_active.png") no-repeat center top;
+    background-size: 100% auto;
+    position: relative;
+
+    .content {
+      padding: 320px 170px 0 200px;
+      color: #fff;
+      font-size: 24px;
+      line-height: 34px;
+    }
+
+    .iconfont {
+      position: absolute;
+      display: block;
+      width: 60px;
+      height: 60px;
+      line-height: 62px;
+      text-align: center;
+      color: #fff;
+      font-size: 48px;
+      right: 0;
+      top: 0;
+    }
+
+    .btn-play {
+      width: 350px;
+      height: 80px;
+      position: absolute;
+      bottom: 40px;
+      left: 165px;
+      background: #3de6ff;
+      text-align: center;
+      line-height: 82px;
+      border-radius: 40px;
+      font-size: 30px;
+      @include tapColor;
+    }
+  }
+
+  .redpack-pop {
+    width: 600px;
+    height: 700px;
+
+    .close-box {
+      width: 100%;
+      height: 100%;
+      background: url("../assets/images/other/red_close.png") no-repeat;
+      background-size: 100% auto;
+      padding: 390px 0 0 207px;
+
+      .btn-close {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      .btn-open {
+        width: 186px;
+        height: 186px;
+        background: url("../assets/images/other/btn_open.png") no-repeat;
+        background-size: 100% auto;
+        @include tapColor;
+      }
+
+      .text-title {
+        position: absolute;
+        top: 150px;
+        text-align: center;
+        width: 100%;
+        left: 0;
+        font-size: 64px;
+        color: #f8d24f;
+      }
+    }
+
+    .open-box {
+      width: 100%;
+      height: 100%;
+      background: url("../assets/images/other/red_open.png") no-repeat;
+      background-size: 100% auto;
+      text-align: center;
+      padding-top: 160px;
+      position: relative;
+
+      .btn-close {
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        right: 90px;
+        top: 20px;
+      }
+
+      .money-text {
+        font-size: 100px;
+        color: #ea594c;
+        line-height: 1;
+
+        span {
+          font-size: 24px;
+        }
+      }
+
+      .center-tip {
+        padding-top: 40px;
+
+        img {
+          height: 50px;
+          width: auto;
+        }
+      }
+
+      .btn-border {
+        width: 240px;
+        height: 80px;
+        border-radius: 40px;
+        position: absolute;
+        bottom: 60px;
+        line-height: 82px;
+        background: #fff5e6;
+        box-shadow: 0 6px 0 #fdc1af;
+        font-size: 30px;
+        @include tapColor;
+
+        &.btn-tixian {
+          left: 40px;
+          color: #b38456;
+        }
+
+        &.btn-fanbei {
+          right: 40px;
+          color: #e35244;
+          background: #f9d455;
+          box-shadow: 0 6px 0 #f7a741;
+        }
       }
     }
   }
