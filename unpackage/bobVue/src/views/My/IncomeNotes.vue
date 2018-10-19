@@ -239,7 +239,7 @@
       <VanPopup v-model="endPop" position="bottom" :close-on-click-overlay="false">
         <DatetimePicker v-model="endTime" type="date" :min-date="minDate" :max-date="endMax" title="选择结束时间" @cancel="endCancel" @confirm="endConfirm"></DatetimePicker>
       </VanPopup>
-      <VIPPopup v-model="vipTip"></VIPPopup>
+      <VIPPopup v-model="vipTip" :level="1"></VIPPopup>
     </template>
   </ThePage>
 </template>
@@ -372,7 +372,7 @@
         this.endDone = true
         this.endPop = false
       },
-      closeAllPop(){
+      closeAllPop() {
         this.filterOpen = this.classOpen = false
         // this.minBeen = this.maxBeen = null
       }

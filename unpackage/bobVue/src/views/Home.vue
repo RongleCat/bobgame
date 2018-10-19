@@ -86,7 +86,7 @@
                 <div class="btn-close" @click="showRedPack = false"></div>
               </div>
               <div class="open-box" v-else>
-                <div class="btn-close"></div>
+                <div class="btn-close" @click="showRedPack = false"></div>
                 <div class="money-text">0.58<span>元</span></div>
                 <div class="center-tip"><img src="../assets/images/other/vip_text.png"></div>
                 <div class="btn-tixian btn-border" @click="$router.push('/my/balance')">去提现</div>

@@ -33,26 +33,21 @@
                   <div class="power-list-title">
                     V0达人权益
                   </div>
-                  <div class="power-list">
+                  <div class="power-list v0">
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-0"></div>
+                      <div class="title">20%分享奖金</div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额20%现金奖励。</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">免费升级VIP</div>
+                      <div class="content">多途径获得VIP经验，集满99经验可升级VIP1。</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
-                    </div>
-                    <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">玩游戏得现金红包</div>
+                      <div class="content">每局游戏结束，有几率获得现金红包。</div>
                     </div>
                   </div>
                 </div>
@@ -67,26 +62,61 @@
                   <div class="power-list-title">
                     V1高手权益
                   </div>
-                  <div class="power-list">
+                  <div class="power-list v1">
                     <div class="item">
-                      <div class="icon"></div>
+                      <div class="icon icon-0"></div>
                       <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">8%复充奖金<label>超值</label></div>
+                      <div class="content">直接获取邀请的玩家首次充值之后的每次充值8%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">15%充值增益<label>超值</label></div>
+                      <div class="content">免费获得充值对应金豆数额之外15%的金豆数量增益</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-3"></div>
+                      <div class="title">赠送白银会员卡<label>超值</label></div>
+                      <div class="content">赠送白银会员卡，获得价值30元RMB的金豆奖励</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-4"></div>
+                      <div class="title">现金红包金额翻倍<label>超值</label></div>
+                      <div class="content">每局游戏结束，有几率获得现金红包的金额奖励翻倍</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-9"></div>
+                      <div class="title">比赛场挑战次数永久+1<label>超值</label></div>
+                      <div class="content">更高的获奖概率，参加平台官方比赛，享受比规定挑战次数更多1次的挑战机会</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-5"></div>
+                      <div class="title">VIP1商品95折</div>
+                      <div class="content">解锁商城VIP1商品折扣，兑换VIP1商品享95折优惠</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-6"></div>
+                      <div class="title">收益一键提现</div>
+                      <div class="content">解锁平台一键提现功能，所有收益可直接在线提现</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-8"></div>
+                      <div class="title">VIP1专属奖池</div>
+                      <div class="content">解锁VIP1奖池，享受更高价值专属抽奖奖品</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-10"></div>
+                      <div class="title">免费专业培训</div>
+                      <div class="content">免费享受3-5天平台系统培训，每月4次线上营销课，微信1对1沟通</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-11"></div>
+                      <div class="title">广告宣传扶持</div>
+                      <div class="content">免费畅享游戏运营中心服务支持、广告投放支持、专业素材文案支持、宣传物料支持</div>
                     </div>
                   </div>
                 </div>
@@ -102,26 +132,71 @@
                   <div class="power-list-title">
                     V2大师权益
                   </div>
-                  <div class="power-list">
+                  <div class="power-list v2">
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-0"></div>
+                      <div class="title">30%分享奖金<label>超值</label></div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额30%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">12%复充奖金<label>超值</label></div>
+                      <div class="content">直接获取邀请的玩家首次充值之后的每次充值12%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">6%间接分享奖金<label>超值</label></div>
+                      <div class="content">直接获得自己邀请玩家再邀请的玩家每次充值6%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-3"></div>
+                      <div class="title">20%充值增益<label>超值</label></div>
+                      <div class="content">免费获得充值对应金豆数额之外20%的金豆数量增益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-4"></div>
+                      <div class="title">赠送黄金会员卡<label>超值</label></div>
+                      <div class="content">赠送黄金会员卡，获得价值150元RMB的金豆奖励</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-11"></div>
+                      <div class="title">线下沙龙物料支持<label>超值</label></div>
+                      <div class="content">获得平台线下少龙免费入场权，可申请举办区域沙龙并免费获得流程辅导和物料支持。</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-5"></div>
+                      <div class="title">现金红包金额翻倍</div>
+                      <div class="content">每局游戏结束，有几率获得现金红包奖励翻倍</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-6"></div>
+                      <div class="title">VIP商品95折</div>
+                      <div class="content">解锁商城VIP商品折扣，兑换VIP商品享95折优惠</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-7"></div>
+                      <div class="title">收益一键提现</div>
+                      <div class="content">解锁平台一键提现功能，所有收益可直接在线提现</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-9"></div>
+                      <div class="title">VIP2专属奖池</div>
+                      <div class="content">解锁VIP2奖池，享受更高价值专属抽奖奖品</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-10"></div>
+                      <div class="title">比赛场挑战次数+3</div>
+                      <div class="content">参加平台官方比赛，享受比规定挑战次数更多3次的挑战机会</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-12"></div>
+                      <div class="title">免费专业培训</div>
+                      <div class="content">免费享受3-5天平台系统培训，每月4次线上营销课，微信1对1沟通</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-13"></div>
+                      <div class="title">广告宣传扶持</div>
+                      <div class="content">免费畅享游戏运营中心服务支持、广告投放支持、专业素材文案支持、宣传物料支持</div>
                     </div>
                   </div>
                 </div>
@@ -137,26 +212,86 @@
                   <div class="power-list-title">
                     V3推广部长权益
                   </div>
-                  <div class="power-list">
+                  <div class="power-list v3">
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-0"></div>
+                      <div class="title">35%分享奖金<label>超值</label></div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额35%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">12%团队奖金<label>超值</label></div>
+                      <div class="content">直接获取自己全部下级充值金额12%的现金奖励（直推从复充开始计算）</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">6%直接团队奖金<label>超值</label></div>
+                      <div class="content">直接获得自己邀请玩家每次复充金额6%的现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-3"></div>
+                      <div class="title">25%充值增益<label>超值</label></div>
+                      <div class="content">免费获得充值对应金豆数额之外25%的金豆数量增益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-4"></div>
+                      <div class="title">赠送铂金会员卡<label>超值</label></div>
+                      <div class="content">赠送铂金会员卡，获得价值990元RMB的金豆奖励</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-5"></div>
+                      <div class="title">现金红包金额翻倍<label>超值</label></div>
+                      <div class="content">每局游戏结束，有几率获得现金红包奖励翻倍</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-15"></div>
+                      <div class="title">免费会员赠送<label>超值</label></div>
+                      <div class="content">平台直接赠送200—500活跃会员，直接绑定至对应V3账号下，随时产生收益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-12"></div>
+                      <div class="title">线下沙龙物料支持<label>超值</label></div>
+                      <div class="content">获得平台线下少龙免费入场权，可申请举办区域沙龙并免费获得流程辅导和物料支持。</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-8"></div>
+                      <div class="title">创建专属比赛<label>超值</label></div>
+                      <div class="content">解锁专属比赛功能，可随意创建个人专属比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-9"></div>
+                      <div class="title">现金比赛场特权<label>超值</label></div>
+                      <div class="content">开放现金比赛场，可自定义创建个人现金比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-6"></div>
+                      <div class="title">VIP商品9折</div>
+                      <div class="content">解锁商城VIP商品折扣，兑换VIP商品享9折优惠</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-7"></div>
+                      <div class="title">收益一键提现</div>
+                      <div class="content">解锁平台一键提现功能，所有收益可直接在线提现</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-10"></div>
+                      <div class="title">VIP3专属奖池</div>
+                      <div class="content">解锁VIP3奖池，享受更高价值专属抽奖奖品</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-11"></div>
+                      <div class="title">比赛场挑战次数+5</div>
+                      <div class="content">参加平台官方比赛，享受比规定挑战次数更多5次的挑战机会</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-13"></div>
+                      <div class="title">免费专业培训</div>
+                      <div class="content">免费享受3-5天平台系统培训，每月10次以上线上营销课，15天电话辅导，微信1对1沟通</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-14"></div>
+                      <div class="title">广告宣传扶持</div>
+                      <div class="content">免费畅享游戏运营中心服务支持、广告投放支持、专业素材文案支持、宣传物料支持</div>
                     </div>
                   </div>
                 </div>
@@ -172,26 +307,96 @@
                   <div class="power-list-title">
                     V4总代理权益
                   </div>
-                  <div class="power-list">
+                  <div class="power-list v4">
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-0"></div>
+                      <div class="title">40%分享奖金<label>超值</label></div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额40%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">14%团队奖金<label>超值</label></div>
+                      <div class="content">直接获取自己全部下级充值金额14%的现金奖励（直推从复充开始计算）</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">7%直接团队奖金<label>超值</label></div>
+                      <div class="content">直接获得自己邀请玩家每次复充金额7%的现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-3"></div>
+                      <div class="title">30%充值增益<label>超值</label></div>
+                      <div class="content">免费获得充值对应金豆数额之外30%的金豆数量增益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-4"></div>
+                      <div class="title">赠送钻石会员卡<label>超值</label></div>
+                      <div class="content">赠送钻石会员卡，获得价值3240元RMB金豆奖励</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-5"></div>
+                      <div class="title">现金红包金额翻倍<label>超值</label></div>
+                      <div class="content">每局游戏结束，有几率获得现金红包奖励翻倍</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-17"></div>
+                      <div class="title">免费会员赠送<label>超值</label></div>
+                      <div class="content">平台直接赠送200—500活跃会员，直接绑定至对应V4账号下，随时产生收益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-8"></div>
+                      <div class="title">创建专属比赛<label>超值</label></div>
+                      <div class="content">解锁自定义比赛功能，可随意创建个人专属比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-9"></div>
+                      <div class="title">现金比赛场特权<label>超值</label></div>
+                      <div class="content">开放现金比赛场，可自定义创建个人现金比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-12"></div>
+                      <div class="title">地区代理<label>超值</label></div>
+                      <div class="content">获取地区推广和代理权限，直接畅享该区域所有平台用户充值收益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-13"></div>
+                      <div class="title">线下高端私密会<label>超值</label></div>
+                      <div class="content">获取线下顶级私密会入场券，公司协助扩充人脉</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-6"></div>
+                      <div class="title">VIP商品85折</div>
+                      <div class="content">解锁商城VIP商品折扣，兑换VIP商品享85折优惠</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-7"></div>
+                      <div class="title">收益一键提现</div>
+                      <div class="content">解锁平台一键提现功能，所有收益可直接在线提现</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-10"></div>
+                      <div class="title">VIP4专属奖池</div>
+                      <div class="content">解锁VIP4奖池，享受更高价值专属抽奖奖品</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-11"></div>
+                      <div class="title">比赛场挑战次数+10</div>
+                      <div class="content">参加平台官方比赛，享受比规定挑战次数更多10次的挑战机会</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-14"></div>
+                      <div class="title">线下沙龙物料支持</div>
+                      <div class="content">获得平台线下少龙免费入场权，可申请举办区域沙龙并免费获得流程辅导和物料支持</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-15"></div>
+                      <div class="title">免费专业培训</div>
+                      <div class="content">免费享受3-5天平台系统培训，每月10次以上线上营销课，30天电话辅导，微信1对1沟通</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-16"></div>
+                      <div class="title">广告宣传扶持</div>
+                      <div class="content">免费畅享游戏运营中心服务支持、广告投放支持、专业素材文案支持、宣传物料支持</div>
                     </div>
                   </div>
                 </div>
@@ -209,24 +414,94 @@
                   </div>
                   <div class="power-list">
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-0"></div>
+                      <div class="title">40%分享奖金<label>超值</label></div>
+                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额40%现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-1"></div>
+                      <div class="title">14%团队奖金<label>超值</label></div>
+                      <div class="content">直接获取自己全部下级充值金额14%的现金奖励（直推从复充开始计算）</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-2"></div>
+                      <div class="title">7%直接团队奖金<label>超值</label></div>
+                      <div class="content">直接获得自己邀请玩家每次复充金额7%的现金奖励</div>
                     </div>
                     <div class="item">
-                      <div class="icon"></div>
-                      <div class="title">25%分享奖金<label>超值</label></div>
-                      <div class="content">邀请其他玩家进入平台消费，拿首次充值金额25%现金奖励。</div>
+                      <div class="icon icon-3"></div>
+                      <div class="title">30%充值增益<label>超值</label></div>
+                      <div class="content">免费获得充值对应金豆数额之外30%的金豆数量增益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-4"></div>
+                      <div class="title">赠送钻石会员卡<label>超值</label></div>
+                      <div class="content">赠送钻石会员卡，获得价值3240元RMB金豆奖励</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-5"></div>
+                      <div class="title">现金红包金额翻倍<label>超值</label></div>
+                      <div class="content">每局游戏结束，有几率获得现金红包奖励翻倍</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-17"></div>
+                      <div class="title">免费会员赠送<label>超值</label></div>
+                      <div class="content">平台直接赠送200—500活跃会员，直接绑定至对应V4账号下，随时产生收益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-8"></div>
+                      <div class="title">创建专属比赛<label>超值</label></div>
+                      <div class="content">解锁自定义比赛功能，可随意创建个人专属比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-9"></div>
+                      <div class="title">现金比赛场特权<label>超值</label></div>
+                      <div class="content">开放现金比赛场，可自定义创建个人现金比赛</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-12"></div>
+                      <div class="title">地区代理<label>超值</label></div>
+                      <div class="content">获取地区推广和代理权限，直接畅享该区域所有平台用户充值收益</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-13"></div>
+                      <div class="title">线下高端私密会<label>超值</label></div>
+                      <div class="content">获取线下顶级私密会入场券，公司协助扩充人脉</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-6"></div>
+                      <div class="title">VIP商品85折</div>
+                      <div class="content">解锁商城VIP商品折扣，兑换VIP商品享85折优惠</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-7"></div>
+                      <div class="title">收益一键提现</div>
+                      <div class="content">解锁平台一键提现功能，所有收益可直接在线提现</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-10"></div>
+                      <div class="title">VIP4专属奖池</div>
+                      <div class="content">解锁VIP4奖池，享受更高价值专属抽奖奖品</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-11"></div>
+                      <div class="title">比赛场挑战次数+10</div>
+                      <div class="content">参加平台官方比赛，享受比规定挑战次数更多10次的挑战机会</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-14"></div>
+                      <div class="title">线下沙龙物料支持</div>
+                      <div class="content">获得平台线下少龙免费入场权，可申请举办区域沙龙并免费获得流程辅导和物料支持</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-15"></div>
+                      <div class="title">免费专业培训</div>
+                      <div class="content">免费享受3-5天平台系统培训，每月10次以上线上营销课，30天电话辅导，微信1对1沟通</div>
+                    </div>
+                    <div class="item">
+                      <div class="icon icon-16"></div>
+                      <div class="title">广告宣传扶持</div>
+                      <div class="content">免费畅享游戏运营中心服务支持、广告投放支持、专业素材文案支持、宣传物料支持</div>
                     </div>
                   </div>
                 </div>
@@ -602,12 +877,20 @@
 
         .icon {
           position: absolute;
-          width: 90px;
-          height: 90px;
-          border-radius: 20px;
-          background: #efc68e;
-          top: 0;
-          left: 35px;
+          width: 100px;
+          height: 100px;
+
+          background-size: 100px auto;
+          top: -5px;
+          left: 30px;
+          background-image: url('../../assets/images/my/pwoer_icon_v4.png');
+          background-repeat: no-repeat;
+
+          @for $i from 0 through 20 {
+            &.icon-#{$i} {
+              background-position-y: $i * -100px
+            }
+          }
         }
 
         .title {
@@ -633,6 +916,14 @@
           line-height: 28px;
           padding-top: 25px;
           color: #adadad;
+        }
+      }
+
+      @for $i from 0 through 4 {
+        &.v#{$i} {
+          .icon {
+            background-image:url('../../assets/images/my/pwoer_icon_v#{$i}.png');
+          }
         }
       }
     }
