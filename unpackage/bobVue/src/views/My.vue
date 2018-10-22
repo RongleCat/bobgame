@@ -603,6 +603,9 @@
 
   .invite-friends {
     height: 210px;
+    background: #fff url('../assets/images/my/create.png') no-repeat;
+    background-size: auto 130px;
+    background-position: 70px bottom;
 
     .btn-invite {
       position: absolute;

@@ -27,7 +27,7 @@
 
           <div class="game-entrance">
             <div class="item" @click="showRedPack = true"></div>
-            <div class="item"></div>
+            <div class="item" @click="$router.push('/game/match')"></div>
           </div>
           <div class="news-container" @click="$router.push('/news/100')">
             <div class="icon">公告</div>
@@ -38,7 +38,7 @@
           </div>
           <div class="block-title">竞技游戏</div>
           <div class="jingji-game-list">
-            <div class="item" v-for="item in homeData.sportsGames" :key="item.id" :style="{'background-image':`url(${createImgUrl(item.cover,'bg')})`}">
+            <div class="item" @click="getUserInfo" v-for="item in homeData.sportsGames" :key="item.id" :style="{'background-image':`url(${createImgUrl(item.cover,'bg')})`}">
               <div class="icon" :style="{'background-image':`url(${createImgUrl(item.icon,'icon')})`}"></div>
               <div class="title">{{item.game_name}}</div>
               <div class="description">{{item.introduction}}</div>
@@ -181,6 +181,12 @@
         } else {
           return "http://cdn.bobgame.cn" + value;
         }
+      },
+      getUserInfo() {
+        let arr = []
+        this.$http.get("/Bobcenter/fetchUsrInfo.html&param=" + JSON.stringify(arr)).then(r => {
+          console.log(r);
+        });
       }
     }
   };
