@@ -26,7 +26,7 @@
           </div>
 
           <div class="game-entrance">
-            <div class="item" @click="showRedPack = true"></div>
+            <div class="item" @click="$router.push('/game/sports')"></div>
             <div class="item" @click="$router.push('/game/match')"></div>
           </div>
           <div class="news-container" @click="$router.push('/news/100')">

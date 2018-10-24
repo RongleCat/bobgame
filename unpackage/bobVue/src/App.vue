@@ -12,7 +12,34 @@
 <script>
   import TheTabber from "@/components/TheTabbar.vue";
   import unit from './unit/back.js';
-  let allRouter = ['Share', 'Lottery', 'ContactUs', 'CustomGame', 'FriendInfomation', 'FriendsDetail', 'IncomeNotes', 'WaitWithdraw', 'Withdraw', 'GoodDetail', 'GoodSearch', 'Rule', 'SchoolDetails', 'School', 'Balance', 'Address', 'MySettings', 'Login', 'My', 'Mall', 'Friends', 'Home', 'Guide'];
+  let allRouter = [
+    'Sports',
+    'OfficialMatchNote',
+    'MyMatchNote',
+    'Match',
+    'Share',
+    'Lottery',
+    'ContactUs',
+    'CustomGame',
+    'FriendInfomation',
+    'FriendsDetail',
+    'IncomeNotes',
+    'WaitWithdraw',
+    'Withdraw',
+    'GoodDetail',
+    'GoodSearch',
+    'Rule',
+    'SchoolDetails',
+    'School',
+    'Balance',
+    'Address',
+    'MySettings',
+    'Login', 'My',
+    'Mall',
+    'Friends',
+    'Home',
+    'Guide'
+  ];
 
   export default {
     components: {
