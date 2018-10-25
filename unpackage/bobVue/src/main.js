@@ -7,6 +7,7 @@ import vuescroll from 'vuescroll';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueClipboard from 'vue-clipboard2'
+import scrollFix from "./unit/scroll_fix";
 // import Vconsole from 'vconsole';
 // import 'vuescroll/dist/vuescroll.css';
 import ThePopView from './components/ThePopView.vue';
@@ -114,6 +115,8 @@ Vue.filter('toString', function (value) {
   return '' + value
 })
 
+Vue.directive('scrollfix', scrollFix)
+
 if (vueTools.atApp()) {
   if (window.plus) {
     plusReady();
@@ -124,6 +127,20 @@ if (vueTools.atApp()) {
   plusReady()
 }
 
+// Vue.mixin({
+//   mounted() {
+//     if (this.$refs.scrollMain) {
+//       console.log(this.$refs.scrollMain);
+//       var ios = navigator.userAgent.indexOf('iphone');
+
+//       if (ios == -1) {
+//         var divEl = document.querySelector('.view-block')
+//         iosTrouchFn(divEl);
+//       }
+//     }
+//   }
+// })
+
 //h5+执行
 function plusReady() {
   new Vue({
@@ -132,3 +149,27 @@ function plusReady() {
     render: h => h(App)
   }).$mount('#app')
 }
+
+// function iosTrouchFn(el) {
+//   el.addEventListener('touchmove', function (e) {
+//     e.isSCROLL = true;
+//   })
+//   document.body.addEventListener('touchmove', function (e) {
+//     if (!e.isSCROLL) {
+//       e.preventDefault(); //阻止默认事件(上下滑动)
+//     } else {
+//       //需要滑动的区域
+//       var top = el.scrollTop; //对象最顶端和窗口最顶端之间的距离 
+//       var scrollH = el.scrollHeight; //含滚动内容的元素大小
+//       var offsetH = el.offsetHeight; //网页可见区域高
+//       var cScroll = top + offsetH; //当前滚动的距离
+
+//       //被滑动到最上方和最下方的时候
+//       if (top == 0) {
+//         top = 1; //0～1之间的小数会被当成0
+//       } else if (cScroll === scrollH) {
+//         el.scrollTop = top - 0.1;
+//       }
+//     }
+//   }, { passive: false })
+// }

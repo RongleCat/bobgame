@@ -11,7 +11,7 @@
       <slot v-else name="header"></slot>
     </template>
     <slot name="plug"></slot>
-    <div class="view-block" :style="{backgroundColor:contentBg?contentBg:'#fff'}">
+    <div class="view-block" :style="{backgroundColor:contentBg?contentBg:'#fff'}" ref="scrollMain" v-scrollfix>
       <slot name="content"></slot>
     </div>
   </div>
@@ -19,7 +19,7 @@
 
 <script>
   export default {
-    props: ['btnType', 'diy', 'color', 'contentBg', 'noHead'],
+    props: ['btnType', 'diy', 'color', 'contentBg', 'noHead', 'backUrl'],
     data() {
       return {
         headHeight: 88
@@ -48,7 +48,19 @@
     },
     methods: {
       btnBackEvent() {
-        this.$router.go(-1)
+        let that = this;
+        let backUrl = that.backUrl || this.$route.query.backUrl;
+        if (backUrl) {
+          let url = backUrl.split('_')[0]
+          let type = parseInt(backUrl.split('_')[1])
+          if (type) {
+            this.$router.replace(url)
+          } else {
+            this.$router.push(url)
+          }
+        } else {
+          this.$router.go(-1)
+        }
       }
     }
   }

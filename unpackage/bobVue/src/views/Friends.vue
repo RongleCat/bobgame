@@ -10,8 +10,8 @@
     <div class="btn-chat btn-round" @click="selectTab = 0" v-if="selectTab == 1" :style="{top:btnTwoTop+'px'}"><i class="iconfont icon-zixun"></i></div>
     <div class="btn-add btn-round" @click="$router.push('/friends/addfriend')" v-if="selectTab == 1" :style="{top:btnAddTop+'px'}"><i class="iconfont icon-add"></i></div>
     <transition name="fade-in">
-      <div class="view-block" v-show="!load">
-        <div class="friend-container">
+      <div class="view-block" v-show="!load" ref="scrollMain">
+        <div class="friend-container" v-scrollfix>
           <swiper :options="friendOption" ref="friend">
             <swiperSlide>
               <div class="friend-list" v-if="chatList.length">

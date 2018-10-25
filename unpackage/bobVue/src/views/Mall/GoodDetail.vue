@@ -45,7 +45,8 @@
 </template>
 
 <script>
-  import CountDown from "@/components/CountDown.vue";
+  import CountDown from "@/components/CountDown.vue"
+  import { Toast } from "vant";
   export default {
     components: {
       CountDown
@@ -56,6 +57,7 @@
           loop: true,
           spaceBetween: 0,
           preloadImages: false,
+          lazyLoading: true,
           pagination: {
             el: '.cover-pagination',
             clickable: true,
@@ -80,7 +82,9 @@
           observer.observe(item);
         });
       } else {
+        Toast('没有')
         $root.querySelectorAll('img').forEach(item => {
+          Toast(item);
           item.target.src = item.target.dataset.src
         })
       }
@@ -91,7 +95,6 @@
           if (item.isIntersecting) {
             item.target.src = item.target.dataset.src
           }
-          console.log(item);
         })
       }
     }

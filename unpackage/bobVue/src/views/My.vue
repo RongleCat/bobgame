@@ -4,7 +4,7 @@
     <div class="header-block common-header" my :style="{top:statusBarHeight}">
       我的
     </div>
-    <div class="view-block" my>
+    <div class="view-block" my ref="scrollMain" v-scrollfix>
       <div class="head-container" :class="[`isvip-${vipLevel}`]" my>
         <div class="card-block">
           <img :src="headUrl" class="user-head" @click="go('mysettings')">

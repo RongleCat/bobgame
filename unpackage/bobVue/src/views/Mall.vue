@@ -9,7 +9,7 @@
       </div>
       <div class="my-order" @click="$router.push('/my/orderlist')">我的订单</div>
     </div>
-    <div class="view-block">
+    <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
         <div class="content-container" v-if="reqDone">
           <!-- 轮播图 -->

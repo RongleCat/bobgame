@@ -13,7 +13,7 @@
       <div class="message-icon card-icon" :class="{active:showMessageTip}" @click="$router.push('/my/mypower/1')">会员卡</div>
       <div class="float-icon" @click="showRedActive = true"></div>
     </div>
-    <div class="view-block">
+    <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
         <div class="content-container" v-if="reqDone">
           <div class="banner-container" home>
