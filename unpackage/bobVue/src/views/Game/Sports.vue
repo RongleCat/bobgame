@@ -2,6 +2,35 @@
   <ThePage color="#f2f2f2" contentBg="#0c053d">
     <template slot="headerContent">
       竞技场
+
+      <Popup :maskClose="false" v-model="showResult">
+        <div class="res-pop">
+          <div class="btn-back" :style="{top:btnTop+'rem'}"><i class="iconfont icon-zuo"></i>返回游戏列表</div>
+          <div class="pop-main">
+            <div class="top-title win"></div>
+            <div class="pop-content">
+              <div class="line-item been">
+                金豆 <div class="right-block two">+<span>20000</span><br>场地租借费：20金豆</div>
+              </div>
+              <div class="line-item windot">
+                胜点 <div class="right-block">+<span>5</span></div>
+              </div>
+              <div class="bottom-tip">今日还能在该游戏获得95金豆</div>
+              <div class="user-info-box">
+                <div class="item left">
+                  <div class="head-box">
+                    <img :src="myInfo.head">
+
+                  </div>
+                </div>
+                <div class="item right"></div>
+              </div>
+            </div>
+            <div class="bottom-btn btn-one">进入聊天页面</div>
+            <div class="bottom-btn btn-two">重新匹配</div>
+          </div>
+        </div>
+      </Popup>
     </template>
     <template slot="content">
       <div class="sports-container">
@@ -113,12 +142,36 @@
 </template>
 
 <script>
+  import { Toast } from "vant";
   export default {
     data() {
       return {
         showHelp: false,
-        listOpen: false
+        listOpen: false,
+        showResult: true,
+        myInfo: {
+          head: 'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg',
+          gameLevel: 18,
+          level: 1,
+          name: '曹铁柱',
+          sex: 0
+        },
+        opponentInfo: {
+          head: 'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg',
+          gameLevel: 20,
+          level: 2,
+          name: '曹铁柱曹铁柱曹铁柱',
+          sex: 1
+        }
       }
+    },
+    computed: {
+      btnTop() {
+        return this.$store.state.statusBarHeight + (88 + 25) / 75
+      }
+    },
+    mounted() {
+      Toast(this.statusBarHeight);
     }
   }
 </script>
@@ -343,5 +396,154 @@
         }
       }
     }
+  }
+
+  .res-pop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    .btn-back {
+      position: absolute;
+      left: 25px;
+      background: rgba(255, 255, 255, .5);
+      color: #fff;
+      padding: 0 20px;
+      line-height: 60px;
+      height: 60px;
+      border-radius: 28px;
+      font-size: 24px;
+      @include tapColor;
+
+      .iconfont {
+        font-size: 24px;
+      }
+    }
+
+    .pop-main {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      padding-top: 58px;
+
+      .top-title {
+        width: 638px;
+        height: 146px;
+        background-size: 100% auto;
+        background-position: top center;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+
+        &.win {
+          background-image: url('../../assets/images/game/result_poptitle_1.png');
+        }
+
+        &.lose {
+          background-image: url('../../assets/images/game/result_poptitle_2.png');
+        }
+
+        &.ping {
+
+          background-image: url('../../assets/images/game/result_poptitle_3.png');
+        }
+      }
+
+      .pop-content {
+        background: #fff;
+        border-radius: 15px;
+        padding: 50px;
+        padding-top: 115px;
+        width: 550px;
+        margin-bottom: 55px;
+
+        .line-item {
+          color: #8c969c;
+          text-align: left;
+          height: 88px;
+          line-height: 90px;
+          border-bottom: 1px dashed #e5e5e5;
+          background-size: 40px auto;
+          background-position: 7px center;
+          background-repeat: no-repeat;
+          padding-left: 60px;
+          overflow: hidden;
+
+          .right-block {
+            float: right;
+            text-align: right;
+            font-size: 20px;
+
+            span {
+              font-size: 28px;
+              font-weight: bold;
+              color: #333;
+              padding-left: 3px;
+            }
+
+            &.two {
+              line-height: 30px;
+              padding: 12px 0;
+            }
+          }
+
+          &.been {
+            background-image: url('../../assets/images/game/been.png');
+          }
+
+          &.windot {
+            background-image: url('../../assets/images/game/windot.png');
+          }
+        }
+
+        .bottom-tip {
+          color: #8c969c;
+          font-size: 20px;
+          line-height: 60px;
+        }
+
+        .user-info-box {
+          @include clearfix;
+
+          .item {
+            width: 180px;
+
+            &:first-child {
+              float: left;
+            }
+
+            &:last-child {
+              float: right;
+            }
+          }
+        }
+      }
+
+      .bottom-btn {
+        width: 450px;
+        height: 88px;
+        line-height: 90px;
+        font-size: 30px;
+        text-align: center;
+        border-radius: 44px;
+        margin: 0 auto;
+        margin-bottom: 24px;
+        @include tapColor;
+
+        &.btn-one {
+          color: #333;
+          background: $by;
+        }
+
+        &.btn-two {
+          background: #333;
+          color: #fff;
+        }
+      }
+    }
+
   }
 </style>
