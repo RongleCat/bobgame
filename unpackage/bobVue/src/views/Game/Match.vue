@@ -22,7 +22,7 @@
         </div>
         <div class="game-list">
           <div class="block-title">自定义比赛</div>
-          <GameItem :personal="true"></GameItem>
+          <GameItem :personal="true" :state="2"></GameItem>
           <GameItem :personal="false"></GameItem>
           <GameItem :personal="true"></GameItem>
           <GameItem :personal="false"></GameItem>

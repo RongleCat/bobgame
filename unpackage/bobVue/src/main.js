@@ -14,6 +14,7 @@ import ThePopView from './components/ThePopView.vue';
 import Popup from './components/Popup.vue';
 import ThePage from './components/ThePage.vue';
 import Help from './components/HelpPopup.vue';
+import GamePop from './components/GamePop.vue';
 
 import { swiperSlide } from "vue-awesome-swiper";
 import swiper from "./components/fixSlide.js";
@@ -43,6 +44,7 @@ Vue.component('ThePopView', ThePopView)
 Vue.component('Popup', Popup)
 Vue.component('ThePage', ThePage)
 Vue.component('Help', Help)
+Vue.component('GamePop', GamePop)
 Vue.component('swiperSlide', swiperSlide)
 Vue.component('swiper', swiper)
 //页面滚动插件配置
@@ -91,9 +93,9 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  // if (response.data.code != 200) {
-  //   router.push('/login')
-  // }
+  if (response.data.code != 200) {
+    router.push('/login')
+  }
   return response.data;
 }, function (error) {
   // 对响应错误做点什么

@@ -4,6 +4,8 @@ import OfficialMatchNote from '../views/Game/OfficialMatchNote.vue'
 import ViewResults from '../views/Game/ViewResults.vue'
 import Sports from '../views/Game/Sports.vue'
 import Matching from '../views/Game/Matching.vue'
+import Stadium from '../views/Game/Stadium.vue'
+import AddFrequency from '../views/Game/AddFrequency.vue'
 
 
 
@@ -44,5 +46,17 @@ export default [
     path: '/game/matching',
     name: 'Matching',
     component: Matching
+  },
+  //赛场页面
+  {
+    path: '/game/stadium/:id',
+    name: 'Stadium',
+    component: Stadium
+  },
+  //增加游戏次数
+  {
+    path: '/game/addfrequency/:id',
+    name: 'AddFrequency',
+    component: AddFrequency
   }
 ]

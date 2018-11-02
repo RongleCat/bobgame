@@ -1,11 +1,9 @@
+import { atApp, isIos } from "./atApp";
+
+
+
 let scroll_fix = {
   inserted(el) {
-    let moveEnd = false
-    document.body.ontouchmove = event => {
-      if (event.cancelable && !event.defaultPrevent) {
-        event.preventDefault()
-      }
-    };
     let startY = 0
 
     function touchSatrtFunc(evt) {
@@ -17,37 +15,48 @@ let scroll_fix = {
         console.error("touchSatrtFunc：" + e.message)
       }
     }
-    document.addEventListener("touchstart", touchSatrtFunc, false);
-    let _ss = el
-    _ss.ontouchmove = function (ev) {
-      moveEnd = true
-      let _point = ev.touches[0],
-        _top = _ss.scrollTop
-      let _bottomFaVal = _ss.scrollHeight - _ss.offsetHeight;
-      if (_top === 0) {
-        if (_point.clientY > startY) {
+
+    if (!atApp() && isIos()) {
+      let moveEnd = false
+      document.body.ontouchmove = event => {
+        if (event.cancelable && !event.defaultPrevent) {
+          event.preventDefault()
+        }
+      };
+      document.addEventListener("touchstart", touchSatrtFunc, false);
+      let _ss = el
+      _ss.ontouchmove = function (ev) {
+        moveEnd = true
+        let _point = ev.touches[0],
+          _top = _ss.scrollTop
+        let _bottomFaVal = _ss.scrollHeight - _ss.offsetHeight;
+        if (_top === 0) {
+          if (_point.clientY > startY) {
+            ev.preventDefault();
+          } else {
+            ev.stopPropagation()
+          }
+        } else if (_top === _bottomFaVal) {
+          if (_point.clientY < startY) {
+            ev.preventDefault()
+          } else {
+            ev.stopPropagation()
+          }
+        } else if (_top > 0 && _top < _bottomFaVal) {
+          ev.stopPropagation()
+        } else {
           ev.preventDefault();
-        } else {
-          ev.stopPropagation()
         }
-      } else if (_top === _bottomFaVal) {
-        if (_point.clientY < startY) {
-          ev.preventDefault()
-        } else {
-          ev.stopPropagation()
-        }
-      } else if (_top > 0 && _top < _bottomFaVal) {
-        ev.stopPropagation()
-      } else {
-        ev.preventDefault();
-      }
-      _ss.ontouchend = (e) => {
-        if (moveEnd) {
-          e.stopPropagation()
-          moveEnd = false
-          return false
+        _ss.ontouchend = (e) => {
+          if (moveEnd) {
+            e.stopPropagation()
+            moveEnd = false
+            return false
+          }
         }
       }
+    } else {
+      return
     }
   }
 }

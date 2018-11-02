@@ -12,8 +12,8 @@
     <div class="item-card">
       <div class="top-block" v-if="personal">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg">
-        <div class="btn-join" v-if="state == 0">立即报名</div>
-        <div class="btn-join" v-else-if="state == 1">开始比赛</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 0">立即报名</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 1">开始比赛</div>
         <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else>查看结果</div>
         <div class="open-name">曹铁柱</div>
         <div class="game-info">创建的第15场比赛</div>
@@ -22,8 +22,8 @@
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-1">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-2">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-3">
-        <div class="btn-join" v-if="state == 0">立即报名</div>
-        <div class="btn-join" v-else-if="state == 1">开始比赛</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 0">立即报名</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 1">开始比赛</div>
         <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else>查看结果</div>
       </div>
       <div class="bottom-block">
@@ -94,7 +94,7 @@
       }
     },
     mounted() {
-      console.log(this.state);
+      // console.log(this.state);
     }
   }
 </script>
@@ -106,7 +106,7 @@
     .item-state {
       height: 70px;
       line-height: 72px;
-      font-size: 30px;
+      font-size: 24px;
       font-weight: bold;
       padding-left: 95px;
       position: relative;

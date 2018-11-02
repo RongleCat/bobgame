@@ -2,11 +2,10 @@
   <ThePage color="#f2f2f2" contentBg="#0c053d">
     <template slot="headerContent">
       竞技场
-
       <Popup :maskClose="false" v-model="showResult">
         <div class="res-pop">
-          <div class="btn-back" :style="{top:btnTop+'rem'}"><i class="iconfont icon-zuo"></i>返回游戏列表</div>
-          <div class="pop-main">
+          <div class="btn-back" :style="{top:btnTop+'rem'}" @click="$router.push('/')"><i class="iconfont icon-zuo"></i>返回游戏列表</div>
+          <div class="pop-main" :style="{top:popTop+'rem'}">
             <div class="top-title win"></div>
             <div class="pop-content">
               <div class="line-item been">
@@ -20,13 +19,33 @@
                 <div class="item left">
                   <div class="head-box">
                     <img :src="myInfo.head">
-
+                    <div class="level-box"><i class="iconfont" :class="[myInfo.sex?'icon-female':'icon-male']"></i>Lv{{myInfo.gameLevel}}</div>
+                  </div>
+                  <div class="user-name" :class="[myInfo.level?'':'no-icon']">{{myInfo.name | jiequ}}
+                    <div class="vip-icon" :class="[`vip-${myInfo.level}`]" v-if="myInfo.level"></div>
+                  </div>
+                  <div class="bottom-line exp">
+                    <div class="exp-bar">
+                      <div class="bar-bg" :style="{width:'10%'}"></div>
+                    </div>
+                    经验：<span>+1000</span>
                   </div>
                 </div>
-                <div class="item right"></div>
+                <div class="item right">
+                  <div class="head-box">
+                    <img :src="opponentInfo.head">
+                    <div class="level-box"><i class="iconfont" :class="[opponentInfo.sex?'icon-female':'icon-male']"></i>Lv{{opponentInfo.gameLevel}}</div>
+                  </div>
+                  <div class="user-name" :class="[opponentInfo.level?'':'no-icon']">{{opponentInfo.name | jiequ}}
+                    <div class="vip-icon" :class="[`vip-${opponentInfo.level}`]" v-if="opponentInfo.level"></div>
+                  </div>
+                  <div class="bottom-line add">
+                    <div class="btn-addfriend"><i class="iconfont icon-add"></i>加好友</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="bottom-btn btn-one">进入聊天页面</div>
+            <div class="bottom-btn btn-one" @click="guanzhu">进入聊天页面</div>
             <div class="bottom-btn btn-two">重新匹配</div>
           </div>
         </div>
@@ -150,43 +169,62 @@
         listOpen: false,
         showResult: true,
         myInfo: {
-          head: 'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg',
+          head: "https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg",
           gameLevel: 18,
           level: 1,
-          name: '曹铁柱',
+          name: "曹铁柱曹铁柱曹铁柱",
           sex: 0
         },
         opponentInfo: {
-          head: 'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg',
+          head: "https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg",
           gameLevel: 20,
           level: 2,
-          name: '曹铁柱曹铁柱曹铁柱',
+          name: "曹铁柱曹铁柱曹铁柱",
           sex: 1
+        }
+      };
+    },
+    filters: {
+      jiequ(v) {
+        if (v.length <= 6) {
+          return v
+        } else {
+          return v.substring(0, 4) + '...';
         }
       }
     },
     computed: {
       btnTop() {
-        return this.$store.state.statusBarHeight + (88 + 25) / 75
+        return this.$store.state.statusBarHeight + (88 + 25) / 75;
+      },
+      popTop() {
+        return this.$store.state.statusBarHeight + (88 + 100) / 75;
       }
     },
     mounted() {
       Toast(this.statusBarHeight);
+    },
+    methods: {
+      guanzhu() {
+        Toast("关注");
+        Toast(location.href);
+        window.location.href =
+          "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjM5NzE4MTE1NA==&scene=110#wechat_redirect";
+      }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
-  $color: ((color:#7f726f),
-  (color:#89273f),
-  (color:#55abe6),
-  (color:#c6814d),
-  (color:#89273f),
-  (color:#22676d),
-  (color:#342876),
-  (color:#4f166d),
-  (color:#11054a),
-  );
+  $color: ((color: #7f726f),
+  (color: #89273f),
+  (color: #55abe6),
+  (color: #c6814d),
+  (color: #89273f),
+  (color: #22676d),
+  (color: #342876),
+  (color: #4f166d),
+  (color: #11054a));
 
   .sports-container {
     .head-block {
@@ -223,7 +261,7 @@
         @include clearfix;
         color: #fff;
         border-radius: 15px 0 0 15px;
-        box-shadow: 0 8px 20px rgba(6, 1, 43, .7);
+        box-shadow: 0 8px 20px rgba(6, 1, 43, 0.7);
 
         .list-main {
           float: left;
@@ -283,7 +321,6 @@
           float: left;
           position: relative;
           height: 230px;
-
           width: 60px;
 
           .main {
@@ -304,7 +341,7 @@
       padding: 25px;
 
       .rule-block {
-        background: url('../../assets/images/game/windot.png') no-repeat;
+        background: url("../../assets/images/game/windot.png") no-repeat;
         background-size: 24px auto;
         background-position: 0 24px;
         padding-top: 15px;
@@ -327,7 +364,7 @@
         .tip-text-block {
           font-size: 22px;
           color: #fff;
-          opacity: .5;
+          opacity: 0.5;
 
           .iconfont {
             font-size: 24px;
@@ -340,7 +377,7 @@
       .sports-item {
         width: 100%;
         height: 240px;
-        background-image: url('../../assets/images/game/sports_bg.png');
+        background-image: url("../../assets/images/game/sports_bg.png");
         background-size: 100% auto;
         margin-bottom: 30px;
         position: relative;
@@ -382,16 +419,16 @@
           height: 60px;
           line-height: 66px;
           padding-left: 450px;
-          text-shadow: 1px 1px 1px #fff, -1px -1px 1px #fff, -1px 1px 1px #fff, 1px -1px 1px #fff,
+          text-shadow: 1px 1px 1px #fff, -1px -1px 1px #fff, -1px 1px 1px #fff,
+            1px -1px 1px #fff;
         }
-
 
         @for $i from 1 through length($color) {
           $item: nth($color, $i);
 
           &.item-#{$i} {
             color: map-get($item, color);
-            background-position-y: ($i - 1) * -250px
+            background-position-y: ($i - 1) * -250px;
           }
         }
       }
@@ -406,7 +443,7 @@
     .btn-back {
       position: absolute;
       left: 25px;
-      background: rgba(255, 255, 255, .5);
+      background: rgba(255, 255, 255, 0.5);
       color: #fff;
       padding: 0 20px;
       line-height: 60px;
@@ -422,9 +459,9 @@
 
     .pop-main {
       position: absolute;
-      top: 50%;
+      // top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
       color: #fff;
       padding-top: 58px;
 
@@ -439,16 +476,15 @@
         transform: translateX(-50%);
 
         &.win {
-          background-image: url('../../assets/images/game/result_poptitle_1.png');
+          background-image: url("../../assets/images/game/result_poptitle_1.png");
         }
 
         &.lose {
-          background-image: url('../../assets/images/game/result_poptitle_2.png');
+          background-image: url("../../assets/images/game/result_poptitle_2.png");
         }
 
         &.ping {
-
-          background-image: url('../../assets/images/game/result_poptitle_3.png');
+          background-image: url("../../assets/images/game/result_poptitle_3.png");
         }
       }
 
@@ -491,11 +527,11 @@
           }
 
           &.been {
-            background-image: url('../../assets/images/game/been.png');
+            background-image: url("../../assets/images/game/been.png");
           }
 
           &.windot {
-            background-image: url('../../assets/images/game/windot.png');
+            background-image: url("../../assets/images/game/windot.png");
           }
         }
 
@@ -507,9 +543,20 @@
 
         .user-info-box {
           @include clearfix;
+          padding: 0 25px;
+          color: #333;
+          padding-top: 10px;
 
           .item {
             width: 180px;
+            position: relative;
+
+            img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+              margin-bottom: 56px;
+            }
 
             &:first-child {
               float: left;
@@ -517,6 +564,117 @@
 
             &:last-child {
               float: right;
+            }
+
+            .user-name {
+              padding-top: 10px;
+              line-height: 56px;
+              font-size: 28px;
+              max-width: 100%;
+              position: absolute;
+              left: 50%;
+              top: 110px;
+              white-space: nowrap;
+
+              transform: translateX(-50%);
+
+              .vip-icon {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background-size: 100% auto;
+                vertical-align: -4px;
+                // position: absolute;
+                // top: 24px;
+                // right: 0;
+                border-radius: 5px;
+              }
+
+              &.no-icon {
+                padding-right: 0;
+              }
+            }
+
+            .level-box {
+              width: 100px;
+              height: 30px;
+              margin: 0 auto;
+              background: #333;
+              position: absolute;
+              top: 85px;
+              left: 40px;
+              border-radius: 15px;
+              overflow: hidden;
+              padding-left: 30px;
+              color: #fff;
+              line-height: 32px;
+              text-align: center;
+              font-size: 20px;
+
+              .iconfont {
+                display: block;
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                color: #fff;
+                border-radius: 50%;
+                font-size: 18px;
+                line-height: 32px;
+                text-align: center;
+
+                &.icon-male {
+                  background: #3bb3ff;
+                }
+
+                &.icon-female {
+                  background: #fe3b6d;
+                }
+              }
+            }
+
+            .bottom-line {
+              height: 44px;
+
+              &.exp {
+                position: relative;
+                line-height: 1;
+                font-size: 20px;
+                padding-top: 24px;
+
+                .exp-bar {
+                  width: 100%;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  height: 12px;
+                  border-radius: 5px;
+                  overflow: hidden;
+                  background: #f0f0f0;
+
+                  .bar-bg {
+                    height: 100%;
+                    background-image: linear-gradient(to bottom, #fff071, #fdd64a);
+                  }
+                }
+              }
+
+              &.add {
+                line-height: 46px;
+                width: 120px;
+                background: #fe6f49;
+                font-size: 20px;
+                color: #fff;
+                margin: 0 auto;
+                border-radius: 22px;
+                @include tapColor;
+
+                .iconfont {
+                  font-size: 24px;
+                  vertical-align: -2px;
+                }
+              }
             }
           }
         }
@@ -539,11 +697,10 @@
         }
 
         &.btn-two {
-          background: #333;
+          background: rgba(48, 48, 48, .7);
           color: #fff;
         }
       }
     }
-
   }
 </style>

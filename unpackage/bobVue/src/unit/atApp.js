@@ -5,6 +5,12 @@ let all = {
     }
     return false
   },
+  isIos() {
+    if (/iphone/.test(navigator.userAgent.toLowerCase())) {
+      return true
+    }
+    return false
+  },
   install(Vue) {
     Vue.prototype.$atApp = function (callback) {
       if (/html5plus/.test(navigator.userAgent.toLowerCase())) {
@@ -23,3 +29,4 @@ let all = {
 }
 export default all
 export const atApp = all.atApp
+export const isIos = all.isIos

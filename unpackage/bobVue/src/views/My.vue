@@ -79,9 +79,9 @@
           </div>
         </div>
         <ul class="my-block nav-list">
-          <li class="icon icon-03" @click="$router.push('/my/customgame')">
+          <li class="icon icon-03" @click="$router.push('/business/matchmanage')">
             <h3 class="block-title">
-              创建专属比赛
+              商家管理
             </h3>
             <i class="iconfont icon-you"></i>
           </li>

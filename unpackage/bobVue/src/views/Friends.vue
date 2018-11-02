@@ -165,7 +165,7 @@
 <script>
   import moment from "moment";
   // import { Toast } from "vant";
-  moment.locale('en', {
+  moment.updateLocale('en', {
     relativeTime: {
       future: "在%s",
       past: "%s前",

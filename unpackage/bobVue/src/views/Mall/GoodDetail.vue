@@ -46,7 +46,7 @@
 
 <script>
   import CountDown from "@/components/CountDown.vue"
-  import { Toast } from "vant";
+  // import { Toast } from "vant";
   export default {
     components: {
       CountDown
@@ -77,15 +77,13 @@
       let $root = that.$refs.cover
       if (window.IntersectionObserver) {
         let observer = new IntersectionObserver(this.enter, $root);
-
         $root.querySelectorAll('img').forEach((item) => {
           observer.observe(item);
         });
       } else {
-        Toast('没有')
-        $root.querySelectorAll('img').forEach(item => {
-          Toast(item);
-          item.target.src = item.target.dataset.src
+        let imgs = $root.querySelectorAll('img')
+        imgs.forEach(item => {
+          item.src = item.getAttribute('data-src')
         })
       }
     },

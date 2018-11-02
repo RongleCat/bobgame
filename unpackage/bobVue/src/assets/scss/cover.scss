@@ -96,7 +96,8 @@
       border-radius: 50%;
       opacity: .3;
       margin-right: 10px;
-      &.cover-item-active{
+
+      &.cover-item-active {
         opacity: .8;
       }
     }
@@ -104,8 +105,85 @@
 }
 
 //商品筛选页面
-.good-page{
-  .common-header{
+.good-page {
+  .common-header {
     z-index: 10000;
+  }
+}
+
+//游戏页面弹窗
+.game-pop-container {
+  .btn-box {
+    padding: 0 40px;
+    padding-top: 30px;
+    @include clearfix;
+
+    .item {
+      border-radius: 40px;
+      height: 80px;
+      line-height: 82px;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      @include tapColor;
+    }
+
+    &.one {
+      text-align: center;
+
+      .item {
+        display: inline-block;
+        width: 240px;
+        background: #fed149;
+      }
+    }
+
+    &.two {
+      .item {
+        width: 240px;
+
+        &:first-child {
+          float: left;
+          background: #f0f0f0;
+          color: #999;
+        }
+
+        &:last-child {
+          float: right;
+          background: #fed149;
+        }
+      }
+    }
+
+    &.three {
+      .item {
+        width: 240px;
+        background: #f0f0f0;
+        color: #999;
+
+        &:first-child {
+          width: 100%;
+          float: none;
+          background: #fed149;
+          color: #333;
+          margin-bottom: 30px;
+        }
+
+        &:nth-child(2) {
+          float: left;
+        }
+
+        &:nth-child(3) {
+          float: right;
+        }
+      }
+    }
+  }
+
+  .content-alert {
+    text-align: center;
+    padding: 40px;
+    font-size: 30px;
+    line-height: 1.5;
   }
 }

@@ -19,7 +19,7 @@ export default [
   },
   {
     path: '/login/:to',
-    name: 'Login',
+    name: 'LoginTo',
     component: Login
   },
   {
@@ -46,7 +46,7 @@ export default [
   //新闻详情详情
   {
     path: '/news/:id',
-    name: 'SchoolDetails',
+    name: 'NewsDetails',
     component: SchoolDetails
   }
 ]

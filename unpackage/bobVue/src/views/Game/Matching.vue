@@ -15,7 +15,7 @@
         <div class="match-end" v-else>
           <div class="info-box my">
             <img :src="myInfo.head" :style="{boxShadow:`0 0 0 0.1333rem ${levelColor[myInfo.level]}`}">
-            <div class="user-name" :class="[opponentInfo.level?'':'no-icon']">{{myInfo.name | jiequ}}
+            <div class="user-name" :class="[myInfo.level?'':'no-icon']">{{myInfo.name | jiequ}}
               <div class="vip-icon" :class="[`vip-${myInfo.level}`]" v-if="myInfo.level"></div>
             </div>
             <div class="level-box"><i class="iconfont" :class="[myInfo.sex?'icon-female':'icon-male']"></i>Lv{{myInfo.gameLevel}}</div>

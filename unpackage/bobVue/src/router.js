@@ -9,6 +9,7 @@ import friendsRouter from './router/friends'
 import myRouter from './router/my'
 import otherRouter from './router/other'
 import gameRouter from './router/game'
+import businessRouter from './router/business'
 
 import Home from './views/Home.vue'
 import Friends from './views/Friends.vue'
@@ -75,7 +76,8 @@ const router = new Router({
     ...mallRouter,
     ...myRouter,
     ...otherRouter,
-    ...gameRouter
+    ...gameRouter,
+    ...businessRouter
     // {
     //   path: '/about',
     //   name: 'about',
