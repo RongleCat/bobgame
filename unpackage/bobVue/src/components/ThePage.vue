@@ -11,15 +11,64 @@
       <slot v-else name="header"></slot>
     </template>
     <slot name="plug"></slot>
-    <div class="view-block" :style="{backgroundColor:contentBg?contentBg:'#fff'}" ref="scrollMain" v-scrollfix>
-      <slot name="content"></slot>
-    </div>
+    <transition name="fade-in">
+      <div class="skeleton-container" v-if="showSkeleton && !loadDone" :style="{top:setViewPaddingTop}">
+        <slot name="gujia" v-if="$slots.gujia"></slot>
+        <template v-else>
+          <div class="item-img-text h180" v-for="i in 6" :key="i">
+            <div class="pic"></div>
+            <div class="text">
+              <div class="item"></div>
+              <div class="item"></div>
+              <div class="item"></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </transition>
+    <transition name="fade-in">
+      <div class="view-block" v-if="!showSkeleton || loadDone" :style="{backgroundColor:contentBg?contentBg:'#fff'}" ref="scrollMain" v-scrollfix>
+        <slot name="content"></slot>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
   export default {
-    props: ['btnType', 'diy', 'color', 'contentBg', 'noHead', 'backUrl'],
+    props: {
+      btnType: {
+        type: String,
+        default: ''
+      },
+      color: {
+        type: String,
+        default: '#f2f2f2'
+      },
+      contentBg: {
+        type: String,
+        default: '#f0f0f0'
+      },
+      noHead: {
+        type: Boolean,
+        default: false
+      },
+      backUrl: {
+        type: String
+      },
+      loadDone: {
+        type: Boolean,
+        default: false
+      },
+      showSkeleton: {
+        type: Boolean,
+        default: false
+      },
+      diy: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
         headHeight: 88

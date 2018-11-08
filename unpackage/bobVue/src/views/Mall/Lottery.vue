@@ -328,7 +328,7 @@
         if (!that.lock) {
           that.lock = true
           that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
-            that.select = r.data
+            that.select = r.result
             that.count = -1;
             that.flashCtrl();
             that.flashCtrl("start");
@@ -345,7 +345,7 @@
     mounted() {
       let that = this
       that.$http.get('/Boblottery/index').then(r => {
-        that.prizesList = r.data.rewardInfo
+        that.prizesList = r.rewardInfo
         that.reqDone = true
       })
       setTimeout(() => {

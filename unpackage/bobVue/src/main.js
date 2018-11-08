@@ -21,7 +21,7 @@ import swiper from "./components/fixSlide.js";
 
 import "swiper/dist/css/swiper.css";
 
-import { Lazyload } from 'vant';
+import { Lazyload, Toast } from 'vant';
 
 // options 为可选参数，无则不传
 Vue.use(Lazyload);
@@ -93,10 +93,14 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (response) {
   // 对响应数据做点什么
-  if (response.data.code != 200) {
+  if (response.data.code == -1) {
     router.push('/login')
+  } else if (response.data.code != 200) {
+    Toast.fail(response.data.msg)
+    return false
+  } else {
+    return response.data.data;
   }
-  return response.data;
 }, function (error) {
   // 对响应错误做点什么
   return Promise.reject(error);
@@ -108,10 +112,22 @@ Vue.use(VueAxios, axios)
 
 
 //全局过滤器
-Vue.filter('imgUrl', function (value) {
+Vue.filter('imgUrl', function (value, style) {
   if (!value) return ''
-  return 'http://cdn.bobgame.cn' + value
+  if (style) {
+    return 'http://cdn.bobgame.cn' + value + style
+  } else {
+    return 'http://cdn.bobgame.cn' + value
+  }
 })
+
+Vue.filter('ossResize', function (value, size) {
+  if (!value) return ''
+  if (!size) return value
+  return value + `?x-oss-process=image/format,jpg/auto-orient,1/interlace,1/resize,w_${size}/quality,q_90`
+})
+
+
 Vue.filter('toString', function (value) {
   if (!value) return ''
   return '' + value
@@ -119,8 +135,25 @@ Vue.filter('toString', function (value) {
 
 Vue.directive('scrollfix', scrollFix)
 
+Vue.mixin({
+  methods:{
+    calcSize(px) {
+      return Math.ceil(px / 37.5 * window.rem)
+    }
+  }
+})
+
 if (vueTools.atApp()) {
   if (window.plus) {
+
+    // let mainWebview = window.plus.webview.getLaunchWebview()
+    // let baseURL = mainWebview.getURL().split('#')[0];
+    let args = window.plus.runtime.arguments;
+    if (args) {
+      // mainWebview.loadURL('')
+    }
+    // window.plus.nativeUI.toast(mainWebview.getURL());
+
     plusReady();
   } else {
     document.addEventListener('plusready', plusReady, false);
@@ -151,27 +184,3 @@ function plusReady() {
     render: h => h(App)
   }).$mount('#app')
 }
-
-// function iosTrouchFn(el) {
-//   el.addEventListener('touchmove', function (e) {
-//     e.isSCROLL = true;
-//   })
-//   document.body.addEventListener('touchmove', function (e) {
-//     if (!e.isSCROLL) {
-//       e.preventDefault(); //阻止默认事件(上下滑动)
-//     } else {
-//       //需要滑动的区域
-//       var top = el.scrollTop; //对象最顶端和窗口最顶端之间的距离 
-//       var scrollH = el.scrollHeight; //含滚动内容的元素大小
-//       var offsetH = el.offsetHeight; //网页可见区域高
-//       var cScroll = top + offsetH; //当前滚动的距离
-
-//       //被滑动到最上方和最下方的时候
-//       if (top == 0) {
-//         top = 1; //0～1之间的小数会被当成0
-//       } else if (cScroll === scrollH) {
-//         el.scrollTop = top - 0.1;
-//       }
-//     }
-//   }, { passive: false })
-// }

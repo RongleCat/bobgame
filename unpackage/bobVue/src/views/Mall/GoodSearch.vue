@@ -1,5 +1,5 @@
 <template>
-  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight" contentBg="#fff" class="good-page">
+  <ThePage color="#f2f2f2" @headerHeight="setHeaderHeight" contentBg="#fff" class="good-page" :loadDone="loadDone" :showSkeleton="true">
     <template slot="headerContent">
       全部商品
       <div class="filter-bar" :style="{top:topHeight+'rem'}">
@@ -9,6 +9,20 @@
         <div class="search-box" v-if="showSearch">
           <input v-model="keyword" :class="{focus:searchFocus||isFocus}" placeholder="输入关键字" type="search" @focus="isFocus = true" @blur="isFocus = false" autofocus="true" ref="search" />
           <div class="btn-cancel" @click="closeSearch">取消</div>
+        </div>
+      </div>
+    </template>
+
+    <template slot="gujia">
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-img-text h180" v-for="i in 6" :key="i">
+        <div class="pic"></div>
+        <div class="text">
+          <div class="item w60"></div>
+          <div class="item w40"></div>
+          <div class="item w90"></div>
         </div>
       </div>
     </template>
@@ -27,39 +41,38 @@
             <div class="item ipt">
               <input v-model="maxBeen" type="number" placeholder="0" />
             </div>
-            <div class="item active" v-if="timeBtnClass">
+            <div class="item" :class="[timeBtnClass?'active':'']" @click="beenConfirm">
               确定
             </div>
-            <div class="item" v-else>
-              确定
-            </div>
+            <div class="item" v-if="timeBtnClass" @click="clearBeen">清除</div>
           </div>
         </div>
       </transition>
       <transition name="pop-top">
         <div class="class-pop" v-if="classOpen" :style="{top:filterTop}">
           <div class="time-line">
-            <div class="item" v-for="(i,index) in typeArr" :key="index" :class="[index === typeSelect?'active':'']" @click="typeSelect = index">{{i}}</div>
+            <div class="item" v-for="(i,index) in typeArr" :key="index" :class="[index === typeSelect?'active':'']" @click="typeSelect = index">{{i.type_name}}</div>
           </div>
         </div>
       </transition>
     </template>
     <template slot="content">
-
       <div class="good-container">
         <List v-model="loading" :finished="finished" @load="onLoad">
-          <div class="item" v-for="(i,index) in list" :key="index" @click="$router.push('/mall/gooddetail/'+i)">
+          <div class="item" v-for="(i,index) in listData" :key="index" @click="$router.push('/mall/gooddetail/'+i.id)">
             <div class="good-pic">
-              <div class="good-left">剩余80%</div>
-              <img :src="i%2 === 0?'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/good_02.jpg':'https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/good_01.jpg'">
+              <div class="good-left">剩余{{parseInt(i.initstore/i.store*100)}}%</div>
+              <img :src="i.img | imgUrl | ossResize(calcSize(240))">
             </div>
-            <div class="main-title">Apple iPhone XS Max (A2104) 64GB 金色 移动联通电信4G手机 双卡双待</div>
-            <div class="sub-title">由 京东 发货, 并提供售后服务. 23:00前下单,预计明天(10月12日)送达</div>
+            <div class="main-title">{{i.prname}}</div>
+            <div class="sub-title">{{i.summary}}</div>
             <div class="price-info">
-              <div class="bean-block">1234567890</div>
-              <div class="vip-price">V1折扣80%</div>
+              <div class="bean-block">{{i.jifen}}</div>
+              <div class="vip-price" v-if="vipLevel != '0'">V{{vipLevel}}享{{vipDiscount}}折</div>
             </div>
           </div>
+
+          <div class="list-no-data" v-if="noData">已经没有了</div>
         </List>
       </div>
     </template>
@@ -67,7 +80,8 @@
 </template>
 
 <script>
-  import { List } from "vant";
+  import { List, Toast } from "vant";
+  import _ from "lodash";
   export default {
     components: {
       List
@@ -86,11 +100,19 @@
         maxBeen: null,
         finished: false,
         loading: false,
-        list: 10,
-        typeId: this.$route.params['condition'].split('_')[0],
-        typeName: decodeURI(decodeURI(this.$route.params['condition'].split('_')[1])),
-        typeArr: ['家具厨具', '美妆护肤', '家用电器', '手机数码', '个护清洁', '休闲零食'],
-        typeSelect: -1
+        page: 0,
+        typeId: this.$route.params["condition"].split("_")[0],
+        typeName: decodeURI(
+          decodeURI(this.$route.params["condition"].split("_")[1])
+        ),
+        typeArr: null,
+        typeSelect: -1,
+        loadDone: false,
+        listData: [],
+        pageMax: null,
+        noData: false,
+        vipLevel: null,
+        vipDiscount: null
       };
     },
     watch: {
@@ -104,58 +126,150 @@
       },
       filterOpen(newValue) {
         if (newValue) {
-          this.classOpen = false
+          this.classOpen = false;
         }
       },
       classOpen(newValue) {
         if (newValue) {
-          this.filterOpen = false
+          this.filterOpen = false;
         }
       },
       typeSelect(v) {
-        this.typeName = this.typeArr[v]
-        this.classOpen = false
+        this.typeName = this.typeArr[v].type_name;
+        this.typeId = this.typeArr[v].id;
+        this.classOpen = false;
+      },
+      typeId() {
+        Toast.loading({
+          message: '加载中...'
+        });
+        let that = this;
+        that.listData = [];
+        that.page = 1;
+        that.getListData();
       }
     },
     mounted() {
       // console.log(this.typeName);
-      this.typeSelect = this.typeArr.indexOf(this.typeName);
-      console.log(this.typeSelect);
+      let that = this;
+
+      let $type = new Promise((resolve, reject) => {
+        that.$http.get("/Bobshop/getTypeList").then(r => {
+          console.log(r);
+
+          r.type.map((item, index) => {
+            if (item.type_name == that.typeName) {
+              that.typeSelect = index;
+            }
+          });
+          that.typeArr = r.type;
+          that.vipLevel = r.level;
+          that.vipDiscount = r.score;
+          resolve(r.type);
+        }).catch(err => {
+          reject(err)
+        });
+      });
+
+      let $list = that.getListData();
+
+      Promise.all([$type, $list]).then(r => {
+        console.log(r);
+        that.loadDone = true;
+      });
+
+      that.$watch(
+        "keyword",
+        _.debounce(function () {
+          that.listData = [];
+          that.page = 1;
+          that.getListData();
+        }, 500)
+      );
     },
     computed: {
       searchFocus() {
         return this.keyword.length;
       },
       timeBtnClass() {
-        return !!this.maxBeen && this.maxBeen > this.minBeen
+        return !!this.maxBeen && parseInt(this.maxBeen) > parseInt(this.minBeen);
       }
     },
     methods: {
       setHeaderHeight(value) {
-        this.filterTop = value + 100 / 75 + "rem"
-        this.topHeight = value
+        this.filterTop = value + 100 / 75 + "rem";
+        this.topHeight = value;
       },
       closeSearch() {
-        this.showSearch = false
-        this.keyword = ""
+        this.showSearch = false;
+        this.keyword = "";
       },
       closeAllPop() {
-        this.filterOpen = this.classOpen = false
-        this.minBeen = this.maxBeen = null
+        this.filterOpen = this.classOpen = false;
+        this.minBeen = this.maxBeen = null;
       },
       onLoad() {
-        let that = this
-        setTimeout(() => {
-          that.list += 10
-          that.loading = false
-        }, 1000);
+        let that = this;
+        that.page++;
+        if (that.page > that.pageMax) {
+          that.loading = false;
+          that.noData = true;
+          return false;
+        }
+        that.getListData().then(() => {
+          that.loading = false;
+        });
       },
       openSearch() {
-        this.showSearch = true
-        this.filterOpen = this.classOpen = false
+        this.showSearch = true;
+        this.filterOpen = this.classOpen = false;
+      },
+      getListData() {
+        let that = this;
+        return new Promise((resolve, reject) => {
+          that.$http.get("/Bobshop/getGoodsList", {
+              params: {
+                prname: that.keyword,
+                type: that.typeId,
+                jdstart: that.minBeen,
+                jdend: that.maxBeen,
+                page: that.page
+              }
+            })
+            .then(r => {
+              console.log(r);
+              // that.typeArr = r.type
+              that.pageMax = r.max;
+              that.listData = [...that.listData, ...r.result];
+              Toast.clear()
+              resolve(r);
+            })
+            .catch(err => {
+              reject(err);
+            });
+        });
+      },
+      beenConfirm() {
+        Toast.loading({
+          message: '加载中...'
+        });
+        this.listData = [];
+        this.page = 1;
+        this.filterOpen = false;
+        this.getListData();
+      },
+      clearBeen() {
+        Toast.loading({
+          message: '加载中...'
+        });
+        this.minBeen = this.minBeenmaxBeen = null;
+        this.filterOpen = false;
+        this.listData = [];
+        this.page = 1;
+        this.getListData();
       }
     }
-  }
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -325,6 +439,7 @@
         &.active {
           background: #ffe150;
           color: #333;
+          @include tapColor;
         }
 
         input {
@@ -347,7 +462,7 @@
 
         &.start-time {
           &:after {
-            content: '';
+            content: "";
             display: block;
             width: 8px;
             height: 1px;
@@ -423,7 +538,7 @@
 
       &:active {
         &:after {
-          opacity: .02;
+          opacity: 0.02;
         }
       }
 
@@ -478,8 +593,6 @@
         line-height: 48px;
         @include textof;
       }
-
-
 
       .price-info {
         padding-top: 15px;

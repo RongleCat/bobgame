@@ -3,7 +3,8 @@
     <div class="item-state" v-if="state == 0">
       <div class="state-label" :class="[stateParse.stateClass]">{{stateParse.stateText}}</div>
       <div class="end-time">9月5日 13：00结束</div>
-      <div class="share-text">邀请好友<i class="iconfont icon-you"></i></div>
+      <div class="share-text" v-if="isRelease"><i class="iconfont icon-shenhe"></i>审核中</div>
+      <div class="share-text" v-else>邀请好友<i class="iconfont icon-you"></i></div>
     </div>
     <div class="item-state" v-else>
       <div class="state-label" :class="[stateParse.stateClass]">{{stateParse.stateText}}</div>
@@ -12,9 +13,14 @@
     <div class="item-card">
       <div class="top-block" v-if="personal">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg">
-        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 0">立即报名</div>
-        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 1">开始比赛</div>
-        <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else>查看结果</div>
+        <template v-if="isRelease">
+          <div class="btn-join" @click="$emit('share',100)" v-if="state == 1 || state == 2">邀请好友参赛</div>
+        </template>
+        <template v-else>
+          <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 1">立即报名</div>
+          <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 2">开始比赛</div>
+          <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else-if="state == 3">查看结果</div>
+        </template>
         <div class="open-name">曹铁柱</div>
         <div class="game-info">创建的第15场比赛</div>
       </div>
@@ -22,9 +28,9 @@
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-1">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-2">
         <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg" class="gameicon-3">
-        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 0">立即报名</div>
-        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 1">开始比赛</div>
-        <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else>查看结果</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-if="state == 1">立即报名</div>
+        <div class="btn-join" @click="$router.push('/game/stadium/100')" v-else-if="state == 2">开始比赛</div>
+        <div class="btn-join" @click="$router.push('/game/viewresults/100')" v-else-if="state == 3">查看结果</div>
       </div>
       <div class="bottom-block">
         <div class="match-game" v-if="personal">
@@ -52,6 +58,28 @@
           <div class="two-line">参与人数越多奖金越高</div>
         </div>
       </div>
+      <div class="footer-block" v-if="isRelease" :class="[state == 0 || state == 1?'three':'two']">
+        <template v-if="state == 0">
+          <div class="item" @click="$emit('joininfo',100)">报名情况</div>
+          <div class="item" @click="$emit('edit',100)">修改比赛</div>
+          <div class="item" @click="$emit('cancel',100)">取消比赛</div>
+        </template>
+        <template v-if="state == 1">
+          <div class="item" @click="$emit('joininfo',100)">报名情况</div>
+          <div class="item disable">修改比赛</div>
+          <div class="item" @click="$emit('cancel',100)">取消比赛</div>
+        </template>
+        <template v-if="state == 2">
+          <div class="item" @click="$emit('joininfo',100)">报名情况</div>
+          <div class="item disable">删除</div>
+        </template>
+        <template v-if="state == 3">
+          <div class="item" @click="$emit('viewresult',100)">比赛结果</div>
+          <div class="item" @click="$emit('delete',100)">删除</div>
+        </template>
+        <!-- <div class="item">比赛结果</div>
+        <div class="item">删除</div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -66,6 +94,10 @@
       state: {
         type: Number,
         default: 1
+      },
+      isRelease: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
@@ -76,6 +108,11 @@
             stateText: '未开始'
           }
         } else if (this.state == 1) {
+          return {
+            stateClass: '',
+            stateText: '未开始'
+          }
+        } else if (this.state == 2) {
           return {
             stateClass: 'open',
             stateText: '进行中'
@@ -94,7 +131,7 @@
       }
     },
     mounted() {
-      // console.log(this.state);
+      // console.log(this.state, this.isRelease);
     }
   }
 </script>
@@ -143,14 +180,19 @@
         .iconfont {
           font-size: 24px;
         }
+
+        .icon-shenhe {
+          padding-right: 5px;
+        }
       }
     }
 
     .item-card {
-      height: 300px;
+      // height: 300px;
       border-radius: 15px;
       overflow: hidden;
       width: 100%;
+      background: #fff;
       box-shadow: 0 4px 20px rgba(100, 100, 100, .14);
 
       .top-block {
@@ -344,6 +386,44 @@
           left: 0;
           text-align: center;
           line-height: 26px;
+        }
+      }
+
+      .footer-block {
+        position: relative;
+        @include oneT;
+        padding: 25px;
+        display: flex;
+
+        &:before {
+          left: 25px;
+          right: 25px;
+          width: auto;
+        }
+
+        .item {
+          height: 70px;
+          flex: 1;
+          border: 1px solid #ccc;
+          margin-right: 30px;
+          line-height: 72px;
+          text-align: center;
+          border-radius: 15px;
+          overflow: hidden;
+          font-size: 24px;
+
+          &.disable {
+            color: #ccc;
+            border-color: #ddd;
+          }
+
+          &:not(.disable) {
+            @include tapMask;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
         }
       }
     }

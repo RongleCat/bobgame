@@ -27,6 +27,7 @@
     mounted() {
       let that = this
       let end = moment(that.endTime)
+      console.log(moment(that.endTime));
       that.calcTime(end)
       this.timer = setInterval(() => {
         that.calcTime(end)

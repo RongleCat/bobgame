@@ -3,14 +3,14 @@
     "id" : "H597B8FD8", /*应用的标识，创建应用时自动生成，勿手动修改*/
     "name" : "bobgame", /*应用名称，程序桌面图标名称*/
     "version" : {
-        "name" : "1.1", /*应用版本名称*/
-        "code" : ""
+        "name" : "1.1.1", /*应用版本名称*/
+        "code" : 1
     },
     "description" : "", /*应用描述信息*/
     "icons" : {
         "72" : "icon.png"
     },
-    "launch_path" : "http://192.168.1.100:8080", /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "launch_path" : "static/index.html", /*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
     "developer" : {
         "name" : "", /*开发者名称*/
         "email" : "", /*开发者邮箱地址*/
@@ -87,7 +87,10 @@
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+				"schemes":[
+					"bobgame"
+				]
             },
             "orientation" : [ "portrait-primary" ], /*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
             "icons" : {
@@ -162,6 +165,9 @@
                         "appid" : "wx8a753c967440272c",
                         "appsecret" : "02829098b6d34ccec5180998d12910d3"
                     }
+                },
+                "speech" : {
+                    "ifly" : {}
                 }
             }
         }

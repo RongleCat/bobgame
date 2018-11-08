@@ -11,6 +11,53 @@
     </div>
     <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
+        <div class="skeleton-container" v-if="!reqDone" :style="{top:statusBarHeight}">
+          <div class="item-img-text h70">
+            <div class="pic"></div>
+            <div class="text y-center">
+              <div class="item h80 w50"></div>
+            </div>
+            <div class="text right y-center">
+              <div class="item h80 w50"></div>
+            </div>
+          </div>
+          <div class="item-block h320">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h160">
+            <div class="item"></div>
+            <div class="item"></div>
+          </div>
+          <div class="item-img-text h180">
+            <div class="pic"></div>
+            <div class="text">
+              <div class="item w60"></div>
+              <div class="item w40"></div>
+              <div class="item w90"></div>
+            </div>
+          </div>
+          <div class="item-img-text h180">
+            <div class="pic"></div>
+            <div class="text">
+              <div class="item w50"></div>
+              <div class="item w80"></div>
+              <div class="item w60"></div>
+            </div>
+          </div>
+          <div class="item-img-text h180">
+            <div class="pic"></div>
+            <div class="text">
+              <div class="item w80"></div>
+              <div class="item w60"></div>
+              <div class="item w90"></div>
+            </div>
+          </div>
+          <div class="item-block h320">
+            <div class="item"></div>
+          </div>
+        </div>
+      </transition>
+      <transition name="fade-in">
         <div class="content-container" v-if="reqDone">
           <!-- 轮播图 -->
           <div class="banner-container" mall>
@@ -28,16 +75,18 @@
             <div class="item" @click="$router.push('/mall/goodsearch/0_all')" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/mall_btn_1.png')`}"></div>
           </div>
           <!-- 限时兑换 -->
-          <div class="block-title">限时兑换</div>
-          <div class="time-get-list">
-            <div class="item" v-for="(item,index) in timeList" :key="index" v-show="item.show">
-              <img :src="item.img">
-              <div class="title">{{item.title}}</div>
-              <div class="bean-block">{{item.price}}</div>
-              <CountDown :endTime="item.endTime" @end="hideItem(index)"></CountDown>
-              <div class="left-count">剩余 {{item.left}}/{{item.count}}</div>
+          <template v-if="mallData.timelimit.length">
+            <div class="block-title">限时兑换</div>
+            <div class="time-get-list">
+              <div class="item" v-for="(item,index) in mallData.timelimit" :key="index" @click="$router.push('/mall/gooddetail/'+item.id)">
+                <img :src="item.img | imgUrl | ossResize(calcSize(180))">
+                <div class="title">{{item.prname}}</div>
+                <div class="bean-block">{{item.jifen}}</div>
+                <CountDown :endTime="item.pro_end_time | dateFormat" @end="window.location.reload()"></CountDown>
+                <div class="left-count">剩余 {{item.initstore}}/{{item.store}}</div>
+              </div>
             </div>
-          </div>
+          </template>
 
           <!-- 商品分类 -->
           <MallGoodsGroup v-for="(item,index) in mallData.NoSpSaleProduct" :key="index" v-bind="item"></MallGoodsGroup>
@@ -52,6 +101,7 @@
   import CountDown from '@/components/CountDown';
   import MallGoodsGroup from '@/components/MallGoodsGroup';
   import { mapState } from "Vuex";
+  // import { Toast } from "vant";
   export default {
     components: { CountDown, MallGoodsGroup },
     data() {
@@ -61,6 +111,7 @@
         // enterLotteryPage: false,
         swiperOption: {
           loop: true,
+          watchOverflow: true,
           spaceBetween: 10,
           pagination: {
             el: '.mall-page',
@@ -131,13 +182,22 @@
           that.reqDone = true
         }, 400)
 
-        console.log(r.data);
-        that.$store.commit('setMallData', r.data);
+        console.log(r);
+        that.$store.commit('setMallData', r);
       })
+    },
+    filters: {
+      dateFormat(v) {
+        if (!v) {
+          return ''
+        }
+        return new Date(parseInt(v) * 1000)
+      }
     },
     beforeCreate() {
       this.$atApp(() => {
         window.plus.navigator.setStatusBarStyle("dark");
+        // let web = window.plus.webview.getLaunchWebview();
       });
     },
     methods: {
@@ -147,9 +207,9 @@
       createUrl(url) {
         return `http://cdn.bobgame.cn${url}`
       },
-      hideItem(_index) {
-        this.timeList[_index].show = false;
-      }
+      // hideItem(_index) {
+      //   this.timeList[_index].show = false;
+      // }
     }
   };
 </script>
@@ -385,5 +445,13 @@
         }
       }
     }
+  }
+
+  .skeleton-container {
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 100px !important;
   }
 </style>

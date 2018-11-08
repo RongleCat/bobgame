@@ -1,4 +1,4 @@
-import { atApp, isIos } from "./atApp";
+import { atApp, isIos,isWeixin } from "./atApp";
 
 
 
@@ -16,7 +16,7 @@ let scroll_fix = {
       }
     }
 
-    if (!atApp() && isIos()) {
+    if (!atApp() && isIos() && isWeixin()) {
       let moveEnd = false
       document.body.ontouchmove = event => {
         if (event.cancelable && !event.defaultPrevent) {

@@ -6,6 +6,9 @@ import Sports from '../views/Game/Sports.vue'
 import Matching from '../views/Game/Matching.vue'
 import Stadium from '../views/Game/Stadium.vue'
 import AddFrequency from '../views/Game/AddFrequency.vue'
+import CustomList from '../views/Game/CustomList.vue'
+import CreateMatch from '../views/Game/CreateMatch.vue'
+
 
 
 
@@ -58,5 +61,17 @@ export default [
     path: '/game/addfrequency/:id',
     name: 'AddFrequency',
     component: AddFrequency
+  },
+  //自定义比赛列表
+  {
+    path: '/game/customlist',
+    name: 'CustomList',
+    component: CustomList
+  },
+  //创建自定义比赛
+  {
+    path: '/game/creatematch',
+    name: 'CreateMatch',
+    component: CreateMatch
   }
 ]

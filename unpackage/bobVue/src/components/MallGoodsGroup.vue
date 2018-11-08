@@ -9,7 +9,7 @@
         <swiper-slide v-for="item in goodslist" :key="item.id">
           <div class="goods-item" @click="$router.push('/mall/gooddetail/'+item.id)">
             <span class="left-block">剩余 {{parseInt(item.initstore/item.store*100)}}%</span>
-            <img v-lazy="createUrl(item.img)">
+            <img :src="item.img | imgUrl | ossResize(calcSize(180))">
             <div class="title">{{item.prname}}</div>
             <div class="center-block">
               <div class="bean-block">{{item.jifen}}</div>

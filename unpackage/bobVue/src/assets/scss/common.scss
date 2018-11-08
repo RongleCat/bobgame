@@ -141,7 +141,7 @@ textarea {
 .no-data {
   width: 100%;
   padding-top: 310px;
-  background: url('/img/nodata.png') no-repeat;
+  background: url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/staticImg/nodata.png') no-repeat;
   background-size: 250px auto;
   background-position: center 25px;
   text-align: center;
@@ -155,7 +155,7 @@ textarea {
 
 @for $i from 0 through 5 {
   .vip-#{$i} {
-    background-image: url('/img/icon/#{$i}.jpg');
+    background-image: url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/staticImg/icon/#{$i}.jpg');
     background-repeat: no-repeat;
   }
 }
@@ -207,4 +207,177 @@ textarea {
   line-height: 62px;
   font-size: 26px;
   @include tapColor;
+}
+
+
+.skeleton-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  z-index: 500;
+  padding: 25px;
+  overflow: hidden;
+
+  >* {
+    margin-bottom: 25px;
+  }
+
+  .item-img-text {
+    display: flex;
+
+    .pic {
+      width: 90px;
+      background: #f0f0f0;
+      margin-right: 25px;
+
+      &:after {
+        width: 100%;
+        padding-top: 100%;
+        display: block;
+        content: '';
+      }
+    }
+
+    @for $i from 0 through 30 {
+      &.h#{$i * 10} {
+        .pic {
+          width: $i * 10px;
+        }
+      }
+    }
+
+    .text {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      .item {
+        height: 20%;
+        background: #f0f0f0;
+
+        @for $i from 0 through 10 {
+          &.w#{$i * 10} {
+            width: $i * 10%;
+          }
+        }
+
+        @for $i from 0 through 10 {
+          &.h#{$i * 10} {
+            height: $i * 10%;
+          }
+        }
+      }
+
+      &.right {
+        align-items: flex-end;
+      }
+
+      &.x-center {
+        align-items: center;
+      }
+
+      &.y-center {
+        justify-content: center;
+      }
+    }
+
+    &.yuan {
+      .pic {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .item-block {
+    display: flex;
+
+    .item {
+      flex: 1;
+      margin-right: 25px;
+      background: #f0f0f0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+
+    @for $i from 0 through 70 {
+      &.h#{$i * 10} {
+        .item {
+          height: $i * 10px;
+        }
+      }
+    }
+
+
+
+    &.fang {
+      .item {
+        &::after {
+          display: block;
+          content: '';
+          padding-top: 100%;
+        }
+      }
+    }
+
+    &.yuan {
+      .item {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .item-list {
+    background: #f0f0f0;
+
+    @for $i from 0 through 10 {
+      &.h#{$i * 10} {
+        .item {
+          height: $i * 10px;
+        }
+      }
+    }
+
+    .item {
+      height: 80px;
+      position: relative;
+      @include oneB;
+
+      &:before {
+        left: 25px;
+        right: 25px;
+        width: auto;
+        background: #e5e5e5;
+      }
+
+      &:last-child {
+        &:before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .item-game-card {
+    >* {
+      margin-bottom: 25px;
+
+      &:first-child {
+        width: 70%;
+      }
+    }
+  }
+}
+
+.list-no-data {
+  width: 100%;
+  line-height: 88px;
+  font-size: 24px;
+  text-align: center;
+  color: #999;
 }

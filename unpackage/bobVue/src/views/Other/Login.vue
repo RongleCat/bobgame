@@ -156,20 +156,20 @@
             data
           }
         }).then(r => {
-          Toast.clear()
-          if (r.code === 200) {
+          // 
+          console.log(r);
+          if (r) {
+            Toast.clear()
             let { head_icon, nickname, jifen } = r.info
             that.$store.commit('setUserInfo', { head_icon, nickname, jifen })
             window.localStorage.setItem('userBaseInfo', JSON.stringify({ head_icon, nickname, jifen }))
-            window.localStorage.token = r.data
-            this.$http.defaults.headers.get['Authorization'] = r.data
+            window.localStorage.token = r.token
+            this.$http.defaults.headers.get['Authorization'] = r.token
             if (that.$route.params.to) {
               that.$router.replace('/' + that.$route.params.to)
             } else {
               that.$router.go(-1)
             }
-          } else {
-            Toast.fail(r.data.msg)
           }
         })
       }

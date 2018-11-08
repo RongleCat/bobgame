@@ -15,6 +15,54 @@
     </div>
     <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
+        <div class="skeleton-container" v-if="!reqDone" :style="{top:statusBarHeight}">
+          <div class="item-img-text h90 yuan">
+            <div class="pic"></div>
+            <div class="text">
+              <div class="item w100 h30"></div>
+              <div class="item w100 h30"></div>
+            </div>
+            <div class="text">
+              <div class="item w100 h30"></div>
+              <div class="item w100 h30"></div>
+            </div>
+            <div class="text y-center right">
+            </div>
+            <div class="text y-center right">
+              <div class="item w60 h100"></div>
+            </div>
+            <div class="text y-center right">
+              <div class="item w60 h100"></div>
+            </div>
+          </div>
+          <div class="item-block h220">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h180">
+            <div class="item"></div>
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+        </div>
+      </transition>
+      <transition name="fade-in">
         <div class="content-container" v-if="reqDone">
           <div class="banner-container" home>
             <swiper :options="swiperOption" ref="mySwiper" class="loop-container">
@@ -74,7 +122,7 @@
                 <div class="text-rule">您将随机分配一款游戏跟对手匹配对战，对战结束后会根据您的输赢情况分配给你不同金额的现金红包奖励存入余额。</div>
               </div>
               <i class="iconfont icon-guanbi" @click="showRedActive = false"></i>
-              <div class="btn-play">立即匹配</div>
+              <div class="btn-play" @click="openWeixin">立即匹配</div>
             </div>
           </Popup>
 
@@ -103,6 +151,7 @@
 
 <script>
   import { mapState } from "Vuex";
+  // import { Toast } from "vant";
   export default {
     data() {
       return {
@@ -159,15 +208,16 @@
         }, 400);
         return false;
       }
-      this.$http.get("/Index/index.html").then(r => {
+      this.$http.get("/Index/index").then(r => {
         setTimeout(() => {
           that.reqDone = true;
-          if (r.data.TodySign.singned) {
+          if (r.TodySign.singned) {
             that.sginView = that.showGetBeen = true;
           }
         }, 400);
-        that.$store.commit("setHomeData", r.data);
+        that.$store.commit("setHomeData", r);
       });
+
     },
     methods: {
       toggleTip() {
@@ -187,6 +237,11 @@
         this.$http.get("/Bobcenter/fetchUsrInfo.html&param=" + JSON.stringify(arr)).then(r => {
           console.log(r);
         });
+      },
+      openWeixin() {
+        this.$atApp(() => {
+          window.plus.runtime.launchApplication({ action: "weixin://RnUbAwvEilb1rU9g9yBU" })
+        })
       }
     }
   };
@@ -793,5 +848,13 @@
         }
       }
     }
+  }
+
+  .skeleton-container {
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 100px !important;
   }
 </style>

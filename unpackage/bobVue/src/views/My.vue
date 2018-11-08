@@ -39,7 +39,7 @@
             <div class="data-name">今日收益</div>
           </div>
         </div>
-        <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" class="img-banner" @click="$router.push('/my/customgame')">
+        <!-- <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" class="img-banner" @click="$router.push('/game/customlist')"> -->
         <!-- <swiper :options="swiperOption" ref="mySwiper" class="my-container">
           <swiperSlide>
             
@@ -54,11 +54,17 @@
         </swiper> -->
       </div>
       <div class="bottom-container">
+        <div class="my-block icon icon-03 invite-friends match">
+          <h3 class="block-title">
+            专属比赛
+          </h3>
+          <div class="btn btn-invite" @click="$router.push('/game/customlist')">创建比赛</div>
+        </div>
         <div class="my-block icon icon-01 invite-friends">
           <h3 class="block-title">
-            邀请好友
+            创建团队
           </h3>
-          <div class="btn btn-invite" @click="go('share')">立即邀请</div>
+          <div class="btn btn-invite" @click="go('share')"><span>新增V3邀请</span>立即邀请</div>
         </div>
         <div class="my-block icon icon-02 order-info" :class="[order?'hasorder':'']">
           <h3 class="block-title">
@@ -79,12 +85,12 @@
           </div>
         </div>
         <ul class="my-block nav-list">
-          <li class="icon icon-03" @click="$router.push('/business/matchmanage')">
+          <!-- <li class="icon icon-03" @click="$router.push('/business/matchmanage')">
             <h3 class="block-title">
               商家管理
             </h3>
             <i class="iconfont icon-you"></i>
-          </li>
+          </li> -->
           <li class="icon icon-04" @click="go('sgin')">
             <h3 class="block-title">
               签到
@@ -305,7 +311,7 @@
     padding: 0 25px;
     padding-top: 40px;
     width: 100%;
-    height: 650px;
+    // height: 650px;
     margin-bottom: 30px;
     background-image: url("../assets/images/my/vip_4.png"),
       linear-gradient(0, #fff 100%, #fff 0);
@@ -611,6 +617,37 @@
       position: absolute;
       top: 90px;
       right: 25px;
+
+      >span {
+        display: block;
+        padding: 0 15px;
+        height: 34px;
+        line-height: 36px;
+        font-size: 20px;
+        color: #fff;
+        background: #ff2654;
+        position: absolute;
+        top: -48px;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        border-radius: 20px;
+
+        &:before {
+          display: block;
+          content: '';
+          border: 6px solid #ff2654;
+          position: absolute;
+          bottom: -12px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-color: #ff2654 transparent transparent transparent;
+        }
+      }
+    }
+
+    &.match {
+      background-image: url('../assets/images/my/match.png');
     }
   }
 
