@@ -15,7 +15,7 @@
     </div>
     <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
-        <div class="skeleton-container" v-if="!reqDone" :style="{top:statusBarHeight}">
+        <div class="skeleton-container" main v-if="!reqDone" :style="{top:statusBarHeight}">
           <div class="item-img-text h90 yuan">
             <div class="pic"></div>
             <div class="text">
@@ -231,12 +231,6 @@
         } else {
           return "http://cdn.bobgame.cn" + value;
         }
-      },
-      getUserInfo() {
-        let arr = []
-        this.$http.get("/Bobcenter/fetchUsrInfo.html&param=" + JSON.stringify(arr)).then(r => {
-          console.log(r);
-        });
       },
       openWeixin() {
         this.$atApp(() => {
@@ -850,7 +844,7 @@
     }
   }
 
-  .skeleton-container {
+  .skeleton-container[main] {
     position: fixed !important;
     width: 100%;
     left: 0;

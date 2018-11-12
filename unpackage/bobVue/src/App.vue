@@ -3,9 +3,18 @@
     <transition :name="'pop-bottom'">
       <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}" v-if="showTabber"></TheTabber>
     </transition>
-    <transition :name="direction">
-      <router-view class="view-main" />
+
+    <transition :enter-active-class="enter" :leave-active-class="leave">
+      <keep-alive>
+        <router-view class="view-main" data-state="cache" v-if="!$route.meta.noCache" />
+      </keep-alive>
     </transition>
+    <transition :enter-active-class="cacheEnter" :leave-active-class="cacheLeave">
+      <router-view class="view-main" data-state="nocache" v-if="$route.meta.noCache" />
+    </transition>
+    <!-- <transition :name="keepDirection">
+      <router-view class="view-main" v-if="$route.meta.noCache" />
+    </transition> -->
   </div>
 </template>
 
@@ -39,7 +48,8 @@
     'Balance',
     'Address',
     'MySettings',
-    'Login', 'My',
+    'Login',
+    'My',
     'Mall',
     'Friends',
     'Home',
@@ -52,8 +62,14 @@
     },
     data() {
       return {
-        direction: 'left',
-        showGuide: window.localStorage.showGuide
+        direction: 'slide-left',
+        keepDirection: 'slide-left',
+        showGuide: window.localStorage.showGuide,
+        isCache: true,
+        enter: 'animated fadeIn',
+        leave: 'animated fadeOut',
+        cacheEnter: 'animated fadeIn',
+        cacheLeave: 'animated fadeOut',
       };
     },
     computed: {
@@ -71,10 +87,26 @@
       '$route': function (to, form) {
         let _before = allRouter.indexOf(to.name),
           _after = allRouter.indexOf(form.name);
+        this.isCache = !to.meta.noCache
         if (_before < _after) {
-          this.direction = 'fade-left';
-        } else {
-          this.direction = 'fade-right';
+          this.enter = 'animated fadeInRight';
+          this.leave = 'animated fadeOutLeft';
+          // if (to.meta.noCache) {
+          //   this.cacheEnter = 'animated fadeInRight'
+          //   this.cacheLeave = 'animated fadeOutRight'
+          // } else {
+          //   this.leave = 'animated fadeInLeft'
+          //   this.cacheLeave = 'animated fadeOutLeft'
+          // }
+        }
+        else {
+          this.enter = 'animated fadeInLeft';
+          this.leave = 'animated fadeOutRight';
+          // if (to.meta.noCache) {
+          //   this.leave = 'animated fadeOutRight';
+          // } else {
+          //   this.leave = 'animated fadeOutRight';
+          // }
         }
       }
     },

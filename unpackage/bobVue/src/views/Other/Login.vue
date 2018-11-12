@@ -100,10 +100,12 @@
           account: that.username,
           password: that.password
         }
+        Toast({ type: 'loading', message: '正在登陆...', duration: 0 })
         that.loginSubmit(that.encodeUserInfo(userInfo, 'account'))
       },
       weixinLogin() {
         let that = this
+        Toast({ type: 'loading', message: '正在登陆...', duration: 0 })
         that.$atApp(() => {
           window.plus.oauth.getServices(services => {
             services.map((item) => {
@@ -148,7 +150,6 @@
       },
       loginSubmit(data) {
         let that = this
-        Toast({ type: 'loading', message: '正在登陆...', duration: 0 })
         that.$http({
           url: '/BobLogin/BobLoginReceive',
           method: 'POST',

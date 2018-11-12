@@ -27,7 +27,7 @@
       </div>
     </transition>
     <transition name="fade-in">
-      <div class="view-block" v-if="!showSkeleton || loadDone" :style="{backgroundColor:contentBg?contentBg:'#fff'}" ref="scrollMain" v-scrollfix>
+      <div class="view-block" v-if="!showSkeleton || loadDone" :style="{backgroundColor:contentBg?contentBg:'#fff'}" ref="scrollMain" v-scrollfix @scroll="noteTop">
         <slot name="content"></slot>
       </div>
     </transition>
@@ -110,6 +110,10 @@
         } else {
           this.$router.go(-1)
         }
+      },
+      noteTop(e) {
+        window.topNote = e.target.scrollTop
+        window.viewBlock = e.target
       }
     }
   }

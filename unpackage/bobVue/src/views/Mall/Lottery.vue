@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div class="pop-btn-line">
-                <button @click="myGetNote = true">中奖纪录</button>
+                <button @click="openMyLog">中奖纪录</button>
                 <button @click="rulePop = true">抽奖规则</button>
               </div>
             </div>
@@ -53,11 +53,11 @@
               <div class="all-get-main">
                 <div class="all-get-title">中奖纪录</div>
                 <div class="all-get-list-container">
-                  <swiper>
-                    <swiperSlide>
-                      <div class="item" v-for="(item,index) in getList" :key="index">
-                        <img :src="item.head">
-                        恭喜 {{item.userName}} 获得<span>{{item.goodsName}}</span>一个！
+                  <swiper :options="swiperOption">
+                    <swiperSlide v-for="(item,index) in getList" :key="index">
+                      <div class="item">
+                        <img :src="createHeadUrl(item.head_icon)">
+                        恭喜 {{item.nickname}} 获得<span>{{item.reward_name}}</span>一个！
                       </div>
                     </swiperSlide>
                   </swiper>
@@ -115,65 +115,10 @@
         <div class="head-title"></div>
         <div class="btn-close" @click="myGetNote = false"><i class="iconfont icon-guanbi"></i></div>
         <ul class="get-list">
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
-          </li>
-          <li>
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-06-27/1530082836.png">
-            100金豆
-            <span>2018-09-20 11:53</span>
+          <li v-for="(i,index) in myGetList" :key="index">
+            <img :src="i.reward_pic | imgUrl">
+            {{i.reward_name}}
+            <span>{{i.reward_time | fTime('YYYY-MM-DD HH:mm')}}</span>
           </li>
         </ul>
       </div>
@@ -193,6 +138,7 @@
 </template>
 
 <script>
+  import { Toast } from "vant";
   export default {
     data() {
       return {
@@ -210,26 +156,23 @@
         globaMessage: false,
         prizesList: null,
         showGetPop: false,
-        getList: [
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' },
-          { head: 'http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqdFqbDwXYTBMS9HMkPdTcDuqEa8CQK1FEAXQ8dfNJltsnovkicVPciaZx0Kp1B7Lj2ib35YxJk0zYKw/132', goodsName: '多功能洗碗机', userName: '你妈炸了' }
-        ],
+        getList: null,
+        myGetList: null,
         plugMainStyle: {
           position: 'absolute',
           top: '1rem',
           left: '50%',
           transform: 'translateX(-50%)'
         },
-        getInfo: null
+        getInfo: null,
+        swiperOption: {
+          loop: true,
+          direction: 'vertical',
+          autoplay: true,
+          delay: 1000,
+          // autoHeight: true,
+          height: 100 / 75 * window.rem
+        }
       };
     },
     computed: {
@@ -300,12 +243,6 @@
       level() {
         this.changeLevel = false
       }
-      // changeLevel(){
-      //   let that = this
-      //   setTimeout(() => {
-      //     that.test = true
-      //   }, 2000);
-      // }
     },
     methods: {
       flashCtrl(state) {
@@ -340,20 +277,46 @@
             that.lock = false
           })
         }
+      },
+      createHeadUrl(url) {
+        if (/http/.test(url)) {
+          return url
+        } else {
+          return 'http://cdn.bobgame.cn' + url
+        }
+      },
+      openMyLog() {
+        let that = this
+        Toast.loading('正在请求');
+        that.$http.get('/Boblottery/getMyLog').then(r => {
+          that.myGetList = r
+          that.myGetNote = true
+          Toast.clear()
+        }).catch(err => {
+          console.error(err);
+          Toast.clear()
+        })
       }
     },
     mounted() {
       let that = this
-      that.$http.get('/Boblottery/index').then(r => {
-        that.prizesList = r.rewardInfo
+
+      let base = that.$http.get('/Boblottery/index')
+      let allLog = that.$http.get('/Boblottery/rewardsLogs')
+      Promise.all([base, allLog]).then(r => {
+        that.prizesList = r[0].rewardInfo
         that.reqDone = true
+        that.getList = r[1]
+      }).catch(err => {
+        console.error(err);
       })
-      setTimeout(() => {
-        that.globaMessage = true
-        setTimeout(() => {
-          that.globaMessage = false
-        }, 2000);
-      }, 2000);
+      //全服公告
+      // setTimeout(() => {
+      //   that.globaMessage = true
+      //   setTimeout(() => {
+      //     that.globaMessage = false
+      //   }, 2000);
+      // }, 2000);
     }
   };
 </script>
@@ -686,9 +649,7 @@
     margin: 0 auto;
     overflow: hidden;
     border-radius: 15px;
-  }
 
-  .all-get-list {
     .item {
       height: 100px;
       width: 100%;
@@ -715,6 +676,7 @@
       }
     }
   }
+
 
   // .van-popup {
   //   border-radius: 15px;

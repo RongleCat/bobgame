@@ -11,7 +11,7 @@
     </div>
     <div class="view-block" ref="scrollMain" v-scrollfix>
       <transition name="fade-in">
-        <div class="skeleton-container" v-if="!reqDone" :style="{top:statusBarHeight}">
+        <div class="skeleton-container" main v-if="!reqDone" :style="{top:statusBarHeight}">
           <div class="item-img-text h70">
             <div class="pic"></div>
             <div class="text y-center">
@@ -31,25 +31,25 @@
           <div class="item-img-text h180">
             <div class="pic"></div>
             <div class="text">
-              <div class="item w60"></div>
-              <div class="item w40"></div>
-              <div class="item w90"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
             </div>
           </div>
           <div class="item-img-text h180">
             <div class="pic"></div>
             <div class="text">
-              <div class="item w50"></div>
-              <div class="item w80"></div>
-              <div class="item w60"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
             </div>
           </div>
           <div class="item-img-text h180">
             <div class="pic"></div>
             <div class="text">
-              <div class="item w80"></div>
-              <div class="item w60"></div>
-              <div class="item w90"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
+              <div class="item" :class="[`w${random(10,3)}0`]"></div>
             </div>
           </div>
           <div class="item-block h320">
@@ -63,7 +63,7 @@
           <div class="banner-container" mall>
             <swiper :options="swiperOption" ref="mySwiper" class="mall-loop">
               <swiperSlide v-for="(item,key,index) in mallData.swipper" :key="index">
-                <img v-lazy="createUrl(item.rollpic)" alt="">
+                <img :src="ossZipFun(item.rollpic,80)" alt="">
               </swiperSlide>
               <div class="swiper-pagination mall-page" slot="pagination"></div>
             </swiper>
@@ -75,7 +75,7 @@
             <div class="item" @click="$router.push('/mall/goodsearch/0_all')" :style="{backgroundImage:`url('https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/mall_btn_1.png')`}"></div>
           </div>
           <!-- 限时兑换 -->
-          <template v-if="mallData.timelimit.length">
+          <template v-if="mallData.timelimit">
             <div class="block-title">限时兑换</div>
             <div class="time-get-list">
               <div class="item" v-for="(item,index) in mallData.timelimit" :key="index" @click="$router.push('/mall/gooddetail/'+item.id)">
@@ -89,7 +89,7 @@
           </template>
 
           <!-- 商品分类 -->
-          <MallGoodsGroup v-for="(item,index) in mallData.NoSpSaleProduct" :key="index" v-bind="item"></MallGoodsGroup>
+          <MallGoodsGroup v-for="(item,index) in mallData.NoSpSaleProduct" :key="index" v-bind="item" :level="mallData.level" :score="mallData.score"></MallGoodsGroup>
         </div>
       </transition>
     </div>
@@ -182,7 +182,7 @@
           that.reqDone = true
         }, 400)
 
-        console.log(r);
+        // console.log(r);
         that.$store.commit('setMallData', r);
       })
     },
@@ -210,6 +210,12 @@
       // hideItem(_index) {
       //   this.timeList[_index].show = false;
       // }
+    },
+    beforeRouteLeave(to, from, next) {
+      if (to.name == "GoodSearch") {
+        to.meta.noCache = true;
+      }
+      next();
     }
   };
 </script>
@@ -447,7 +453,7 @@
     }
   }
 
-  .skeleton-container {
+  .skeleton-container[main] {
     position: fixed !important;
     width: 100%;
     left: 0;

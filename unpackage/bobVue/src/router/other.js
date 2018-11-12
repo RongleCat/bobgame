@@ -3,6 +3,7 @@ import Login from '../views/Other/Login.vue'
 import Message from '../views/Other/Message.vue'
 import School from "../views/My/School.vue";
 import SchoolDetails from "../views/My/SchoolDetails.vue";
+import Test from '../views/Other/Test.vue'
 
 export default [
   {
@@ -48,5 +49,11 @@ export default [
     path: '/news/:id',
     name: 'NewsDetails',
     component: SchoolDetails
+  },
+  //跳转测试
+  {
+    path: '/jump/test',
+    name: 'Test',
+    component: Test
   }
 ]

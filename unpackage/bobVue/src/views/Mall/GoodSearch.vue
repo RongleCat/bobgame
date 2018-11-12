@@ -20,9 +20,9 @@
       <div class="item-img-text h180" v-for="i in 6" :key="i">
         <div class="pic"></div>
         <div class="text">
-          <div class="item w60"></div>
-          <div class="item w40"></div>
-          <div class="item w90"></div>
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
         </div>
       </div>
     </template>
@@ -58,7 +58,7 @@
     </template>
     <template slot="content">
       <div class="good-container">
-        <List v-model="loading" :finished="finished" @load="onLoad">
+        <List v-model="loading" :finished="finished" @load="onLoad" ref="list">
           <div class="item" v-for="(i,index) in listData" :key="index" @click="$router.push('/mall/gooddetail/'+i.id)">
             <div class="good-pic">
               <div class="good-left">剩余{{parseInt(i.initstore/i.store*100)}}%</div>
@@ -155,7 +155,7 @@
 
       let $type = new Promise((resolve, reject) => {
         that.$http.get("/Bobshop/getTypeList").then(r => {
-          console.log(r);
+          // console.log(r);
 
           r.type.map((item, index) => {
             if (item.type_name == that.typeName) {
@@ -173,8 +173,8 @@
 
       let $list = that.getListData();
 
-      Promise.all([$type, $list]).then(r => {
-        console.log(r);
+      Promise.all([$type, $list]).then(() => {
+        // console.log(r);
         that.loadDone = true;
       });
 
@@ -186,6 +186,15 @@
           that.getListData();
         }, 500)
       );
+    },
+    activated() {
+      setTimeout(() => {
+        if (window.sessionStorage.getItem('scrollTop')) {
+          window.viewBlock.scrollTop = parseInt(window.sessionStorage.getItem('scrollTop'))
+        }
+      }, 300);
+
+
     },
     computed: {
       searchFocus() {
@@ -237,7 +246,7 @@
               }
             })
             .then(r => {
-              console.log(r);
+              // console.log(r);
               // that.typeArr = r.type
               that.pageMax = r.max;
               that.listData = [...that.listData, ...r.result];
@@ -268,6 +277,14 @@
         this.page = 1;
         this.getListData();
       }
+    },
+    beforeRouteLeave(to, from, next) {
+      let that = this
+      window.sessionStorage.setItem('scrollTop', that.$refs.list.scroller.scrollTop)
+      next()
+    },
+    deactivated() {
+      window.sessionStorage.setItem('scrollTop', this.$refs.list.scroller.scrollTop)
     }
   };
 </script>

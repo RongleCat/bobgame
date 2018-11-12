@@ -1,7 +1,7 @@
 <template>
   <div class="group-container">
     <div class="group-head-img" @click="goList">
-      <img v-lazy="createUrl(typeinfo.pic)">
+      <img v-lazy="ossZipFun(typeinfo.pic,80)">
     </div>
     <div class="group-swiper">
       <swiper :options="swiperOption" ref="mySwiper">
@@ -9,8 +9,11 @@
         <swiper-slide v-for="item in goodslist" :key="item.id">
           <div class="goods-item" @click="$router.push('/mall/gooddetail/'+item.id)">
             <span class="left-block">剩余 {{parseInt(item.initstore/item.store*100)}}%</span>
-            <img :src="item.img | imgUrl | ossResize(calcSize(180))">
+            <img v-lazy="ossResizeFun(item.img,calcSize(180))">
             <div class="title">{{item.prname}}</div>
+            <div class="center-block">
+              <div class="vip-price" v-if="level != '0'">V{{level}}享{{score}}折</div>
+            </div>
             <div class="center-block">
               <div class="bean-block">{{item.jifen}}</div>
             </div>
@@ -28,7 +31,7 @@
 
 <script>
   export default {
-    props: ['goodslist', 'typeinfo'],
+    props: ['goodslist', 'typeinfo', 'level', 'score'],
     data() {
       return {
         swiperOption: {
@@ -69,7 +72,7 @@
 
   .goods-item {
     width: 100%;
-    height: 360px;
+    height: 400px;
     padding-top: 35px;
     position: relative;
 
@@ -108,6 +111,23 @@
       right: 25px;
       top: 25px;
     }
+  }
+
+  .vip-price {
+    display: inline-block;
+    height: 30px;
+    background: #333;
+    color: #fff;
+    font-size: 20px;
+    background-image: url("../assets/images/mall/vip_price.png");
+    background-size: auto 22px;
+    background-repeat: no-repeat;
+    background-position-x: 7px;
+    background-position-y: center;
+    padding-left: 40px;
+    padding-right: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
   }
 
   .bean-block {

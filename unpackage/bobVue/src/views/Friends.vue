@@ -20,7 +20,7 @@
                   <div class="name-line">曹铁柱<i class="iconfont icon-male"></i><span class="vip-label vip-0"></span><span class="time">{{'2018-10-13 12:09' | lastTime}}</span></div>
                   <div class="two-line">昨晚1.25倍看如懿，感觉对话有点魔性，切回来好多了25倍看如懿，感觉对话有点魔性，切回来好多了</div>
                 </div>
-                <div class="item">
+                <div class="item" @click="$router.push('/jump/test')">
                   <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/1.jpg">
                   <div class="name-line">曹铁柱<i class="iconfont icon-female woman"></i><span class="vip-label vip-1"></span><span class="time">5分钟前</span></div>
                   <div class="two-line">昨晚1.25倍看如懿，感觉对话有点魔性，切回来好多了25倍看如懿，感觉对话有点魔性，切回来好多了</div>
