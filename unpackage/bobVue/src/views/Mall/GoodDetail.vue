@@ -188,7 +188,7 @@
         }
       }
     },
-    mounted() {
+    activated() {
       let that = this
       let getPage = that.getPageData()
 
@@ -347,10 +347,11 @@
       }
     },
     beforeRouteLeave(to, from, next) {
+      this.loadDone = false
       if (to.name == "GoodSearch") {
-        to.meta.noCache = false;
+        to.meta.reload = false;
       } else {
-        delete to.meta.noCache
+        delete to.meta.reload
       }
       next();
     }

@@ -66,7 +66,7 @@ const router = new Router({
       component: My,
       beforeEnter: (to, from, next) => {
         if (!window.localStorage.token) {
-          next('/login/my')
+          next('/login')
         } else {
           next()
         }

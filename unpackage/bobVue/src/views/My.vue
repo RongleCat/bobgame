@@ -4,43 +4,73 @@
     <div class="header-block common-header" my :style="{top:statusBarHeight}">
       我的
     </div>
+
     <div class="view-block" my ref="scrollMain" v-scrollfix>
-      <div class="head-container" :class="[`isvip-${vipLevel}`]" my>
-        <div class="card-block">
-          <img :src="headUrl" class="user-head" @click="go('mysettings')">
-          <h3 class="user-name" @click="go('mysettings')">{{userInfo.nickname}}
-            <div class="vip-label" :class="[`vip-${vipLevel}`]">{{vipName[vipLevel]}}</div>
-          </h3>
-          <div class="user-id" @click="go('mysettings')">ID:Wx_56598566</div>
-          <div class="view-power" @click="go('mypower/1')">查看权益<i class="iconfont icon-you"></i></div>
-          <div class="level-exp">
-            已累计经验值：100000/100000
-            <div class="tip-icon" @click="showExp = true">
-              <i class="iconfont icon-wenhaoshi"></i>
-            </div>
-            <div class="exp-bar">
-              <div class="exp-bar-inside" :style="{'width':expValue+'%'}"></div>
-            </div>
+
+      <transition name="fade-in">
+        <div class="skeleton-container" my v-if="!loadDone" :style="{top:setViewPaddingTop}">
+          <div class="item-block h330">
+            <div class="item"></div>
           </div>
-          <div class="card-time" @click="go('mypower/0')">2018-12-21 到期</div>
-        </div>
-        <div class="my-data">
-          <div class="item" @click="go('balance')">
-            <div class="data-value">4833.25</div>
-            <div class="data-name">余额</div>
+          <div class="item-block h110">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
           </div>
-          <div class="item" @click="go('myinvitation')">
-            <div class="tip-box">+1</div>
-            <div class="data-value">1333</div>
-            <div class="data-name">邀请的伙伴</div>
+          <div class="item-block h210">
+            <div class="item"></div>
           </div>
-          <div class="item" @click="go('incomenotes')">
-            <div class="data-value">0</div>
-            <div class="data-name">今日收益</div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
+          </div>
+          <div class="item-block h210">
+            <div class="item"></div>
           </div>
         </div>
-        <!-- <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" class="img-banner" @click="$router.push('/game/customlist')"> -->
-        <!-- <swiper :options="swiperOption" ref="mySwiper" class="my-container">
+      </transition>
+      <transition name="fade-in">
+        <div v-if="loadDone">
+          <div class="head-container" :class="[`isvip-${userInfo.level}`]" my>
+            <div class="card-block">
+              <img :src="headUrl" class="user-head" @click="go('mysettings')">
+              <h3 class="user-name" @click="go('mysettings')">{{jiequName(userInfo.nickname)}}
+                <div class="vip-label" :class="[`vip-${vipLevel(userInfo.level)}`]">{{vipNames[vipLevel(userInfo.level)]}}</div>
+              </h3>
+              <div class="user-id" @click="go('mysettings')">ID:{{userInfo.account}}</div>
+              <div class="level-exp">
+                已累计经验值：{{pageData.exp}}/{{pageData.amount_exp}}
+                <div class="tip-icon" @click="showExp = true">
+                  <i class="iconfont icon-wenhaoshi"></i>
+                </div>
+                <div class="exp-bar">
+                  <div class="exp-bar-inside" :style="{'width':parseInt(pageData.exp)/parseInt(pageData.amount_exp)*100+'%'}"></div>
+                </div>
+              </div>
+
+              <div class="view-power" @click="go('mypower/'+vipLevel(userInfo.level))">{{pageData.card?'查看权益':'去续费'}}<i class="iconfont icon-you"></i></div>
+              <div class="card-time" v-if="!pageData.card">已到期</div>
+              <div class="card-time" v-if="pageData.card">{{pageData.card.end | fTime('YYYY-MM-DD')}} 到期</div>
+            </div>
+            <div class="my-data">
+              <div class="item" @click="go('balance')">
+                <div class="data-value">{{pageData.usermoney}}</div>
+                <div class="data-name">余额</div>
+              </div>
+              <div class="item" @click="go('myinvitation')">
+                <div class="tip-box" v-if="parseInt(pageData.promote_num)">+{{pageData.promote_num}}</div>
+                <div class="data-value">{{pageData.member}}</div>
+                <div class="data-name">邀请的伙伴</div>
+              </div>
+              <div class="item" @click="go('incomenotes')">
+                <div class="data-value">{{pageData.usertodayincome}}</div>
+                <div class="data-name">今日收益</div>
+              </div>
+            </div>
+            <!-- <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/my_banner.png" class="img-banner" @click="$router.push('/game/customlist')"> -->
+            <!-- <swiper :options="swiperOption" ref="mySwiper" class="my-container">
           <swiperSlide>
             
           </swiperSlide>
@@ -52,90 +82,92 @@
           </swiperSlide>
           <div class="my-pagination" slot="pagination"></div>
         </swiper> -->
-      </div>
-      <div class="bottom-container">
-        <div class="my-block icon icon-03 invite-friends match">
-          <h3 class="block-title">
-            专属比赛
-          </h3>
-          <div class="btn btn-invite" @click="$router.push('/game/customlist')">创建比赛</div>
-        </div>
-        <div class="my-block icon icon-01 invite-friends">
-          <h3 class="block-title">
-            创建团队
-          </h3>
-          <div class="btn btn-invite" @click="go('share')"><span>新增V3邀请</span>立即邀请</div>
-        </div>
-        <div class="my-block icon icon-02 order-info" :class="[order?'hasorder':'']">
-          <h3 class="block-title">
-            订单详情
-            <span class="view-more" v-if="order" @click="go('orderlist')">查看更多<i class="iconfont icon-you"></i></span>
-          </h3>
-
-          <div class="order-item" v-if="order">
-            <img src="http://cdn.bobgame.cn//Uploads/Picture/2018-08-15/5b73f07a78cf72.00191710.jpg">
-            <div class="text-block">
-              您已中得大奖<br><span>快去领奖吧！</span>
-              <div class="btn btn-get" @click="order = !order">前去领奖</div>
+          </div>
+          <div class="bottom-container">
+            <div class="my-block icon icon-03 invite-friends match">
+              <h3 class="block-title">
+                专属比赛
+              </h3>
+              <div class="btn btn-invite" @click="$router.push('/game/customlist')">创建比赛</div>
             </div>
-          </div>
-          <div class="no-order" v-if="!order">
-            您当前没有任何订单，快去逛逛商城吧
-            <div class="btn btn-mall" @click="order = !order">去商城</div>
-          </div>
-        </div>
-        <ul class="my-block nav-list">
-          <!-- <li class="icon icon-03" @click="$router.push('/business/matchmanage')">
+            <div class="my-block icon icon-01 invite-friends">
+              <h3 class="block-title">
+                创建团队
+              </h3>
+              <div class="btn btn-invite" @click="go('share')"><span>新增V3邀请</span>立即邀请</div>
+            </div>
+            <div class="my-block icon icon-02 order-info" :class="[order?'hasorder':'']">
+              <h3 class="block-title">
+                订单详情
+                <span class="view-more" v-if="pageData.usrLotOrder.length" @click="go('orderlist')">查看更多<i class="iconfont icon-you"></i></span>
+              </h3>
+
+              <div class="order-item" v-if="pageData.usrLotOrder.length">
+                <img :src="pageData.usrLotOrder[0].reward_pic | imgUrl | ossResize(calcSize(100))">
+                <div class="text-block">
+                  您已中得大奖<br><span>快去领奖吧！</span>
+                  <div class="btn btn-get" @click="go('orderlist')">前去领奖</div>
+                </div>
+              </div>
+              <div class="no-order" v-if="!pageData.usrLotOrder.length">
+                您当前没有任何订单，快去逛逛商城吧
+                <div class="btn btn-mall" @click="$router.push('/mall')">去商城</div>
+              </div>
+            </div>
+            <ul class="my-block nav-list">
+              <!-- <li class="icon icon-03" @click="$router.push('/business/matchmanage')">
             <h3 class="block-title">
               商家管理
             </h3>
             <i class="iconfont icon-you"></i>
           </li> -->
-          <li class="icon icon-04" @click="go('sgin')">
-            <h3 class="block-title">
-              签到
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-05" @click="go('task')">
-            <h3 class="block-title">
-              任务
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-010" @click="go('rankinglist')">
-            <h3 class="block-title">
-              排行榜
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-06" @click="go('givebean')">
-            <h3 class="block-title">
-              会员代充
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-07" @click="$router.push('/school')">
-            <h3 class="block-title">
-              波波学院
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-08" @click="go('contactus')">
-            <h3 class="block-title">
-              联系我们
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-          <li class="icon icon-09" @click="go('mysettings')">
-            <h3 class="block-title">
-              个人设置
-            </h3>
-            <i class="iconfont icon-you"></i>
-          </li>
-        </ul>
-        <div class="my-block btn-logout" @click="logout">退出登录</div>
-      </div>
+              <li class="icon icon-04" @click="go('sgin')">
+                <h3 class="block-title">
+                  签到
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-05" @click="go('task')">
+                <h3 class="block-title">
+                  任务
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-010" @click="go('rankinglist')">
+                <h3 class="block-title">
+                  排行榜
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-06" @click="go('givebean')">
+                <h3 class="block-title">
+                  会员代充
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-07" @click="$router.push('/school')">
+                <h3 class="block-title">
+                  波波学院
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-08" @click="go('contactus')">
+                <h3 class="block-title">
+                  联系我们
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+              <li class="icon icon-09" @click="go('mysettings')">
+                <h3 class="block-title">
+                  个人设置
+                </h3>
+                <i class="iconfont icon-you"></i>
+              </li>
+            </ul>
+            <div class="my-block btn-logout" @click="logout">退出登录</div>
+          </div>
+        </div>
+      </transition>
     </div>
     <Help v-model="showExp">
       <template slot="title">
@@ -171,8 +203,8 @@
         headHeight: 88,
         scrollTop: 0,
         expValue: 60,
-        vipLevel: 0,
         showExp: false,
+        loadDone: false,
         swiperOption: {
           loop: true,
           spaceBetween: 10,
@@ -189,14 +221,13 @@
         //   img:'http://cdn.bobgame.cn//Uploads/Picture/2018-08-15/5b73f07a78cf72.00191710.jpg'
         // },
         getData: null,
+        pageData: null,
+        userInfo: null,
         order: true,
-        vipName: ["达人", "高手", "大师", "推广部长", "总代理", "联合创始人"]
+        vipNames: ["达人", "高手", "大师", "推广部长", "总代理", "联合创始人"]
       };
     },
     computed: {
-      userInfo() {
-        return this.$store.state.userInfo;
-      },
       statusBarHeight() {
         return this.$store.state.statusBarHeight + "rem";
       },
@@ -215,7 +246,29 @@
         return this.scrollTop / 200;
       }
     },
-    mounted() {},
+    mounted() {
+      let that = this
+      let $page = that.$http.get('/Bobcenter/index')
+      let userInfo = that.getUserInfo([])
+
+      Promise.all([$page, userInfo]).then(r => {
+        console.log(r);
+        that.pageData = r[0]
+        that.userInfo = r[1]
+        // setTimeout(() => {
+        that.loadDone = true
+        // }, 3000);
+      }).catch(err => {
+        console.error(err)
+      })
+    },
+    activated() {
+      setTimeout(() => {
+        if (window.sessionStorage.getItem('mallTop')) {
+          this.$refs.scrollMain.scrollTop = parseInt(window.sessionStorage.getItem('mallTop'))
+        }
+      }, 1);
+    },
     beforeCreate() {
       this.$atApp(() => {
         window.plus.navigator.setStatusBarStyle("dark");
@@ -245,9 +298,34 @@
         this.$router.push("/my/" + value);
       },
       logout() {
-        window.localStorage.clear();
-        this.$router.replace("/home");
+        window.localStorage.removeItem('userBaseInfo');
+        window.localStorage.removeItem('token');
+        location.reload()
+        // this.$router.replace("/home");
+      },
+      vipLevel(level) {
+        if (level == '4+') {
+          return 5
+        } else {
+          return parseInt(level)
+        }
+      },
+      jiequName(str) {
+        if (str.length <= 6) {
+          return str
+        } else {
+          return str.substring(0, 5) + '...'
+        }
       }
+    },
+    beforeRouteLeave(to, from, next) {
+      let names = ['IncomeNotes', 'Balance', 'MyInvitation', 'MySettings', 'Task', 'Sgin', 'OrderList', 'RankingList', 'ContactUs', 'GiveBean', 'Share', 'CustomGame']
+      if (names.indexOf(to.name) != -1) {
+        window.sessionStorage.setItem('mallTop', this.$refs.scrollMain.scrollTop)
+      } else {
+        window.sessionStorage.removeItem('myTop')
+      }
+      next();
     }
   };
 </script>
@@ -740,5 +818,13 @@
     width: 100%;
     display: block;
     border-radius: 10px;
+  }
+
+  .skeleton-container[my] {
+    position: fixed !important;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 100px !important;
   }
 </style>

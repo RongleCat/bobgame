@@ -63,7 +63,7 @@
           <div class="banner-container" mall>
             <swiper :options="swiperOption" ref="mySwiper" class="mall-loop">
               <swiperSlide v-for="(item,key,index) in mallData.swipper" :key="index">
-                <img :src="ossZipFun(item.rollpic,80)" alt="">
+                <img :src="ossZipFun(item.rollpic,80)" @click="$router.push('/mall/gooddetail/'+getGoodId(item.rollpic_url))">
               </swiperSlide>
               <div class="swiper-pagination mall-page" slot="pagination"></div>
             </swiper>
@@ -186,6 +186,13 @@
         that.$store.commit('setMallData', r);
       })
     },
+    activated() {
+      setTimeout(() => {
+        if (window.sessionStorage.getItem('mallTop')) {
+          this.$refs.scrollMain.scrollTop = parseInt(window.sessionStorage.getItem('mallTop'))
+        }
+      }, 1);
+    },
     filters: {
       dateFormat(v) {
         if (!v) {
@@ -207,13 +214,21 @@
       createUrl(url) {
         return `http://cdn.bobgame.cn${url}`
       },
-      // hideItem(_index) {
-      //   this.timeList[_index].show = false;
-      // }
+      getGoodId(url) {
+        let urls = url.split('=')[1].split('.')[0].split('/')
+        return urls[urls.length - 1]
+      }
     },
     beforeRouteLeave(to, from, next) {
       if (to.name == "GoodSearch") {
-        to.meta.noCache = true;
+        to.meta.reload = true;
+        window.sessionStorage.setItem('mallTop', this.$refs.scrollMain.scrollTop)
+      }
+      if (to.name == 'GoodDetail') {
+        window.sessionStorage.setItem('mallTop', this.$refs.scrollMain.scrollTop)
+      }
+      if (to.name != "GoodSearch" && to.name != 'GoodDetail') {
+        window.sessionStorage.removeItem('mallTop')
       }
       next();
     }

@@ -4,12 +4,12 @@
       <TheTabber class="com-tabber" :style="{zIndex:tabberZIndex}" v-if="showTabber"></TheTabber>
     </transition>
 
-    <transition :enter-active-class="enter" :leave-active-class="leave">
+    <transition :name="direction">
       <keep-alive>
         <router-view class="view-main" data-state="cache" v-if="!$route.meta.noCache" />
       </keep-alive>
     </transition>
-    <transition :enter-active-class="cacheEnter" :leave-active-class="cacheLeave">
+    <transition :name="direction">
       <router-view class="view-main" data-state="nocache" v-if="$route.meta.noCache" />
     </transition>
     <!-- <transition :name="keepDirection">
@@ -20,40 +20,40 @@
 
 <script>
   import TheTabber from "@/components/TheTabbar.vue";
-  import unit from './unit/back.js';
+  import unit from "./unit/back.js";
   let allRouter = [
-    'CreateMatch',
-    'CustomList',
-    'AddFrequency',
-    'Stadium',
-    'Rule',
-    'Sports',
-    'OfficialMatchNote',
-    'MyMatchNote',
-    'Match',
-    'Share',
-    'Lottery',
-    'ContactUs',
-    'CustomGame',
-    'FriendInfomation',
-    'FriendsDetail',
-    'IncomeNotes',
-    'WaitWithdraw',
-    'Withdraw',
-    'GoodDetail',
-    'GoodSearch',
-    'Rule',
-    'SchoolDetails',
-    'School',
-    'Balance',
-    'Address',
-    'MySettings',
-    'Login',
-    'My',
-    'Mall',
-    'Friends',
-    'Home',
-    'Guide'
+    "CreateMatch",
+    "CustomList",
+    "AddFrequency",
+    "Stadium",
+    "Rule",
+    "Sports",
+    "OfficialMatchNote",
+    "MyMatchNote",
+    "Match",
+    "Share",
+    "Lottery",
+    "ContactUs",
+    "CustomGame",
+    "FriendInfomation",
+    "FriendsDetail",
+    "IncomeNotes",
+    "WaitWithdraw",
+    "Withdraw",
+    "GoodDetail",
+    "GoodSearch",
+    "Rule",
+    "SchoolDetails",
+    "School",
+    "Balance",
+    "Address",
+    "MySettings",
+    "Login",
+    "My",
+    "Mall",
+    "Friends",
+    "Home",
+    "Guide"
   ];
 
   export default {
@@ -62,60 +62,47 @@
     },
     data() {
       return {
-        direction: 'slide-left',
-        keepDirection: 'slide-left',
+        direction: "fade-left",
+        keepDirection: "fade-left",
         showGuide: window.localStorage.showGuide,
-        isCache: true,
-        enter: 'animated fadeIn',
-        leave: 'animated fadeOut',
-        cacheEnter: 'animated fadeIn',
-        cacheLeave: 'animated fadeOut',
+        enter: "",
+        leave: "",
+        cacheEnter: "",
+        cacheLeave: ""
       };
     },
     computed: {
       tabberZIndex() {
-        return this.$store.state.tabberZIndex
+        return this.$store.state.tabberZIndex;
       },
       hasPopOpen() {
-        return this.$store.state.hasPopOpen
+        return this.$store.state.hasPopOpen;
       },
       showTabber() {
-        return this.$store.state.showTabber
+        return this.$store.state.showTabber;
       }
     },
     watch: {
-      '$route': function (to, form) {
+      $route: function (to, form) {
         let _before = allRouter.indexOf(to.name),
           _after = allRouter.indexOf(form.name);
-        this.isCache = !to.meta.noCache
+        // console.log(!!form.meta.noCache, !!to.meta.noCache);
         if (_before < _after) {
-          this.enter = 'animated fadeInRight';
-          this.leave = 'animated fadeOutLeft';
-          // if (to.meta.noCache) {
-          //   this.cacheEnter = 'animated fadeInRight'
-          //   this.cacheLeave = 'animated fadeOutRight'
-          // } else {
-          //   this.leave = 'animated fadeInLeft'
-          //   this.cacheLeave = 'animated fadeOutLeft'
-          // }
-        }
-        else {
-          this.enter = 'animated fadeInLeft';
-          this.leave = 'animated fadeOutRight';
-          // if (to.meta.noCache) {
-          //   this.leave = 'animated fadeOutRight';
-          // } else {
-          //   this.leave = 'animated fadeOutRight';
-          // }
+          this.direction = "fade-left";
+        } else {
+          this.direction = "fade-right";
         }
       }
     },
     beforeCreate() {
       let that = this;
       that.$atApp(() => {
-        this.$store.commit('setStatusBarHeight', window.plus.navigator.getStatusbarHeight() / window.rem)
-        unit.bindBackKeyEvent(that)
-      })
+        this.$store.commit(
+          "setStatusBarHeight",
+          window.plus.navigator.getStatusbarHeight() / window.rem
+        );
+        unit.bindBackKeyEvent(that);
+      });
     }
   };
 </script>

@@ -135,9 +135,13 @@
         }
       },
       typeSelect(v) {
-        this.typeName = this.typeArr[v].type_name;
-        this.typeId = this.typeArr[v].id;
-        this.classOpen = false;
+        if (v != -1) {
+          this.typeName = this.typeArr[v].type_name;
+          this.typeId = this.typeArr[v].id;
+          this.classOpen = false;
+        } else {
+          this.typeName = '全部'
+        }
       },
       typeId() {
         Toast.loading({
@@ -149,52 +153,31 @@
         that.getListData();
       }
     },
-    mounted() {
-      // console.log(this.typeName);
-      let that = this;
-
-      let $type = new Promise((resolve, reject) => {
-        that.$http.get("/Bobshop/getTypeList").then(r => {
-          // console.log(r);
-
-          r.type.map((item, index) => {
-            if (item.type_name == that.typeName) {
-              that.typeSelect = index;
-            }
-          });
-          that.typeArr = r.type;
-          that.vipLevel = r.level;
-          that.vipDiscount = r.score;
-          resolve(r.type);
-        }).catch(err => {
-          reject(err)
-        });
-      });
-
-      let $list = that.getListData();
-
-      Promise.all([$type, $list]).then(() => {
-        // console.log(r);
-        that.loadDone = true;
-      });
-
-      that.$watch(
-        "keyword",
-        _.debounce(function () {
-          that.listData = [];
-          that.page = 1;
-          that.getListData();
-        }, 500)
-      );
-    },
     activated() {
-      setTimeout(() => {
-        if (window.sessionStorage.getItem('scrollTop')) {
-          window.viewBlock.scrollTop = parseInt(window.sessionStorage.getItem('scrollTop'))
+      let that = this
+      if (this.$route.meta.reload) {
+        that.loadDone = false
+        that.listData = []
+        that.keyword = ''
+        that.typeId = that.$route.params["condition"].split("_")[0]
+        that.minBeen = null
+        that.maxBeen = null
+        that.page = 1
+
+        if (!that.loadDone) {
+          this.pageInit()
         }
-      }, 300);
-
-
+      } else {
+        if (!that.loadDone) {
+          this.pageInit()
+        } else {
+          setTimeout(() => {
+            if (window.sessionStorage.getItem('scrollTop')) {
+              window.viewBlock.scrollTop = parseInt(window.sessionStorage.getItem('scrollTop'))
+            }
+          }, 1);
+        }
+      }
     },
     computed: {
       searchFocus() {
@@ -276,11 +259,53 @@
         this.listData = [];
         this.page = 1;
         this.getListData();
+      },
+      pageInit() {
+        let that = this;
+
+        let $type = new Promise((resolve, reject) => {
+          that.$http.get("/Bobshop/getTypeList").then(r => {
+            // console.log(r);
+            that.typeSelect = -1
+
+            r.type.map((item, index) => {
+              if (item.id == that.typeId) {
+                that.typeSelect = index
+                that.typeId = parseInt(item.id)
+              }
+            });
+            that.typeArr = r.type;
+            that.vipLevel = r.level;
+            that.vipDiscount = r.score;
+            resolve(r.type);
+          }).catch(err => {
+            reject(err)
+          });
+        });
+
+        let $list = that.getListData();
+
+        Promise.all([$type, $list]).then(() => {
+          // console.log(r);
+          that.loadDone = true;
+        });
+
+        that.$watch(
+          "keyword",
+          _.debounce(function () {
+            that.listData = [];
+            that.page = 1;
+            that.getListData();
+          }, 500)
+        );
       }
     },
     beforeRouteLeave(to, from, next) {
       let that = this
-      window.sessionStorage.setItem('scrollTop', that.$refs.list.scroller.scrollTop)
+
+      if (to.name !== 'Mall') {
+        window.sessionStorage.setItem('scrollTop', that.$refs.list.scroller.scrollTop)
+      }
       next()
     },
     deactivated() {

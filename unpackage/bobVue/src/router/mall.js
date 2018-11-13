@@ -10,16 +10,10 @@ export default [{
 {
   path: '/mall/goodsearch/:condition',
   name: 'GoodSearch',
-  component: GoodSearch,
-  meta: {
-    noCache: true
-  }
+  component: GoodSearch
 },
 {
   path: '/mall/gooddetail/:id',
   name: 'GoodDetail',
-  component: GoodDetail,
-  meta: {
-    noCache: true
-  }
+  component: GoodDetail
 }]

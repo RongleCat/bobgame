@@ -157,8 +157,6 @@
             data
           }
         }).then(r => {
-          // 
-          console.log(r);
           if (r) {
             Toast.clear()
             let { head_icon, nickname, jifen } = r.info
@@ -166,11 +164,12 @@
             window.localStorage.setItem('userBaseInfo', JSON.stringify({ head_icon, nickname, jifen }))
             window.localStorage.token = r.token
             this.$http.defaults.headers.get['Authorization'] = r.token
-            if (that.$route.params.to) {
-              that.$router.replace('/' + that.$route.params.to)
-            } else {
-              that.$router.go(-1)
-            }
+            that.$router.go(-1)
+            // if (that.$route.params.to) {
+            //   that.$router.replace('/' + that.$route.params.to)
+            // } else {
+            //   that.$router.go(-1)
+            // }
           }
         })
       }

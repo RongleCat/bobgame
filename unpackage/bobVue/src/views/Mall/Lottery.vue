@@ -265,13 +265,17 @@
         if (!that.lock) {
           that.lock = true
           that.$http.get(`/Boblottery/lottery&type=${that.level}`).then(r => {
-            that.select = r.result
-            that.count = -1;
-            that.flashCtrl();
-            that.flashCtrl("start");
-            that.timer = window.setInterval(() => {
-              that.count += 1
-            }, 300)
+            if (r) {
+              that.select = r.result
+              that.count = -1;
+              that.flashCtrl();
+              that.flashCtrl("start");
+              that.timer = window.setInterval(() => {
+                that.count += 1
+              }, 300)
+            } else {
+              that.lock = false
+            }
           }).catch(err => {
             console.log(err);
             that.lock = false
@@ -292,7 +296,7 @@
           that.myGetList = r
           that.myGetNote = true
           Toast.clear()
-        }).catch(err => {
+        }).catch(err => {`  `
           console.error(err);
           Toast.clear()
         })

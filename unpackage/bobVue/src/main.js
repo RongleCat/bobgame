@@ -80,16 +80,16 @@ Vue.config.productionTip = false
 
 
 //请求拦截
-let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
-let cancelToken = axios.CancelToken;
-let removePending = (config) => {
-  for (let p in pending) {
-    if (pending[p].u === config.url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
-      pending[p].f(); //执行取消操作
-      pending.splice(p, 1); //把这条记录从数组中移除
-    }
-  }
-}
+// let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
+// let cancelToken = axios.CancelToken;
+// let removePending = (config) => {
+//   for (let p in pending) {
+//     if (pending[p].u === config.url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
+//       pending[p].f(); //执行取消操作
+//       pending.splice(p, 1); //把这条记录从数组中移除
+//     }
+//   }
+// }
 
 //请求默认配置及拦截
 axios.defaults.baseURL = 'http://ceshi2.bobgame.cn/app.php?s='
@@ -97,10 +97,10 @@ axios.defaults.headers.get['Authorization'] = window.localStorage.getItem('token
 // axios.defaults.headers.post['Authorization'] = window.localStorage.getItem('token');
 
 axios.interceptors.request.use(function (config) {
-  removePending(config); //在一个ajax发送前执行一下取消操作
-  config.cancelToken = new cancelToken((c) => {
-    pending.push({ u: config.url + '&' + config.method, f: c });
-  });
+  // removePending(config); //在一个ajax发送前执行一下取消操作
+  // config.cancelToken = new cancelToken((c) => {
+  //   pending.push({ u: config.url + '&' + config.method, f: c });
+  // });
   // 在发送请求之前做些什么
   // console.log(config);
   if (!/Login/.test(config.url)) {
@@ -119,7 +119,7 @@ axios.interceptors.request.use(function (config) {
 
 axios.interceptors.response.use(function (res) {
   // 对响应数据做点什么
-  removePending(res.config);
+  // removePending(res.config);
   if (res.data.code == -1) {
     router.push('/login')
   } else if (res.data.code != 200) {
@@ -171,6 +171,7 @@ Vue.filter('toString', function (value) {
   if (!value) return ''
   return '' + value
 })
+
 
 Vue.directive('scrollfix', scrollFix)
 

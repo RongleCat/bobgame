@@ -672,6 +672,12 @@
       this.cardSwiper;
       this.contentSwiper;
       this.paySwiper;
+      this.$http.get('/Bobcenter/userCenter').then(r => {
+        console.log(r)
+
+      }).catch(err => {
+        console.error(err)
+      })
     },
     methods: {
       slideTo(v) {
