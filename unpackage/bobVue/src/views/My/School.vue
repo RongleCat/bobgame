@@ -1,5 +1,5 @@
 <template>
-  <ThePage color="#f2f2f2" contentBg="#f0f0f0">
+  <ThePage color="#f2f2f2" contentBg="#f0f0f0" :showSkeleton="true" :loadDone="loadDone">
     <template slot="headerContent">
       波波学院
       <div class="top-tab-nav">
@@ -14,28 +14,27 @@
         </div>
       </div>
     </template>
+    <template slot="gujia">
+      <div class="item-block h80">
+        <div class="item"></div>
+      </div>
+      <div class="item-img-text h140" v-for="i in 10" :key="i">
+        <div class="pic"></div>
+        <div class="text">
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
+          <div class="item" :class="[`w${random(10,3)}0`]"></div>
+        </div>
+      </div>
+    </template>
     <template slot="content">
       <div class="school-container">
         <swiper :options="swiperOption" ref="mySwiper" class="invite-loop">
-          <swiperSlide class="slide-block one">
-            <div class="school-item" v-for="i in 10" :key="i" @click="$router.push('/my/school/'+i)">
-              <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/news_01.jpg">
-              <div class="title">新人手册学习指导</div>
-              <div class="time">2018-09-29</div>
-            </div>
-          </swiperSlide>
-          <swiperSlide class="slide-block two">
-            <div class="school-item" v-for="i in 10" :key="i" @click="$router.push('/my/school/'+i)">
-              <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/news_01.jpg">
-              <div class="title">新人手册学习指导</div>
-              <div class="time">2018-09-29</div>
-            </div>
-          </swiperSlide>
-          <swiperSlide class="slide-block three">
-            <div class="school-item" v-for="i in 10" :key="i" @click="$router.push('/my/school/'+i)">
-              <img src="https://bobtestimg.oss-cn-hangzhou.aliyuncs.com/images/news_01.jpg">
-              <div class="title">新人手册学习指导</div>
-              <div class="time">2018-09-29</div>
+          <swiperSlide class="slide-block" v-for="(j,jindex) in 3" :key="j">
+            <div class="school-item" v-for="(i,index) in createList(jindex)" :key="index" @click="$router.push('/school/'+i.id)">
+              <img :src="i.bgimg | imgUrl | ossResize(calcSize(200))">
+              <div class="title">{{i.title}}</div>
+              <div class="time">{{i.update_time | fTime}}</div>
             </div>
           </swiperSlide>
         </swiper>
@@ -57,17 +56,15 @@
               this.vue.selectTab = this.activeIndex
             }
           }
-        }
+        },
+        loadDone: false,
+        swiper: null,
+        pageData: null
       }
     },
     computed: {
       searchFocus() {
         return this.keyword.length
-      },
-      swiper() {
-        let that = this
-        that.$refs.mySwiper.swiper.vue = that
-        return this.$refs.mySwiper.swiper
       }
     },
     watch: {
@@ -75,9 +72,31 @@
         this.swiper.slideTo(newValue)
       }
     },
-    mounted() {
-      //调用自动计算
-      this.swiper
+    activated() {
+      let that = this
+      that.$http.get('/Bobschool/index').then(r => {
+        if (r) {
+          that.pageData = r
+          setTimeout(() => {
+            that.loadDone = true
+          }, 500);
+          setTimeout(() => {
+            that.swiper = that.$refs.mySwiper.swiper
+            that.swiper.vue = that
+          }, 500);
+        }
+      }).catch(err => {
+        console.error(err)
+      })
+    },
+    methods: {
+      createList(index) {
+        if (this.pageData) {
+          return this.pageData[index].article
+        } else {
+          return []
+        }
+      }
     }
   }
 </script>

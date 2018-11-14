@@ -82,6 +82,15 @@
     mounted() {
       //调用自动计算
       this.swiper
+    },
+    activated() {
+      this.$http.get('/Rank/index').then(r => {
+        if (r) {
+          console.log(r);
+        }
+      }).catch(err => {
+        console.error(err)
+      })
     }
   }
 </script>

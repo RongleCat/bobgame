@@ -190,12 +190,12 @@
       },
       ...mapState(["homeData"])
     },
-    // mounted() {
-    //   let that = this;
-    //   setTimeout(() => {
-    //     that.sginView = true
-    //   }, 1000);
-    // },
+    mounted() {
+      this.$atApp(() => {
+        let mainWebview = window.plus.webview.getLaunchWebview()
+        window.plus.nativeUI.toast(mainWebview.getURL());
+      })
+    },
     beforeCreate() {
       let that = this;
       that.$atApp(() => {

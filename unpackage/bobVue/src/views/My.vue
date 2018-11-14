@@ -300,8 +300,9 @@
       logout() {
         window.localStorage.removeItem('userBaseInfo');
         window.localStorage.removeItem('token');
-        location.reload()
-        // this.$router.replace("/home");
+        //退出登录以后删除所有缓存页面保证新用户加载
+        this.$vnode.parent.componentInstance.cache = {}
+        this.$router.replace("/home");
       },
       vipLevel(level) {
         if (level == '4+') {

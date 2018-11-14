@@ -1,5 +1,5 @@
 <template>
-  <ThePage color="#f2f2f2" contentBg="#161129">
+  <ThePage color="#f2f2f2" contentBg="#161129" :showSkeleton="true" :loadDone="loadDone">
     <template slot="headerContent">
       签到
       <div class="sgin-bottom">
@@ -25,6 +25,32 @@
         </div>
       </div>
     </template>
+    <template slot="gujia">
+      <div class="item-block h300">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h100">
+        <div class="item"></div>
+      </div>
+      <div class="item-block h600">
+        <div class="item"></div>
+      </div>
+    </template>
     <template slot="content">
       <div class="sgin-container">
         <div class="sgin-head">
@@ -43,89 +69,8 @@
             <div class="star-ball"></div>
             <span>可签</span>
           </div>
-          <div class="item">
-            <div class="star-ball">4</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">5</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">6</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">7</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">8</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">9</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">10</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">11</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">12</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">13</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">14</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">15</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">16</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">17</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">18</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">19</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">20</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">21</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">22</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">23</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">24</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">25</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">26</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">27</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">28</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">29</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">30</div>
-          </div>
-          <div class="item">
-            <div class="star-ball">31</div>
+          <div class="item" v-for="i in parseInt(pageData.day)" :key="i">
+            <div class="star-ball">{{i}}</div>
           </div>
         </div>
       </div>
@@ -137,11 +82,23 @@
   export default {
     data() {
       return {
-
+        pageData: null,
+        loadDone: false
       }
     },
-    mounted() {
+    activated() {
+      let that = this
       document.querySelector('title').innerText = '签到'
+      that.$http.get('/Bobsign/index').then(r => {
+        console.log(r)
+
+        if (r) {
+          that.pageData = r
+          that.loadDone = true
+        }
+      }).catch(err => {
+        console.error(err)
+      })
     }
   }
 </script>
