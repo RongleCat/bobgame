@@ -1,8 +1,8 @@
 var server = "http://fmcatamr.oss-cn-hangzhou.aliyuncs.com"; //申请到的阿里云OSS地址
 // let server = 'http://192.168.2.225:3000/upload'
 var mp3server = 'http://fmcatmp3.oss-cn-hangzhou.aliyuncs.com'
-var OSSAccessKeyId = 'LTAIYteBql8yKgjJ'; //申请到的阿里云AccessKeyId和AccessKeySecret
-var AccessKeySecret = 'tkXWQARw7UnEymqcct40M61sLvYmxn'; //需要用自己申请的进行替换
+var OSSAccessKeyId = '**********'; //申请到的阿里云AccessKeyId和AccessKeySecret
+var AccessKeySecret = '**********'; //需要用自己申请的进行替换
 /*
  * 阿里云参数设置，用于计算签名signature
  */
